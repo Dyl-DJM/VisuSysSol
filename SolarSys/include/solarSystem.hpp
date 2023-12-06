@@ -4,9 +4,10 @@
 =      Made by Kevin QUACH and Dylan DE JESUS	     =
 =													 =
 =													 =
-=  This module contains all the planets we can find  =
-=  in the solar system.                              =
-=  behaviour of the app.                             =
+=  This module defines the SolarSystem class.        =
+=  A SolarSystem object contains planets and has     =
+=  several methods to iterate over them, access      =
+=  them, add new planets, ...                        =
 =													 =
 ======================================================
 */
@@ -19,7 +20,7 @@
 #include "include/planetObject.hpp"
 
 /**
- * @brief Gathers all the planets.
+ * @brief A SolarSystem object
  *
  * It is a PlanetObject (defined in the planetObject module) container.
  ********************************************************************************/
@@ -50,14 +51,14 @@ private:
         Iterator &operator++();
 
         /**
-         * @brief Moves the pointer of the iterator on the next element (befor expression).
+         * @brief Moves the pointer of the iterator on the next element (before expression).
          ********************************************************************************/
         Iterator operator++(int);
 
         /**
          * @brief Comparison operator (equality).
          *
-         * Two iterators are equals if they points at the same index.
+         * Two iterators are equals if they points to the same index.
          *
          * @param other An iterator.
          *
@@ -111,7 +112,7 @@ public:
     /**
      * @brief Get a collection of all the planets stored.
      *
-     * @return A vector of all the PlanetObject (defined in the planetObject module)
+     * @return A vector containing all the PlanetObject (defined in the planetObject module)
      *         stored.
      ********************************************************************************/
     const std::vector<std::unique_ptr<PlanetObject>> &getAllPlanets() const;
@@ -122,7 +123,7 @@ public:
     ~SolarSystem();
 
     /**
-     * @brief Returns the first planet.
+     * @brief Returns a pointer on the first planet.
      *
      * @return A pointer on the first planet.
      ********************************************************************************/
@@ -131,7 +132,7 @@ public:
     /**
      * @brief Returns the end value of the iterator.
      *
-     * @return A pointer on the first location that'll generate an error.
+     * @return A pointer on the end of the of planet container
      ********************************************************************************/
     Iterator end();
 
@@ -143,14 +144,12 @@ public:
     unsigned int nbPlanets();
 
     /**
-     * @brief Retrieves the planet ath the given.
+     * @brief Retrieves the planet at the given index.
      *
-     * Returns the index th planet stored.
      *
-     * @param index An integer describing the index which must belong to the
-     * [0, size - 1] interval.
+     * @param index The index which must belong to the [0, size - 1] interval.
      *
-     * @return The number of planets.
+     * @return The planet at the given index.
      ********************************************************************************/
     PlanetObject &operator[](unsigned int index);
 };

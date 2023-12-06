@@ -4,8 +4,9 @@
 =      Made by Kevin QUACH and Dylan DE JESUS	     =
 =													 =
 =													 =
-=  Texture management. There are the functions       =
-=  which allow the load, the binding, the filters..  =
+=  Texture management. Contains the functions        =
+=  that allow the loading, the binding,              =
+=  the filtering..                                   =
 =													 =
 ======================================================
 */
@@ -18,7 +19,7 @@
 
 /**
  * @brief Loads a texture.
- * 
+ *
  * @param ptrText A pointer on an Image (defined in the glimac library).
  ********************************************************************************/
 GLuint loadTexture(std::unique_ptr<Image> ptrText);

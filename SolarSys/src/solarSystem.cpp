@@ -4,9 +4,10 @@
 =      Made by Kevin QUACH and Dylan DE JESUS	     =
 =													 =
 =													 =
-=  This module contains all the planets we can find  =
-=  in the solar system.                              =
-=  behaviour of the app.                             =
+=  This module defines the SolarSystem class.        =
+=  A SolarSystem object contains planets and has     =
+=  several methods to iterate over them, access      =
+=  them, add new planets, ...                        =
 =													 =
 ======================================================
 */
@@ -26,7 +27,7 @@ void SolarSystem::addPlanet(std::unique_ptr<PlanetObject> planet)
 /**
  * @brief Get a collection of all the planets stored.
  *
- * @return A vector of all the PlanetObject (defined in the planetObject module)
+ * @return A vector containing all the PlanetObject (defined in the planetObject module)
  *         stored.
  ********************************************************************************/
 const std::vector<std::unique_ptr<PlanetObject>> &SolarSystem::getAllPlanets() const
@@ -45,14 +46,12 @@ unsigned int SolarSystem::nbPlanets()
 }
 
 /**
- * @brief Retrieves the planet ath the given.
+ * @brief Retrieves the planet at the given index.
  *
- * Returns the index th planet stored.
  *
- * @param index An integer describing the index which must belong to the
- * [0, size - 1] interval.
+ * @param index The index which must belong to the [0, size - 1] interval.
  *
- * @return The number of planets.
+ * @return The planet at the given index.
  ********************************************************************************/
 PlanetObject &SolarSystem::operator[](unsigned int index)
 {
@@ -70,11 +69,11 @@ PlanetObject &SolarSystem::operator[](unsigned int index)
  ********************************************************************************/
 SolarSystem::~SolarSystem()
 {
-    _planets.clear(); // When the solar system is deleted, we want all the planets to be
+    _planets.clear(); // When the solar system is deleted, we want all the planets to be deleted as well
 }
 
 /**
- * @brief Returns the first planet.
+ * @brief Returns a pointer on the first planet.
  *
  * @return A pointer on the first planet.
  ********************************************************************************/
@@ -86,7 +85,7 @@ SolarSystem::Iterator SolarSystem::begin()
 /**
  * @brief Returns the end value of the iterator.
  *
- * @return A pointer on the first location that'll generate an error.
+ * @return A pointer on the end of the of planet container
  ********************************************************************************/
 SolarSystem::Iterator SolarSystem::end()
 {
@@ -115,7 +114,7 @@ SolarSystem::Iterator &SolarSystem::Iterator::operator++()
 
 /**
  * @brief Moves the pointer of the iterator on the next element
- * (befor expression).
+ * (before expression).
  ********************************************************************************/
 SolarSystem::Iterator SolarSystem::Iterator::operator++(int)
 {
@@ -127,7 +126,7 @@ SolarSystem::Iterator SolarSystem::Iterator::operator++(int)
 /**
  * @brief Comparison operator.
  *
- * Two iterators are equals if they points at the same index.
+ * Two iterators are equals if they points to the same index.
  *
  * @param other An iterator.
  *

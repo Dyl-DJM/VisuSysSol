@@ -4,18 +4,15 @@
 =     Made by Kevin QUACH and Dylan DE JESUS	     =
 =													 =
 =													 =
-=  Place where we can find the system of events.     =
+=  Module where we can find the system of events.    =
 =													 =
-=  There are the all the interactions the user can   =
-=  have with the window such as the keys of its		 =
-=  keyboard, its mouse (keys, motion), the window	 =
-=  events (resize..)								 =
-=													 =
+=  Contains implementations of the interactions      =
+=  with the window using the keys, the keyboard,     =
+=  the mouse or window events (resize..)      		 =
 ======================================================
 */
 
 #include "include/events.hpp"
-
 
 /**
  * @brief Callback function for the resize event.

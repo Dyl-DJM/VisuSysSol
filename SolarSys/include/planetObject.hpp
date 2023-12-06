@@ -7,9 +7,10 @@
 =  This module owns the management of a planet		 =
 =  object, this means that we can find all the		 =
 =  information we need to draw it            		 =
-=													 =
+=  													 =
 ======================================================
 */
+// UNCLEARRRRRRRRRR ^^^^^^^^
 
 #pragma once
 
@@ -63,20 +64,20 @@ public:
      * Configure the matrices which are going to determine the location of
      * the object in the scene.
      *
-     * @param w Width that whill be used for the pespective computation.
-     * @param h Height that whill be used for the pespective computation.
+     * @param w Width that will be used for the pespective computation.
+     * @param h Height that will be used for the pespective computation.
      ********************************************************************************/
     void configureMatrices(float w, float h);
 
     /**
      * @brief Apply transformations on the matrices.
      *
-     * @param rotation A float value taht determines how much do we rotate.
+     * @param rotation A float value that determines how much do we rotate.
      ********************************************************************************/
     void updateMatrices(float rotation);
 
     /**
-     * @brief Retrieves the ID of the textures binbed to the planet object.
+     * @brief Retrieves the ID of the textures binded to the planet object.
      *
      * @return A view of an ID vector for the textures this object is binded to.
      ********************************************************************************/

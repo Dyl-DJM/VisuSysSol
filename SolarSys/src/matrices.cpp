@@ -42,8 +42,7 @@ void Matrices::init(float w, float h, float rotation, float translation, float s
 /**
  * @brief Retrieves the Projection ModelView matrix.
  *
- * @return A view of the 4x4 matrix that represents the Projection ModelView
- * matrix.
+ * @return A view of the 4x4 Projection ModelView matrix.
  ********************************************************************************/
 const glm::mat4 Matrices::getMVPMatrix() const
 {
@@ -53,7 +52,7 @@ const glm::mat4 Matrices::getMVPMatrix() const
 /**
  * @brief Retrieves the ModelView matrix.
  *
- * @return A view of the 4x4 matrix that represents the ModelView matrix.
+ * @return A view of the 4x4 ModelView matrix.
  ********************************************************************************/
 const glm::mat4 Matrices::getMVMatrix() const
 {
@@ -63,7 +62,7 @@ const glm::mat4 Matrices::getMVMatrix() const
 /**
  * @brief Retrieves the Normal matrix.
  *
- * @return A view of the 4x4 matrix that represents the Normal matrix.
+ * @return A view of the 4x4 Normal matrix.
  ********************************************************************************/
 const glm::mat4 Matrices::getNormalMatrix() const
 {
@@ -73,7 +72,7 @@ const glm::mat4 Matrices::getNormalMatrix() const
 /**
  * @brief Retrieves the Projection matrix.
  *
- * @return A view of the 4x4 matrix that represents the Projection matrix.
+ * @return A view of the 4x4 Projection matrix.
  ********************************************************************************/
 const glm::mat4 Matrices::getProjMatrix() const
 {
@@ -101,7 +100,7 @@ void Matrices::setMVMatrix(glm::mat4 newMatrix)
 }
 
 /**
- * @brief Set a new value to the Normaal matrix.
+ * @brief Set a new value to the Normal matrix.
  *
  * @param newMatrix A 4x4 (glm::mat4 provided by the glm library) matrix.
  ********************************************************************************/

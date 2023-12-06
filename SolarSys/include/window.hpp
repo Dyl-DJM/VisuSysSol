@@ -36,9 +36,9 @@ public:
      *
      * @param width Width dimension of the window.
      * @param height Height dimension of the window.
-     * @param title A char array that represents the title of the window.
+     * @param title The title of the window.
      *
-     * @return A window created otherwise its a null pointer if an error occured.
+     * @return The window created or a null pointer if an error occured.
      ********************************************************************************/
     Window(unsigned int width, unsigned int height, const char *title);
 
@@ -47,7 +47,7 @@ public:
      *
      * @warning This must be called before the creation of the window
      *
-     * @return A code error telling if the initialization is successfull or not.
+     * @return 1 if the initialization is successfull, else 0.
      ********************************************************************************/
     static int initWindowLib();
 
@@ -57,10 +57,9 @@ public:
     /*static*/ void freeCurrentWindow();
 
     /**
-     * @brief Make a window being active.
+     * @brief Make a window active.
      *
-     * This means that, its allows the window to react with the possible events by the
-     * user on the window for example.
+     * Allows the window to react to the possible events.
      *
      * @param window A window.
      ********************************************************************************/
@@ -69,7 +68,7 @@ public:
     /**
      * @brief Checks if a window is still active/opened.
      *
-     * @return A boolean, true if window is still open and false otherwise.
+     * @return A boolean, true if window is still open, false otherwise.
      ********************************************************************************/
     bool isWindowOpen();
 
@@ -89,9 +88,9 @@ public:
     ~Window();
 
     /**
-     * @brief Ends the window library.
+     * @brief Closes the window library.
      *
-     * Terminates the GLFW library.
+     * Closes the GLFW library.
      ********************************************************************************/
     static void endWindowLib();
 
@@ -99,11 +98,11 @@ private:
     /**
      * @brief Displays the error that occured on the window.
      *
-     * @param code Code error.
-     * @param desc A description of the error.
+     * @param code Error code.
+     * @param desc Description of the error.
      ********************************************************************************/
     static void onError(int code, const char *desc);
 
     GLFWwindow *_window = NULL; // Pointer on a GLFW window
-    bool _state = false;        // True if the window is open and false otherwise
+    bool _state = false;        // true if the window is open, false otherwise
 };

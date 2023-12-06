@@ -17,11 +17,11 @@
 #include "include/coreEngine.hpp"
 
 /**
- * @brief Build an object that represent a Planet.
+ * @brief Build a Planet object.
  *
  * Thanks to IDs, it loads the corresponding textures to fill the planet to
  * create. It also needs information about the Data type we want to put inside
- * it and the type of shader manager.
+ * and the type of shader manager.
  * With these information it is possible to create a Planet Object and set its
  * initial matrices.
  * After the call of this function, it will be possible to display this object in
@@ -32,12 +32,12 @@
  * @tparam ShaderType A type that gathers information about the shader management of the
  *         planet object, must be a ShaderManager or a derived class.
  * @param applicationPath A FilePath object (class of the glimac folder) to the folder where we find the shader files.
- * @param nbTextures Amount of textures to lload from the given array.
+ * @param nbTextures Amount of textures to load from the given array.
  * @param textures An array of integers that contains textures ids.
  * @param windowWidth Width of the window.
  * @param windowHeight Height of the window.
  *
- * @return A PlanetObject, the object that is able to be displayed in a 3D scene.
+ * @return A PlanetObject, the object that can be displayed in a 3D scene.
  ********************************************************************************/
 template <typename DataType = PlanetData, typename ShaderType = ShaderManager>
 PlanetObject createPlanet(FilePath applicationPath, int nbTextures, unsigned int *textures, float windowWidth, float windowHeight)
@@ -50,11 +50,11 @@ PlanetObject createPlanet(FilePath applicationPath, int nbTextures, unsigned int
 }
 
 /**
- * @brief Build an object that represent a Planet.
+ * @brief Build a Planet object.
  *
  * Thanks to an ID, it loads the corresponding texture to fill the planet to
  * create. It also needs information about the Data type we want to put inside
- * it and the type of shader manager.
+ * and the type of shader manager.
  * With these information it is possible to create a Planet Object and set its
  * initial matrices.
  * After the call of this function, it will be possible to display this object in
@@ -69,7 +69,7 @@ PlanetObject createPlanet(FilePath applicationPath, int nbTextures, unsigned int
  * @param windowWidth Width of the window.
  * @param windowHeight Height of the window.
  *
- * @return A PlanetObject, the object that is able to be displayed in a 3D scene.
+ * @return A PlanetObject, the object that can be displayed in a 3D scene.
  ********************************************************************************/
 template <typename DataType, typename ShaderType = ShaderManager>
 PlanetObject createPlanet(FilePath applicationPath, unsigned int texture, float windowWidth, float windowHeight)
@@ -84,13 +84,13 @@ PlanetObject createPlanet(FilePath applicationPath, unsigned int texture, float 
 /**
  * @brief Fills an empty solar sytem with all the information about it (planets...).
  *
- *  Creates planets and add it insided the given solar system object.
- *  Its starts by creating and loading textures (at the Paths stored in the PathStorage class
+ *  Creates planets and add them inside the given solar system object.
+ *  It starts by creating and loading textures (at the Path stored in the PathStorage class
  *  defined in the pathStorage module).
- *  Then, its creates PlanetObject objects (class defined in the planetObject module) and store
+ *  Then, it creates PlanetObject objects (class defined in the planetObject module) and store
  *  it inside a SolarSytem object (defined in the solarSystem module).
  *
- * @param relativePath A path location where the app is ran.
+ * @param relativePath Path location where the app is ran.
  * @param windowWidth Width of the window.
  * @param windowHeight Height of the window.
  * @param solarSys A SolarSystem object we want to fill.
@@ -121,10 +121,10 @@ void createSolarSys(char *relativePath, float windowWidth, float windowHeight, S
  * @brief Renders the whole 3D simulation
  *
  * Launches the main loop that allows the program to run the 3D simulation.
- * It manages the computations of trasnformations, the window management,
+ * It manages the computations of transformations, the window management,
  * and the rendering of a 3D environment.
  *
- * @param relativePath A path location where the app is ran.
+ * @param relativePath Path location where the app is ran.
  *
  * @return The code error of the core engine part.
  ********************************************************************************/

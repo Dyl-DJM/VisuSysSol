@@ -4,8 +4,9 @@
 =      Made by Kevin QUACH and Dylan DE JESUS	     =
 =													 =
 =													 =
-=  The tools module allows the definition helpful    =
-=  stuff that may be used by the other modules       =
+=  The tools module allows the definition of
+=  helpful stuff that may be used by the other       =
+=  modules.                                           =
 =                                                    =
 =													 =
 ======================================================

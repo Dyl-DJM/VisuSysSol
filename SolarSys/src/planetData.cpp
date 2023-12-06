@@ -1,14 +1,14 @@
 /*
 ======================================================
-=  						                             =
+=  													 =
 =      Made by Kevin QUACH and Dylan DE JESUS	     =
-=						                             =
-=						                             =
-=  This module introduces all the data concercing    =
-=  the app, we can find the information about the    =
-=  solar system behaviour such as the rotation       =
-=  period of the planets and more.		             =
-=						                             =
+=													 =
+=													 =
+=  This module contains the definition of classes    =
+=  used to create instances of Planets.              =
+=  These classes contains the planet's data such as  =
+=  diameter, rotation period, ...                    =
+=													 =
 ======================================================
 */
 

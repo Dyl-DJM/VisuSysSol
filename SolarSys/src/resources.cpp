@@ -12,12 +12,11 @@
 
 #include "include/resources.hpp"
 
-
 /**
  * @brief Loads an image at a given path.
- * 
- * @param path A path that leads to the Image to load.
- * 
+ *
+ * @param path Path of the Image to load.
+ *
  * @return A pointer on an Image (defined in the glimac library).
  ********************************************************************************/
 std::unique_ptr<Image> loadImgFromPath(const char *path)
