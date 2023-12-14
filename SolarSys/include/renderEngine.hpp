@@ -19,6 +19,8 @@
 #include "include/tools.hpp"
 #include "include/planetObject.hpp"
 
+#include <glimac/glm.hpp> // TODO delete when the skybox is finished/well defined
+
 /**
  * @brief Represents all the render engine part of the application.
  *

@@ -153,6 +153,8 @@ int render3DScene(char *relativePath)
 
     /***************** INITIALIZE THE 3D CONFIGURATION (DEPTH) *******************/
 
+    // glDisable(GL_DEPTH_TEST);
+
     RenderEngine::init3DConfiguration();
     auto renderEng = std::make_unique<RenderEngine>();
     renderEng->createSphere();
