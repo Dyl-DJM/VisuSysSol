@@ -151,6 +151,13 @@ int render3DScene(char *relativePath)
     auto solarSys = std::make_unique<SolarSystem>();
     createSolarSys(relativePath, windowWidth, windowHeight, *solarSys);
 
+    // Skybox
+    FilePath applicationPath(relativePath);
+
+    auto textID = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_SKYBOX);
+    std::cout << "ARGGGG" << std::endl;
+    auto skybox = std::make_unique<Skybox>(applicationPath, textID);
+
     /***************** INITIALIZE THE 3D CONFIGURATION (DEPTH) *******************/
 
     // glDisable(GL_DEPTH_TEST);
@@ -158,25 +165,33 @@ int render3DScene(char *relativePath)
     RenderEngine::init3DConfiguration();
     auto renderEng = std::make_unique<RenderEngine>();
     renderEng->createSphere();
+    renderEng->integrateSkybox(*skybox);
 
     /********************* RENDERING LOOP ********************/
+
+    // glDisable(GL_DEPTH_TEST);
     while (window->isWindowOpen())
     {
         RenderEngine::clearDisplay(); // Allows the scene to update its rendering by clearing the display
 
-        for (auto &planet : (*solarSys))
-        {
-            renderEng->start(planet);         // Binds textures and vao
-            planet.updateMatrices(getTime()); // Update the matrices regarding the time
-            renderEng->draw(planet);          // Draw the current planet
-            renderEng->end(planet);           // Unbind the resources
-        }
+        renderEng->start((*skybox));
+        renderEng->draw((*skybox));
+        renderEng->end((*skybox));
+
+        // for (auto &planet : (*solarSys))
+        // {
+        //     renderEng->start(planet);         // Binds textures and vao
+        //     planet.updateMatrices(getTime()); // Update the matrices regarding the time
+        //     renderEng->draw(planet);          // Draw the current planet
+        //     renderEng->end(planet);           // Unbind the resources
+        // }
 
         window->manageWindow(); // Make the window active (events) and swap the buffers
     }
 
     // Reset the resources before the reset of the window library
     solarSys.reset();
+    skybox.reset();
     renderEng.reset();
     window->freeCurrentWindow();
     window.reset();
