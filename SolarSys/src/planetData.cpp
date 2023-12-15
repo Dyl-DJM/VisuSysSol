@@ -39,6 +39,12 @@ SunData::SunData() : PlanetData(3, 1, 0, 0, 0)
 {
 }
 
+// Mercury
+
+MercuryData::MercuryData() : PlanetData(0.2, 0.25, 1.5, 0, 0.5)
+{
+}
+
 /*================================== EARTH DATA ====================================*/
 
 /**

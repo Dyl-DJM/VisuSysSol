@@ -102,18 +102,29 @@ void createSolarSys(char *relativePath, float windowWidth, float windowHeight, S
 
     // Textures loading
     unsigned int sunText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_SUN);
+
+    unsigned int mercuryText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_MERCURY);
+    unsigned int mercuryBumpText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_MERCURY_BUMP);
+
+
+
     unsigned int earthText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_EARTH);
     unsigned int cloudText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_CLOUDS);
 
     // Sun
-    auto sun = createPlanet<SunData, Shader1Texture>(applicationPath, sunText, windowWidth, windowHeight);
+    PlanetObject sun = createPlanet<SunData, Shader1Texture>(applicationPath, sunText, windowWidth, windowHeight);
+
+    // Mercury
+    unsigned int mercuryTextures[] = {mercuryText, mercuryBumpText};
+    PlanetObject mercury = createPlanet<MercuryData, Shader2Texture>(applicationPath, 2, mercuryTextures, windowWidth, windowHeight);
 
     // Earth
-    unsigned int textures[] = {earthText, cloudText};
-    auto earth = createPlanet<EarthData, Shader2Texture>(applicationPath, 2, textures, windowWidth, windowHeight); // TODO : When the data linking is done, no need to add 1 to the width
+    unsigned int earthTextures[] = {earthText, cloudText};
+    PlanetObject earth = createPlanet<EarthData, Shader2Texture>(applicationPath, 2, earthTextures, windowWidth, windowHeight); // TODO : When the data linking is done, no need to add 1 to the width
 
     // // Fill the solar system
     solarSys.addPlanet(std::make_unique<PlanetObject>(sun));
+    solarSys.addPlanet(std::make_unique<PlanetObject>(mercury));
     solarSys.addPlanet(std::make_unique<PlanetObject>(earth));
 }
 

@@ -60,6 +60,15 @@ public:
     SunData();
 };
 
+class MercuryData : public PlanetData
+{
+    public:
+    /**
+     * @brief Constructor
+    */
+   MercuryData();
+};
+
 /**
  * @brief Contains data about the Earth.
  *

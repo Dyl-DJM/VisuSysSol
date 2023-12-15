@@ -19,6 +19,10 @@ class PathStorage{
 public:
     // Textures
     static constexpr const char *PATH_TEXTURE_SUN = "../assets/sun/sunBetter.jpg";
+
+    static constexpr const char *PATH_TEXTURE_MERCURY = "../assets/mercury/mercurymapthumb.jpg";
+    static constexpr const char *PATH_TEXTURE_MERCURY_BUMP = "../assets/mercury/mercurybumpthumb.jpg";
+
     static constexpr const char *PATH_TEXTURE_EARTH = "../assets/earth/earthMapBetter.jpg";
     static constexpr const char *PATH_TEXTURE_CLOUDS = "../assets/earth/earthCloudBetter.jpg";
 
