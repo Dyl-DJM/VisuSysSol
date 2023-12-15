@@ -169,22 +169,24 @@ int render3DScene(char *relativePath)
 
     /********************* RENDERING LOOP ********************/
 
-    // glDisable(GL_DEPTH_TEST);
     while (window->isWindowOpen())
     {
         RenderEngine::clearDisplay(); // Allows the scene to update its rendering by clearing the display
 
+        glDisable(GL_DEPTH_TEST);
         renderEng->start((*skybox));
         renderEng->draw((*skybox));
         renderEng->end((*skybox));
 
-        // for (auto &planet : (*solarSys))
-        // {
-        //     renderEng->start(planet);         // Binds textures and vao
-        //     planet.updateMatrices(getTime()); // Update the matrices regarding the time
-        //     renderEng->draw(planet);          // Draw the current planet
-        //     renderEng->end(planet);           // Unbind the resources
-        // }
+        glEnable(GL_DEPTH_TEST);
+
+        for (auto &planet : (*solarSys))
+        {
+            renderEng->start(planet);         // Binds textures and vao
+            planet.updateMatrices(getTime()); // Update the matrices regarding the time
+            renderEng->draw(planet);          // Draw the current planet
+            renderEng->end(planet);           // Unbind the resources
+        }
 
         window->manageWindow(); // Make the window active (events) and swap the buffers
     }

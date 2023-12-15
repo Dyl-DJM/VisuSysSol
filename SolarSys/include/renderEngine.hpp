@@ -104,9 +104,22 @@ public:
         // Unbind because we need a static draw (we won't modify the data in the buffer in the future)
         glBindBuffer(GL_ARRAY_BUFFER, 0); // Unbind thanks to the Buffer ID 0
 
+        /*********************** IBO *********************/
+
+        glGenBuffers(1, &_ibo);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ibo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, skybox.nbIndexes() * sizeof(uint32_t), skybox.getIndexes(), GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        /*********************** VAO *********************/
+
         // VAO generation
         glGenVertexArrays(1, &_vaoSkybox);
         glBindVertexArray(_vaoSkybox);
+
+        // Bind the VBO to the current VAO
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ibo);
 
         // Vertex Attributes
         const GLuint ATTR_POSITION = 0;
@@ -171,8 +184,7 @@ public:
             i++;
         }
 
-        // Draw the vertices
-        glDrawArrays(GL_POLYGON, 0, _nbVerticesSkybox);
+        glDrawElements(GL_TRIANGLES, skybox.nbIndexes(), GL_UNSIGNED_INT, 0);
     }
 
     /**
@@ -200,5 +212,6 @@ private:
     // Skybox
     GLuint _vboSkybox;
     GLuint _vaoSkybox;
+    GLuint _ibo;
     unsigned int _nbVerticesSkybox = 0;
 };

@@ -46,18 +46,28 @@ public:
         return _matrices;
     }
 
+    const uint32_t *getIndexes() const
+    {
+        return _indexes.data();
+    }
+
+    uint nbIndexes() const
+    {
+        return _indexes.size();
+    }
+
 private:
     void
     build(FilePath filePath, GLuint textID)
     {
         /*
-              6   *---------*    5
+              5   *---------*    4
                  /|        /|
-            1   *---------* |  4
+            0   *---------* |  3
                 | |       | |
-               7| |_______|_*  8
+               6| |_______|_*  7
                 |/        |/
-             2  *---------*  3
+             1  *---------*  2
 
         */
 
@@ -97,11 +107,37 @@ private:
             _cube.push_back(vertex);
         }
 
-        _matrices.init(1000, 1000, 20, -5, 1);
+        _matrices.init(1000, 1000, 0, 0, 0.5);
 
         _shader = std::make_shared<Shader1Texture>(filePath);
 
         _texts.push_back(textID);
+
+        _indexes = {
+            // Front face
+            0, 1, 2, // Triangle 1
+            2, 0, 3, // Triangle 2
+
+            // Upper face
+            3, 4, 5, // Triangle 3
+            5, 0, 3, // Triangle 4
+
+            // Right face
+            3, 4, 7, // Triangle 5
+            7, 3, 2, // Triangle 6
+
+            // Lower face
+            2, 7, 6, // Triangle 7
+            6, 2, 1, // Triangle 8
+
+            // Left Face
+            1, 0, 5, // Triangle 9
+            5, 1, 6, // Triangle 10
+
+            // Back Face
+            6, 5, 4, // Triangle 9
+            4, 6, 7  // Triangle 10
+        };
     }
 
     std::vector<ShapeVertex>
@@ -110,4 +146,6 @@ private:
     Matrices _matrices;
 
     std::vector<GLuint> _texts;
+
+    std::vector<uint32_t> _indexes;
 };

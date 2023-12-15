@@ -22,7 +22,7 @@ public:
     static constexpr const char *PATH_TEXTURE_SUN = "../assets/sun/sunBetter.jpg";
     static constexpr const char *PATH_TEXTURE_EARTH = "../assets/earth/earthMapBetter.jpg";
     static constexpr const char *PATH_TEXTURE_CLOUDS = "../assets/earth/earthCloudBetter.jpg";
-    static constexpr const char *PATH_TEXTURE_SKYBOX = "../assets/skybox/space.jpg";
+    static constexpr const char *PATH_TEXTURE_SKYBOX = "../assets/skybox/spaceMilky.jpg";
 
     // Shaders
     static constexpr const char *RELATIVE_PATH_VERTEX = "SolarSys/shaders/3D.vs.glsl";         // Vertex shader path
