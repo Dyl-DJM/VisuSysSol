@@ -18,6 +18,7 @@
 
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "../include/camera.hpp"
 
 /**
  * @brief Contains all the methods to interact with the window.
@@ -46,7 +47,19 @@ public:
      ********************************************************************************/
     static void setEvents(GLFWwindow *window);
 
+    /**
+     * @brief Recover the view matrix of the Camera
+    */
+    static glm::mat4 getViewMatrix();
+
 private:
+
+    static Camera camera;  // Camera object
+    static bool mouse_right_press;  // Boolean describing wether the right mouse is pressed or not
+    static double mouse_x;
+    static double mouse_y;
+
+
     /**
      * @brief Callback function for the keys on the keyboard.
      *
@@ -82,6 +95,18 @@ private:
      ********************************************************************************/
     static void onMouseMotion(GLFWwindow *window, double x, double y);
 
+
+    /**
+     * @brief Callback function for mouse scroll.
+     *
+     * It fits the wanted template of the GLFW description.
+     *
+     * @param window A window.
+     * @param xoffset 
+     * @param yoffset
+     ********************************************************************************/
+    static void onScroll(GLFWwindow* window, double xoffset, double yoffset);
+
     /**
      * @brief Callback function for the resize event.
      *
@@ -93,3 +118,12 @@ private:
      ********************************************************************************/
     static void onWindowResized(GLFWwindow *window, int width, int height);
 };
+
+// Initialization of the static Camera
+inline Camera Events::camera = Camera();
+
+inline bool Events::mouse_right_press = false;
+
+inline double Events::mouse_x = 0.0f;
+
+inline double Events::mouse_y = 0.0f;

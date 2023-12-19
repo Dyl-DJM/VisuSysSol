@@ -131,9 +131,12 @@ void RenderEngine::draw(PlanetObject &planet)
     planetProgram.use();
 
     auto transfos = planet.getMatrices();
-    auto MVPMatrix = transfos.getMVPMatrix();
-    auto MVMatrix = transfos.getMVMatrix();
+    // auto MVPMatrix = transfos.getMVPMatrix();
+    auto viewMatrix = Events::getViewMatrix();
     auto normalMatrix = transfos.getMVPMatrix();
+    auto projMatrix = transfos.getProjMatrix();
+    auto MVMatrix = viewMatrix *transfos.getMVMatrix();
+    auto MVPMatrix = projMatrix * MVMatrix;
 
     // Send matrices
     glUniformMatrix4fv(planetShader->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));

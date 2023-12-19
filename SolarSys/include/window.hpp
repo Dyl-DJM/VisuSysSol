@@ -21,6 +21,7 @@
 
 #include "include/tools.hpp"
 #include "include/events.hpp"
+#include "include/camera.hpp"
 
 /**
  * @brief Representation of a window where we can render the 3D scene.

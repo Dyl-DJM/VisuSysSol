@@ -18,6 +18,7 @@
 #include "include/textures.hpp"
 #include "include/tools.hpp"
 #include "include/planetObject.hpp"
+#include "include/events.hpp"
 
 /**
  * @brief Represents all the render engine part of the application.
