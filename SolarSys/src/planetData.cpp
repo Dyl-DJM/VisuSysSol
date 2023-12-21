@@ -19,14 +19,18 @@
 /**
  * @brief Constructor of the class.
  *
- * @param rotation A float value that describes the rotation period of the
- *                 planet.
- * @param diameter A size for the planet.
- * @param position A position value regarding the sun position.
- * @param angle A value that represents the angle regarding the ellipse.
+ * @param rotation Rotation period of the planet
+ * @param diameter Size of the planet in km
+ * @param position Position of the planet relative to the sun
+ * @param angle Angle of rotation of the ellipse
+ * @param revPeriod Revolution period of the planet
  ********************************************************************************/
 PlanetData::PlanetData(float rotation, float diameter, float position, float angle, float revPeriod)
-    : _rotationPeriod{rotation}, _diameter{diameter}, _position{position}, _angle{angle}, _revolutionPeriod{revPeriod}
+    : _rotationPeriod{rotation}
+    , _diameter{diameter / PlanetData::unit}
+    , _position{position}
+    , _angle{angle}
+    , _revolutionPeriod{revPeriod}
 {
 }
 
@@ -35,13 +39,13 @@ PlanetData::PlanetData(float rotation, float diameter, float position, float ang
 /**
  * @brief Constructor of the class.
  ********************************************************************************/
-SunData::SunData() : PlanetData(3, 1, 0, 0, 0)
+SunData::SunData() : PlanetData(3, 1392680, 0, 0, 0)
 {
 }
 
 // Mercury
 
-MercuryData::MercuryData() : PlanetData(0.2, 0.25, 1.5, 0, 0.5)
+MercuryData::MercuryData() : PlanetData(0.2, 4881, 1.5, 0, 0.5)
 {
 }
 
@@ -50,6 +54,6 @@ MercuryData::MercuryData() : PlanetData(0.2, 0.25, 1.5, 0, 0.5)
 /**
  * @brief Constructor of the class.
  ********************************************************************************/
-EarthData::EarthData() : PlanetData(0.4, 0.5, 2, 0, 1)
+EarthData::EarthData() : PlanetData(0.4, 12756, 2, 0, 1)
 {
 }
