@@ -18,15 +18,6 @@ class Camera{
     public:
 
         /**
-         * @brief Constructor of the class.
-         *
-         * @param rotation A float value that describes the rotation period of the
-         *                 planet.
-         * @param diameter A size for the planet.
-         * @param position A position value regarding the sun position.
-         * @param angle A value that represents the angle regarding the ellipse.
-         ********************************************************************************/
-        /**
          * @brief Constructor
         */
         Camera();
@@ -52,11 +43,21 @@ class Camera{
         */
         void rotateUp(float degrees);
 
+
         glm::mat4 getViewMatrix() const;
+
+        /**
+         * @brief Update the camera's position depending on the target planet's position
+         * 
+         * @param targetPosition the position of the targeted planet
+        */
+        void update_position(glm::vec4 targetPosition);
 
     private:
         float m_fDistance;
-        float m_fAngleX;
-        float m_fAngleY;
+        float m_fAngleX;       // Rotation angle on the X axis
+        float m_fAngleY;       // Rotation angle on the Y axis
+        glm::vec3 position;    // Position of the camera
+        glm::mat4 view_matrix;  
 
 };

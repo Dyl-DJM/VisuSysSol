@@ -59,6 +59,7 @@ private:
     static bool mouse_right_press;  // Boolean describing wether the right mouse is pressed or not
     static double mouse_x;
     static double mouse_y;
+    static unsigned int planet_idx;          // Index of the planet whose POV is to be shown
     static std::vector<std::unique_ptr<PlanetObject>> planets;  // Vector of pointers toward planets from  which position will be recovered from.
 
 
@@ -126,3 +127,5 @@ inline bool Events::mouse_right_press = false;
 inline double Events::mouse_x = 0.0f;
 
 inline double Events::mouse_y = 0.0f;
+
+inline unsigned int Events::planet_idx = 0;  // The sun (index 0) is selected by default

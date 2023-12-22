@@ -185,6 +185,7 @@ int render3DScene(char *relativePath)
         {
             renderEng->start(planet);         // Binds textures and vao
             planet.updateMatrices(getTime()); // Update the matrices regarding the time
+            context.update_camera();
             renderEng->draw(planet, camera);          // Draw the current planet
             renderEng->end(planet);           // Unbind the resources
         }

@@ -99,7 +99,12 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
     }
 
     if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE){
-        // Do stuff with camera and POV
+        Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+        context->previous_planet();
+    }
+    else if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE){
+        Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+        context->next_planet();
     }
 }
 
