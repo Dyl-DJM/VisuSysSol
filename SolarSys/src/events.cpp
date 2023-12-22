@@ -42,8 +42,14 @@ void Events::onMouseMotion(GLFWwindow *window, double x, double y)
     std::cout << "Mouse Motion : " << window << " for mouse position " << x << " , " << y << std::endl;
 
     if (mouse_right_press){   // Camera rotation
+
+        Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+
+        Camera & camera = context->getCamera();
+
         camera.rotateLeft(mouse_x - x);
         camera.rotateUp(mouse_y - y);
+
         glfwGetCursorPos(window, &mouse_x, &mouse_y);
     }
 }
@@ -91,10 +97,18 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
     {
         glfwSetWindowShouldClose(window, GLFW_TRUE); // Sets the close flag of the window at true
     }
+
+    if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE){
+        // Do stuff with camera and POV
+    }
 }
 
 void Events::onScroll(GLFWwindow* window, double xoffset, double yoffset){
     std::cout << "Key Event : " << window << "\nxoffset: " << xoffset << "\nyoffset: " << yoffset << std::endl;
+
+    Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+
+    Camera & camera = context->getCamera();
 
     if (yoffset == -1){  // Dezooming
         camera.moveFront(0.5);
@@ -114,7 +128,7 @@ void Events::onScroll(GLFWwindow* window, double xoffset, double yoffset){
  *
  * @param window A window to bind the events with.
  ********************************************************************************/
-void Events::setEvents(GLFWwindow *window)
+void Events::setEvents(GLFWwindow *window, Context & context)
 {
     glfwSetWindowSizeCallback(window, Events::onWindowResized);
     glfwSetCursorPosCallback(window, Events::onMouseMotion);   /* Mouse moved */
@@ -122,13 +136,7 @@ void Events::setEvents(GLFWwindow *window)
     glfwSetKeyCallback(window, Events::onKey);                 /* Key events */
     glfwSetScrollCallback(window, Events::onScroll);
 
+    glfwSetWindowUserPointer(window, &context);    /* Set the context */
+
     std::cout << window << std::endl;
-}
-
-
-/**
- * @brief Recover the view matrix of the Camera
-*/
-glm::mat4 Events::getViewMatrix(){
-    return camera.getViewMatrix();
 }

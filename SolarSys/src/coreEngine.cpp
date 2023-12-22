@@ -155,12 +155,20 @@ int render3DScene(char *relativePath)
     {
         return ERR_INT_CODE; // defined inside the tools module
     }
-    window->configureEvents();
 
     /********************* GRAPHIC OBJECTS CREATION ********************/
 
     auto solarSys = std::make_unique<SolarSystem>();
     createSolarSys(relativePath, windowWidth, windowHeight, *solarSys);
+    Camera camera = Camera();
+
+    /********************* CONTEXT OBJECT CREATION ********************/
+
+    Context context = Context(camera, *solarSys);
+
+    /********************* SETTING EVENTS AND PASSING CONTEXT ********************/
+
+    window->configureEvents(context);
 
     /***************** INITIALIZE THE 3D CONFIGURATION (DEPTH) *******************/
 
@@ -177,7 +185,7 @@ int render3DScene(char *relativePath)
         {
             renderEng->start(planet);         // Binds textures and vao
             planet.updateMatrices(getTime()); // Update the matrices regarding the time
-            renderEng->draw(planet);          // Draw the current planet
+            renderEng->draw(planet, camera);          // Draw the current planet
             renderEng->end(planet);           // Unbind the resources
         }
 

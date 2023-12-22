@@ -132,9 +132,9 @@ Window::Window(unsigned int width, unsigned int height, const char *title)
 /**
  * @brief Sets the events for the window.
  ********************************************************************************/
-void Window::configureEvents()
+void Window::configureEvents(Context & context)
 {
-    Events::setEvents(_window);
+    Events::setEvents(_window, context);
 }
 
 /**

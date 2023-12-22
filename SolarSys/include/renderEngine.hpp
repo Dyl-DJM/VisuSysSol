@@ -79,7 +79,7 @@ public:
      * @param planet A PlanetObject (defined in the planetObject module) we want
      *               to draw.
      ********************************************************************************/
-    void draw(PlanetObject &planet);
+    void draw(PlanetObject &planet, Camera & camera);
 
     /**
      * @brief Put an end to the current rendering environment.

@@ -76,7 +76,7 @@ public:
     /**
      * @brief Sets the events for the window.
      ********************************************************************************/
-    void configureEvents();
+    void configureEvents(Context & context);
 
     /**
      * @brief Gives the creation state of the window.

@@ -123,7 +123,7 @@ void RenderEngine::start(const PlanetObject &planet)
  * @param planet A PlanetObject (defined in the planetObject module) we want
  *               to draw.
  ********************************************************************************/
-void RenderEngine::draw(PlanetObject &planet)
+void RenderEngine::draw(PlanetObject &planet, Camera & camera)
 {
     auto planetShader = planet.getShaderManager().get();
     auto &planetProgram = planetShader->m_Program; // Use of reference to not call the copy constructor of Program (which is private)
@@ -132,7 +132,7 @@ void RenderEngine::draw(PlanetObject &planet)
 
     auto transfos = planet.getMatrices();
     // auto MVPMatrix = transfos.getMVPMatrix();
-    auto viewMatrix = Events::getViewMatrix();
+    auto viewMatrix = camera.getViewMatrix();
     auto normalMatrix = transfos.getMVPMatrix();
     auto projMatrix = transfos.getProjMatrix();
     auto MVMatrix = viewMatrix *transfos.getMVMatrix();

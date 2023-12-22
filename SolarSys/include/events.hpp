@@ -18,7 +18,7 @@
 
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "../include/camera.hpp"
+#include "../include/context.hpp"
 
 /**
  * @brief Contains all the methods to interact with the window.
@@ -45,19 +45,21 @@ public:
      *
      * @param window A window to bind the events with.
      ********************************************************************************/
-    static void setEvents(GLFWwindow *window);
+    static void setEvents(GLFWwindow *window, Context & context);
 
     /**
-     * @brief Recover the view matrix of the Camera
+     * Sets the solar system from which position data will be recovered from.
+     * @param solarSys The SolarSystem object from which the planets will be recovered from
     */
-    static glm::mat4 getViewMatrix();
+    static void setPlanets(SolarSystem & solarSys);
+    
 
 private:
 
-    static Camera camera;  // Camera object
     static bool mouse_right_press;  // Boolean describing wether the right mouse is pressed or not
     static double mouse_x;
     static double mouse_y;
+    static std::vector<std::unique_ptr<PlanetObject>> planets;  // Vector of pointers toward planets from  which position will be recovered from.
 
 
     /**
@@ -118,9 +120,6 @@ private:
      ********************************************************************************/
     static void onWindowResized(GLFWwindow *window, int width, int height);
 };
-
-// Initialization of the static Camera
-inline Camera Events::camera = Camera();
 
 inline bool Events::mouse_right_press = false;
 
