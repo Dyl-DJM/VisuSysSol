@@ -158,6 +158,7 @@ int render3DScene(char *relativePath)
 
     /********************* GRAPHIC OBJECTS CREATION ********************/
 
+    // Solar System
     auto solarSys = std::make_unique<SolarSystem>();
     createSolarSys(relativePath, windowWidth, windowHeight, *solarSys);
     Camera camera = Camera();
@@ -170,16 +171,30 @@ int render3DScene(char *relativePath)
 
     window->configureEvents(context);
 
+    // Skybox
+    FilePath applicationPath(relativePath);
+    auto textID = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_SKYBOX);
+    auto skybox = std::make_unique<Skybox>(applicationPath, textID);
+
     /***************** INITIALIZE THE 3D CONFIGURATION (DEPTH) *******************/
 
-    RenderEngine::init3DConfiguration();
     auto renderEng = std::make_unique<RenderEngine>();
     renderEng->createSphere();
+    renderEng->integrateSkybox(*skybox); // Allows the
 
     /********************* RENDERING LOOP ********************/
+
     while (window->isWindowOpen())
     {
         RenderEngine::clearDisplay(); // Allows the scene to update its rendering by clearing the display
+
+        RenderEngine::disableZBuffer();
+
+        renderEng->start((*skybox));
+        renderEng->draw((*skybox));
+        renderEng->end((*skybox));
+
+        RenderEngine::enableZBuffer();
 
         for (auto &planet : (*solarSys))
         {
@@ -195,6 +210,7 @@ int render3DScene(char *relativePath)
 
     // Reset the resources before the reset of the window library
     solarSys.reset();
+    skybox.reset();
     renderEng.reset();
     window->freeCurrentWindow();
     window.reset();

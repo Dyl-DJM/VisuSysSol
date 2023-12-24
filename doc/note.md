@@ -154,6 +154,9 @@ Se documenter sur une formule de rendu procédurale qui simule des flammes
 Penser à gérer le cas de redimensionnement de la fenêtre pour que la scène fit avec le redimensionnement (Probablement changer la matrice de projection en y mettant les nouvelles valeurs de la fenêtre si redimensionnement il y a eu);
 
 
+Vérifier avec Valgrind, enlever tous les pointeurs C, et vérifier qu'on a la moins de shared pointer possible
+
+
 
 
 
