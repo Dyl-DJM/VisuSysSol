@@ -20,7 +20,7 @@
 #include "include/planetObject.hpp"
 #include "include/skybox.hpp"
 
-#include <glimac/glm.hpp> // TODO delete when the skybox is finished/well defined
+#include <glimac/glm.hpp> // TODO : Delete when the skybox is finished/well defined
 
 /**
  * @brief Represents all the render engine part of the application.
@@ -44,11 +44,18 @@ public:
     static void clearDisplay();
 
     /**
-     * @brief Initialize the 3d configuration.
+     * @brief Enables the Depth buffer.
      *
      * It configures the depth of the scene in OpenGL.
      ********************************************************************************/
-    static void init3DConfiguration();
+    static void enableZBuffer();
+
+    /**
+     * @brief Disable the Depth buffer.
+     *
+     * It disables the depth of the scene in OpenGL.
+     ********************************************************************************/
+    static void disableZBuffer();
 
     /**
      * @brief Loads a texture at the given path.
@@ -56,6 +63,10 @@ public:
      * @param path Path representation of the texture location.
      ********************************************************************************/
     static GLuint createTexture(const char *path);
+
+    /* ========================================================================================================== */
+    /* =                                                PLANET                                                  = */
+    /* ========================================================================================================== */
 
     /**
      * @brief Create a Sphere object, fill the vao and vbo with
@@ -91,125 +102,51 @@ public:
      ********************************************************************************/
     void end(const PlanetObject &planet);
 
-    void integrateSkybox(const Skybox &skybox)
-    {
-        _nbVerticesSkybox = skybox.nbVertices();
-        auto ptrVertices = skybox.data();
+    /* ========================================================================================================== */
+    /* =                                                SKYBOX                                                  = */
+    /* ========================================================================================================== */
 
-        // Generates VBO buffer and binds it
-        glGenBuffers(1, &_vboSkybox);
-        glBindBuffer(GL_ARRAY_BUFFER, _vboSkybox);
+    /**
+     * @brief Integrates information of a skybox.
+     *
+     * @param skybox A skybox object (see the module skybox) we want its cube shape
+     * toe ba drawable by the render engine.
+     ********************************************************************************/
+    void integrateSkybox(const Skybox &skybox);
 
-        glBufferData(GL_ARRAY_BUFFER, _nbVerticesSkybox * sizeof(ShapeVertex), ptrVertices, GL_STATIC_DRAW);
-        // Unbind because we need a static draw (we won't modify the data in the buffer in the future)
-        glBindBuffer(GL_ARRAY_BUFFER, 0); // Unbind thanks to the Buffer ID 0
+    /**
+     * @brief Configures the environment to allow the rendering.
+     *
+     * Bind the textures of the skybox object and the VAO.
+     *
+     * @param skybox A Skybox (see the skybox module) we want
+     *               to configure the drawing environment for.
+     ********************************************************************************/
+    void start(const Skybox &skybox);
 
-        /*********************** IBO *********************/
-
-        glGenBuffers(1, &_ibo);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ibo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, skybox.nbIndexes() * sizeof(uint32_t), skybox.getIndexes(), GL_STATIC_DRAW);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-        /*********************** VAO *********************/
-
-        // VAO generation
-        glGenVertexArrays(1, &_vaoSkybox);
-        glBindVertexArray(_vaoSkybox);
-
-        // Bind the VBO to the current VAO
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ibo);
-
-        // Vertex Attributes
-        const GLuint ATTR_POSITION = 0;
-        const GLuint ATTR_NORMAL = 1;
-        const GLuint ATTR_TEXTURE = 2;
-
-        glEnableVertexAttribArray(ATTR_POSITION);
-        glEnableVertexAttribArray(ATTR_NORMAL);
-        glEnableVertexAttribArray(ATTR_TEXTURE);
-
-        // Set the information for GPU on how to read the vertex array
-        glBindBuffer(GL_ARRAY_BUFFER, _vboSkybox);
-        glVertexAttribPointer(ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)offsetof(ShapeVertex, position)); // Positions
-        glVertexAttribPointer(ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)offsetof(ShapeVertex, normal));     // Normals
-        glVertexAttribPointer(ATTR_TEXTURE, 2, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)offsetof(ShapeVertex, texCoords)); // Textures coords
-        glBindBuffer(GL_ARRAY_BUFFER, 0);                                                                                                  // Unbind thanks to the Buffer ID 0
-
-        // Unbind the VAO
-        glBindVertexArray(0);
-    }
-
-    void start(const Skybox &skybox)
-    {
-        // Bind the texture
-        auto skyboxTexts = skybox.getTextIDs();
-        int i = 0;
-        for (auto it = skyboxTexts.begin(); it != skyboxTexts.end(); it++)
-        {
-            glActiveTexture(GL_TEXTURE0 + i);
-            glBindTexture(GL_TEXTURE_2D, *it); // Earth texture binded to #0
-            i++;
-        }
-
-        // Bind the VAO to draw its data
-        glBindVertexArray(_vaoSkybox);
-    }
-
-    void draw(Skybox &skybox)
-    {
-        auto skyboxShader = skybox.getShaderManager().get();
-        auto &skyboxProgram = skyboxShader->m_Program; // Use of reference to not call the copy constructor of Program (which is private)
-
-        skyboxProgram.use();
-
-        auto transfos = skybox.getMatrices();
-        auto MVPMatrix = transfos.getMVPMatrix();
-        auto MVMatrix = transfos.getMVMatrix();
-        auto normalMatrix = transfos.getMVPMatrix();
-
-        // Send matrices
-        glUniformMatrix4fv(skyboxShader->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
-        glUniformMatrix4fv(skyboxShader->uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
-        glUniformMatrix4fv(skyboxShader->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
-
-        // //Send the textures
-        int i = 0;
-        auto skyboxTexts = skybox.getTextIDs();
-
-        for (auto it = skyboxTexts.begin(); it != skyboxTexts.end(); it++)
-        {
-            glUniform1i(skyboxShader->uTextures[i], i);
-            i++;
-        }
-
-        glDrawElements(GL_TRIANGLES, skybox.nbIndexes(), GL_UNSIGNED_INT, 0);
-    }
+    /**
+     * @brief Launches the rendering of the given skybox.
+     *
+     * @param skybox A Skybox (defined in the skybix module) we want
+     *               to draw.
+     ********************************************************************************/
+    void draw(Skybox &skybox);
 
     /**
      * @brief Put an end to the current rendering environment.
      *
-     * @param planet A PlanetObject (defined in the planetObject module) we want
+     * @param skybox A Skybox object (defined in the skybox module) we want
      *               to put an end to the drawing environment for.
      ********************************************************************************/
-    void end(const Skybox &skybox)
-    {
-        // Unbind textures
-        for (unsigned int i = 0; i < skybox.getTextIDs().size(); i++)
-        {
-            glBindTexture(GL_TEXTURE_2D, 0);
-        }
-        // Unbind the VAO
-        glBindVertexArray(0);
-    }
+    void end(const Skybox &skybox);
 
 private:
+    // Planets
     GLuint _vbo;                  // VertexBufferObject ID
     GLuint _vao;                  // VertexArrayObject ID
     unsigned int _nbVertices = 0; // Amount of vertices to draw
 
-    // Skybox
+    // Skybox                          // TODO : Put it inside a map to store all the type of VBOs etc for each shape (sphere)
     GLuint _vboSkybox;
     GLuint _vaoSkybox;
     GLuint _ibo;
