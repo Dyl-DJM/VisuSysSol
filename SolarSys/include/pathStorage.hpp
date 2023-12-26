@@ -24,6 +24,8 @@ public:
     static constexpr const char *PATH_TEXTURE_MERCURY = "../assets/mercury/mercurymapthumb.jpg";
     static constexpr const char *PATH_TEXTURE_MERCURY_BUMP = "../assets/mercury/mercurybumpthumb.jpg";
 
+    static constexpr const char *PATH_TEXTURE_VENUS = "../assets/venus/venusmapthumb.jpg";
+
     static constexpr const char *PATH_TEXTURE_EARTH = "../assets/earth/earthMapBetter.jpg";
     static constexpr const char *PATH_TEXTURE_CLOUDS = "../assets/earth/earthCloudBetter.jpg";
     static constexpr const char *PATH_TEXTURE_SKYBOX = "../assets/skybox/spaceMilky.jpg";

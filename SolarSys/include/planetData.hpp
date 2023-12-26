@@ -74,6 +74,15 @@ class MercuryData : public PlanetData
    MercuryData();
 };
 
+class VenusData : public PlanetData
+{
+    public:
+    /**
+     * @brief Constructor
+    */
+   VenusData();
+};
+
 /**
  * @brief Contains data about the Earth.
  *

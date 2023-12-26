@@ -49,6 +49,12 @@ MercuryData::MercuryData() : PlanetData(0.2, 4881, 1.5, 0, 0.5)
 {
 }
 
+//Venus
+
+VenusData::VenusData() : PlanetData(0.3, 12103.6, 1.75, 0, 0.75)
+{
+}
+
 /*================================== EARTH DATA ====================================*/
 
 /**
