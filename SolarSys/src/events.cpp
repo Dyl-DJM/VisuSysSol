@@ -106,6 +106,16 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
         Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
         context->next_planet();
     }
+
+    /****************  Speed Management ****************/
+    else if (key == GLFW_KEY_KP_ADD && action == GLFW_RELEASE){
+        Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+        context->increaseSpeed(2);
+    }
+    else if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_RELEASE){
+        Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+        context->decreaseSpeed(2);
+    }
 }
 
 void Events::onScroll(GLFWwindow* window, double xoffset, double yoffset){

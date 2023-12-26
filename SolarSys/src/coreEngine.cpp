@@ -170,6 +170,8 @@ int render3DScene(char *relativePath)
     /********************* CONTEXT OBJECT CREATION ********************/
 
     Context context = Context(camera, *solarSys);
+    float inProgramElapsedTime = getTime();
+    float currentElapsedTime = getTime();
 
     /********************* SETTING EVENTS AND PASSING CONTEXT ********************/
 
@@ -188,6 +190,9 @@ int render3DScene(char *relativePath)
 
     /********************* RENDERING LOOP ********************/
 
+    float step = 0;
+    
+
     while (window->isWindowOpen())
     {
         RenderEngine::clearDisplay(); // Allows the scene to update its rendering by clearing the display
@@ -200,10 +205,15 @@ int render3DScene(char *relativePath)
 
         RenderEngine::enableZBuffer();
 
+        step = getTime() - currentElapsedTime;
+        currentElapsedTime = getTime();
+
         for (auto &planet : (*solarSys))
         {
+            // Solution if problem persist: Use a step...
+            inProgramElapsedTime += step * context.getSpeedMultiplier();
             renderEng->start(planet);         // Binds textures and vao
-            planet.updateMatrices(getTime()); // Update the matrices regarding the time
+            planet.updateMatrices(inProgramElapsedTime); // Update the matrices regarding the time
             context.update_camera();
             renderEng->draw(planet, camera);          // Draw the current planet
             renderEng->end(planet);           // Unbind the resources

@@ -18,11 +18,13 @@
  * @brief Class constructor.
  * @param cam The camera associated to the program
  * @param solarSystem The SolarSystem object associated to the program
+ * @param speedMultiplier Speed multiplier at which time elapses in the solar system
 */
 Context::Context(Camera & cam, SolarSystem & solarSystem)
     : camera {cam}
     , solarSys {solarSystem}
     , planet_idx {0}
+    , speedMultiplier {1}
     {
         update_camera();
     }
@@ -62,4 +64,30 @@ void Context::next_planet(){
 */
 void Context::previous_planet(){
     planet_idx = (planet_idx == 0) ? solarSys.nbPlanets() - 1 : (planet_idx - 1);
+}
+
+/**
+ * @brief Accessor for the speed multiplier
+*/
+float Context::getSpeedMultiplier(){
+    return speedMultiplier;
+}
+
+/**
+ * @brief Increase the speed multiplier by the given value. Maximum multiplier is capped at 25.
+ * @param value value by which to increase the speed multiplier
+*/
+void Context::increaseSpeed(float value){
+    speedMultiplier += value;
+    speedMultiplier = (speedMultiplier + value > 25) ? speedMultiplier : (speedMultiplier + value);
+}
+
+/**
+ * @brief Decrease the speed multiplier by the given value. Speed multiplier can't go lower than 1
+ * @param value value by which to decrease the speed multiplier
+*/
+void Context::decreaseSpeed(float value){
+    if (speedMultiplier - value >= 1){
+        speedMultiplier = (speedMultiplier - value < 1) ? speedMultiplier : (speedMultiplier - value);
+    }
 }
