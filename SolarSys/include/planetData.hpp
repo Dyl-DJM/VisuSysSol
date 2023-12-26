@@ -45,11 +45,13 @@ public:
     const float _angle;            // Angle of rotation of the ellipse
     const float _revolutionPeriod; // Revolution period of the planet
 
-    static const float unit;  // The homothety unit we'll use to downscale the solar system
+    static const float sizeUnit;  // The homothety unit we'll use to downscale the solar system
+    static const float rotationUnit;  // Homothety unit we'll use to reduce the time of rotation
 
 };
 
-inline const float PlanetData::unit = 142984.; // We are setting 1 unit to 142984 km (Jupiter's size)
+inline const float PlanetData::sizeUnit = 142984.; // We are setting 1 unit to 142984 km (Jupiter's size)
+inline const float PlanetData::rotationUnit = 24.;  // We are setting 1 unit to 24 hours (Earth's rotation)
 
 /**
  * @brief Contains data about the Sun.

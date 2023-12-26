@@ -78,11 +78,11 @@ void PlanetObject::updateMatrices(float rotation)
     float rotationDegree = _data._rotationPeriod == 0 ? 0 : rotation * (1. / _data._rotationPeriod); // TODO : Change this computation that doesn't fit realty and put it at a function of the class
     float revolutionDegree = _data._revolutionPeriod == 0 ? 0 : rotation * (1. / _data._revolutionPeriod);
     // TODO : put real conversions iduced by real values of the rotation period, diameter etc..
-    auto MVMatrixBasic = glm::translate(glm::mat4(1), glm::vec3(0.f, 0.f, 0));       // Central point of the sun : need to put it as a static field of the planet Data instead
-    auto MVMatrix = glm::rotate(MVMatrixBasic, revolutionDegree, glm::vec3(0, 1, 0)); // Rotation around the central point (the sun)
+    // auto MVMatrixBasic = glm::translate(glm::mat4(1), glm::vec3(0.f, 0.f, 0));       // Central point of the sun : need to put it as a static field of the planet Data instead
+    auto MVMatrix = glm::rotate(glm::mat4(1), revolutionDegree, glm::vec3(0, 1, 0)); // Rotation around the central point (the sun)
 
     MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, _data._position));                         // Distance from the central point (from the sun)
-    MVMatrix = glm::rotate(MVMatrix, rotationDegree, glm::vec3(0, 1, 0));                          // Rotation on itself
+    MVMatrix = glm::rotate(MVMatrix, rotationDegree - revolutionDegree, glm::vec3(0, 1, 0));       // Rotation on itself
     MVMatrix = glm::scale(MVMatrix, glm::vec3(_data._diameter, _data._diameter, _data._diameter)); // Size dimension
 
     auto normalMatrix = glm::transpose(glm::inverse(MVMatrix));
