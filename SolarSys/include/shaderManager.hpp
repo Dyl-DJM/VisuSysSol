@@ -47,6 +47,14 @@ public:
     GLint uMVMatrix;              // Uniform ID for ModelView matrix
     GLint uNormalMatrix;          // Uniform ID for Normal matrix
     std::vector<GLint> uTextures; // Texture IDs
+
+    // Light components
+    GLint uKd;
+    GLint uKs;
+    GLint uShininess;
+    GLint uLightPosition;
+    GLint uLightIntensity;
+    GLint uIsLighted;
 };
 
 /**

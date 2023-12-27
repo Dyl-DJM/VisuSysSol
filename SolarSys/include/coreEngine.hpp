@@ -27,6 +27,7 @@
 #include "include/solarSystem.hpp"
 #include "include/pathStorage.hpp"
 #include "include/skybox.hpp"
+#include "include/light.hpp"
 
 #include <glimac/getTime.hpp> // Must keep it after the other includes
 

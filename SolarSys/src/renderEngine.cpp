@@ -133,7 +133,7 @@ void RenderEngine::start(const PlanetObject &planet)
  * @param planet A PlanetObject (defined in the planetObject module) we want
  *               to draw.
  ********************************************************************************/
-void RenderEngine::draw(PlanetObject &planet, Camera & camera)
+void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light)
 {
     auto planetShader = planet.getShaderManager().get();
     auto &planetProgram = planetShader->m_Program; // Use of reference to not call the copy constructor of Program (which is private)
@@ -145,13 +145,25 @@ void RenderEngine::draw(PlanetObject &planet, Camera & camera)
     auto viewMatrix = camera.getViewMatrix();
     auto normalMatrix = transfos.getMVPMatrix();
     auto projMatrix = transfos.getProjMatrix();
-    auto MVMatrix = viewMatrix *transfos.getMVMatrix();
+    auto MVMatrix = viewMatrix * transfos.getMVMatrix();
     auto MVPMatrix = projMatrix * MVMatrix;
 
     // Send matrices
     glUniformMatrix4fv(planetShader->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
     glUniformMatrix4fv(planetShader->uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     glUniformMatrix4fv(planetShader->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+
+    // Send Material Information
+    glUniform3fv(planetShader->uKd, 1, glm::value_ptr(light._Kd));
+    glUniform3fv(planetShader->uKs, 1, glm::value_ptr(light._Ks));
+    glUniform1f(planetShader->uShininess, light._shininess);
+
+    // Send Light Information
+
+    glm::vec3 lightPos = glm::vec3(viewMatrix * glm::vec4(light._position, 0)); // Must multiplicate with the View Matrix after the rotation
+    glUniform3fv(planetShader->uLightPosition, 1, glm::value_ptr(lightPos));
+    glUniform3fv(planetShader->uLightIntensity, 1, glm::value_ptr(light._intensity));
+    glUniform1i(planetShader->uIsLighted, true);
 
     // //Send the textures
     int i = 0;
@@ -291,6 +303,8 @@ void RenderEngine::draw(Skybox &skybox)
     glUniformMatrix4fv(skyboxShader->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
     glUniformMatrix4fv(skyboxShader->uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     glUniformMatrix4fv(skyboxShader->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+
+    glUniform1i(skyboxShader->uIsLighted, false); // We don't want the cube to be lighted
 
     // //Send the textures
     int i = 0;

@@ -20,6 +20,7 @@
 #include "include/planetObject.hpp"
 #include "include/events.hpp"
 #include "include/skybox.hpp"
+#include "include/light.hpp"
 
 #include <glimac/glm.hpp> // TODO : Delete when the skybox is finished/well defined
 
@@ -93,7 +94,7 @@ public:
      * @param planet A PlanetObject (defined in the planetObject module) we want
      *               to draw.
      ********************************************************************************/
-    void draw(PlanetObject &planet, Camera &camera);
+    void draw(PlanetObject &planet, Camera &camera, const Light &light);
 
     /**
      * @brief Put an end to the current rendering environment.
@@ -147,7 +148,7 @@ private:
     GLuint _vao;                  // VertexArrayObject ID
     unsigned int _nbVertices = 0; // Amount of vertices to draw
 
-    // Skybox                          // TODO : Put it inside a map to store all the type of VBOs etc for each shape (sphere)
+    // Skybox                          // TODO : Put it inside a map to store all the type of VBOs etc for each shape (sphere, cube, rings etc)
     GLuint _vboSkybox;
     GLuint _vaoSkybox;
     GLuint _ibo;

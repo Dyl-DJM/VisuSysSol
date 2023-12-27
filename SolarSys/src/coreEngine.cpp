@@ -167,6 +167,9 @@ int render3DScene(char *relativePath)
     createSolarSys(relativePath, windowWidth, windowHeight, *solarSys);
     Camera camera = Camera();
 
+    // Light
+    auto sunLight = Light();
+
     /********************* CONTEXT OBJECT CREATION ********************/
 
     Context context = Context(camera, *solarSys);
@@ -191,7 +194,6 @@ int render3DScene(char *relativePath)
     /********************* RENDERING LOOP ********************/
 
     float step = 0;
-    
 
     while (window->isWindowOpen())
     {
@@ -212,11 +214,11 @@ int render3DScene(char *relativePath)
         {
             // Solution if problem persist: Use a step...
             inProgramElapsedTime += step * context.getSpeedMultiplier();
-            renderEng->start(planet);         // Binds textures and vao
+            renderEng->start(planet);                    // Binds textures and vao
             planet.updateMatrices(inProgramElapsedTime); // Update the matrices regarding the time
             context.update_camera();
-            renderEng->draw(planet, camera);          // Draw the current planet
-            renderEng->end(planet);           // Unbind the resources
+            renderEng->draw(planet, camera, sunLight); // Draw the current planet
+            renderEng->end(planet);                    // Unbind the resources
         }
 
         window->manageWindow(); // Make the window active (events) and swap the buffers
