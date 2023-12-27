@@ -98,6 +98,12 @@ public:
      ********************************************************************************/
     const Matrices &getMatrices() const;
 
+    /**
+     * @brief Get the planetObject's size from its data.
+     * @return The size of the planet.
+    */
+   float getSize() const;
+
 private:
     PlanetData _data;                       // Information about the planet
     std::vector<GLuint> _textIDs;           // Textures IDs

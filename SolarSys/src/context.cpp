@@ -27,6 +27,7 @@ Context::Context(Camera & cam, SolarSystem & solarSystem)
     , speedMultiplier {1}
     {
         update_camera();
+        camera.set_distance(solarSys[planet_idx].getSize() * 2);
     }
 
 /**
@@ -57,6 +58,7 @@ void Context::update_camera(){
 */
 void Context::next_planet(){
     planet_idx = (planet_idx == solarSys.nbPlanets() - 1) ? 0 : (planet_idx + 1);
+    camera.set_distance(solarSys[planet_idx].getSize() * 2);
 }
 
 /**
@@ -64,6 +66,7 @@ void Context::next_planet(){
 */
 void Context::previous_planet(){
     planet_idx = (planet_idx == 0) ? solarSys.nbPlanets() - 1 : (planet_idx - 1);
+    camera.set_distance(solarSys[planet_idx].getSize() * 2);
 }
 
 /**

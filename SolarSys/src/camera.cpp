@@ -30,7 +30,7 @@ Camera::Camera()
 */
 void Camera::moveFront(float delta)
 {
-    m_fDistance =  (m_fDistance + delta >= 0 ? m_fDistance + delta : m_fDistance);
+    m_fDistance =  (m_fDistance + delta > 0 ? m_fDistance + delta : m_fDistance);
 }
 
 /**
@@ -88,3 +88,16 @@ void Camera::update_position(glm::vec4 targetPosition){
     view_matrix = glm::lookAt(position, glm::vec3(targetPosition), upVector);
 }
 
+/**
+ * @brief Set a distance for the camera
+ * 
+ * @param distance The distance to set
+*/
+void Camera::set_distance(float distance){
+    if (distance < 1.){
+        m_fDistance = 1.;
+    }
+    else {
+        m_fDistance = distance;
+    }
+}

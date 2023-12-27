@@ -53,6 +53,13 @@ class Camera{
         */
         void update_position(glm::vec4 targetPosition);
 
+        /**
+         * @brief Set a distance for the camera
+         * 
+         * @param distance The distance to set
+        */
+       void set_distance(float distance);
+
     private:
         float m_fDistance;
         float m_fAngleX;       // Rotation angle on the X axis

@@ -40,18 +40,20 @@ public:
     virtual ~PlanetData() {}
 
     const float _rotationPeriod;   // Rotation period of the planet
-    const float _diameter;         // Size of the planet in km
+    const float _diameter;         // Size of the planet
     const float _position;         // Position of the planet relative to the sun
     const float _angle;            // Angle of rotation of the ellipse
     const float _revolutionPeriod; // Revolution period of the planet
 
     static const float sizeUnit;  // The homothety unit we'll use to downscale the solar system
     static const float rotationUnit;  // Homothety unit we'll use to reduce the time of rotation
+    static const float distanceUnit;
 
 };
 
 inline const float PlanetData::sizeUnit = 142984.; // We are setting 1 unit to 142984 km (Jupiter's size)
 inline const float PlanetData::rotationUnit = 24.;  // We are setting 1 unit to 24 hours (Earth's rotation)
+inline const float PlanetData::distanceUnit = 5000000.;  
 
 /**
  * @brief Contains data about the Sun.

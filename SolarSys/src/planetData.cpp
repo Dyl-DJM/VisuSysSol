@@ -28,7 +28,7 @@
 PlanetData::PlanetData(float rotation, float diameter, float position, float angle, float revPeriod)
     : _rotationPeriod{rotation / PlanetData::rotationUnit}
     , _diameter{diameter / PlanetData::sizeUnit}
-    , _position{position / PlanetData::sizeUnit}
+    , _position{position / PlanetData::distanceUnit}
     , _angle{angle}
     , _revolutionPeriod{revPeriod}  // Since we've set the rotation unit to 1 Earth day (24h) 
                                     // There's no need to modify the revolution as it is already expressed in Earth days
