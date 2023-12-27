@@ -81,7 +81,6 @@ float Context::getSpeedMultiplier(){
  * @param value value by which to increase the speed multiplier
 */
 void Context::increaseSpeed(float value){
-    speedMultiplier += value;
     speedMultiplier = (speedMultiplier + value > 25) ? speedMultiplier : (speedMultiplier + value);
 }
 
@@ -90,7 +89,5 @@ void Context::increaseSpeed(float value){
  * @param value value by which to decrease the speed multiplier
 */
 void Context::decreaseSpeed(float value){
-    if (speedMultiplier - value >= 1){
-        speedMultiplier = (speedMultiplier - value < 1) ? speedMultiplier : (speedMultiplier - value);
-    }
+    speedMultiplier = (speedMultiplier - value < 1) ? speedMultiplier : (speedMultiplier - value);
 }

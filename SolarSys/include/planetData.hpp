@@ -52,7 +52,7 @@ public:
 };
 
 inline const float PlanetData::sizeUnit = 142984.; // We are setting 1 unit to 142984 km (Jupiter's size)
-inline const float PlanetData::rotationUnit = 24.;  // We are setting 1 unit to 24 hours (Earth's rotation)
+inline const float PlanetData::rotationUnit = 6.;  // We are setting 1 unit to 6 hours
 inline const float PlanetData::distanceUnit = 5000000.;  
 
 /**
@@ -99,4 +99,58 @@ public:
      * @brief Constructor of the class.
      ********************************************************************************/
     EarthData();
+};
+
+class MarsData : public PlanetData
+{
+    public:
+    /**
+     * @brief Constructor
+    */
+   MarsData();
+};
+
+class JupiterData : public PlanetData
+{
+    public:
+    /**
+     * @brief Constructor
+    */
+   JupiterData();
+};
+
+class SaturnData : public PlanetData
+{
+    public:
+    /**
+     * @brief Constructor
+    */
+   SaturnData();
+};
+
+class UranusData : public PlanetData
+{
+    public:
+    /**
+     * @brief Constructor
+    */
+   UranusData();
+};
+
+class NeptuneData : public PlanetData
+{
+    public:
+    /**
+     * @brief Constructor
+    */
+   NeptuneData();
+};
+
+class PlutoData : public PlanetData
+{
+    public:
+    /**
+     * @brief Constructor
+    */
+   PlutoData();
 };
