@@ -28,7 +28,7 @@
 PlanetData::PlanetData(float rotation, float diameter, float position, float angle, float revPeriod)
     : _rotationPeriod{rotation / PlanetData::rotationUnit}
     , _diameter{diameter / PlanetData::sizeUnit}
-    , _position{position}
+    , _position{position / PlanetData::sizeUnit}
     , _angle{angle}
     , _revolutionPeriod{revPeriod}  // Since we've set the rotation unit to 1 Earth day (24h) 
                                     // There's no need to modify the revolution as it is already expressed in Earth days
@@ -46,13 +46,13 @@ SunData::SunData() : PlanetData(609.12, 1392680, 0, 0, 0)
 
 // Mercury
 
-MercuryData::MercuryData() : PlanetData(4222.6, 4881, 1.5, 0, 87.969)
+MercuryData::MercuryData() : PlanetData(4222.6, 4881, 58000000, 0, 87.969)
 {
 }
 
 //Venus
 
-VenusData::VenusData() : PlanetData(2802.0, 12103.6, 1.75, 0, 224.701)
+VenusData::VenusData() : PlanetData(2802.0, 12103.6, 108208930, 0, 224.701)
 {
 }
 
@@ -61,6 +61,6 @@ VenusData::VenusData() : PlanetData(2802.0, 12103.6, 1.75, 0, 224.701)
 /**
  * @brief Constructor of the class.
  ********************************************************************************/
-EarthData::EarthData() : PlanetData(24., 12756, 2, 0, 365.256)
+EarthData::EarthData() : PlanetData(24., 12756, 149597871, 0, 365.256)
 {
 }
