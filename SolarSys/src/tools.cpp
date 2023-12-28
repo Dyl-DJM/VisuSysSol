@@ -12,13 +12,7 @@
 ======================================================
 */
 
-#pragma once
-
-#include <glimac/glm.hpp>
-
-// Errors code for integer return values
-#define ERR_INT_CODE 0
-#define SUCCESS_INT_CODE 1
+#include "include/tools.hpp"
 
 /**
  * @brief Converts a fraction into a degree value.
@@ -28,4 +22,7 @@
  *
  * @return A float number in degree.
  ********************************************************************************/
-float fractionToDegrees(float num, float denom);
+float fractionToDegrees(float num, float denum)
+{
+    return glm::degrees(std::acos(1.0 - (num / denum)));
+}

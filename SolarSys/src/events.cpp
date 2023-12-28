@@ -101,18 +101,29 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
         glfwSetWindowShouldClose(window, GLFW_TRUE); // Sets the close flag of the window at true
     }
 
+    /**************** Camera Management ****************/
+
+    // Go to the next planet focused pov
     if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE)
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->previous_planet();
     }
+    // Go to the previous planet focused pov
     else if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->next_planet();
     }
+    // Go to the initial pov
+    else if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE)
+    {
+        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
+        context->resetCam();
+    }
 
-    /****************  Speed Management ****************/
+    /**************** Speed Management ****************/
+
     else if (key == GLFW_KEY_KP_ADD && action == GLFW_RELEASE)
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
