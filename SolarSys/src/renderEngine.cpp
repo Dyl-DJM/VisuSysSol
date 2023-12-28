@@ -133,7 +133,7 @@ void RenderEngine::start(const PlanetObject &planet)
  * @param planet A PlanetObject (defined in the planetObject module) we want
  *               to draw.
  ********************************************************************************/
-void RenderEngine::draw(PlanetObject &planet, Camera & camera)
+void RenderEngine::draw(PlanetObject &planet, Camera &camera)
 {
     auto planetShader = planet.getShaderManager().get();
     auto &planetProgram = planetShader->m_Program; // Use of reference to not call the copy constructor of Program (which is private)
@@ -143,9 +143,9 @@ void RenderEngine::draw(PlanetObject &planet, Camera & camera)
     auto transfos = planet.getMatrices();
     // auto MVPMatrix = transfos.getMVPMatrix();
     auto viewMatrix = camera.getViewMatrix();
-    auto normalMatrix = transfos.getMVPMatrix();
+    auto normalMatrix = transfos.getNormalMatrix();
     auto projMatrix = transfos.getProjMatrix();
-    auto MVMatrix = viewMatrix *transfos.getMVMatrix();
+    auto MVMatrix = viewMatrix * transfos.getMVMatrix();
     auto MVPMatrix = projMatrix * MVMatrix;
 
     // Send matrices
@@ -285,7 +285,7 @@ void RenderEngine::draw(Skybox &skybox)
     auto transfos = skybox.getMatrices();
     auto MVPMatrix = transfos.getMVPMatrix();
     auto MVMatrix = transfos.getMVMatrix();
-    auto normalMatrix = transfos.getMVPMatrix();
+    auto normalMatrix = transfos.getNormalMatrix();
 
     // Send matrices
     glUniformMatrix4fv(skyboxShader->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
