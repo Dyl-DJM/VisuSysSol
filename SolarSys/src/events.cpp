@@ -41,11 +41,12 @@ void Events::onMouseMotion(GLFWwindow *window, double x, double y)
 {
     std::cout << "Mouse Motion : " << window << " for mouse position " << x << " , " << y << std::endl;
 
-    if (mouse_right_press){   // Camera rotation
+    if (mouse_right_press)
+    { // Camera rotation
 
-        Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
 
-        Camera & camera = context->getCamera();
+        Camera &camera = context->getCamera();
 
         camera.rotateLeft(mouse_x - x);
         camera.rotateUp(mouse_y - y);
@@ -69,11 +70,13 @@ void Events::onMouseButton(GLFWwindow *window, int code, int action, int other)
     std::cout << "Mouse Button : " << window << " of code " << code << " fo action "
               << action << " and other : " << other << std::endl;
 
-    if (code == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS){
+    if (code == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+    {
         mouse_right_press = true;
         glfwGetCursorPos(window, &mouse_x, &mouse_y);
     }
-    else if (code == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE){
+    else if (code == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
+    {
         mouse_right_press = false;
     }
 }
@@ -98,40 +101,57 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
         glfwSetWindowShouldClose(window, GLFW_TRUE); // Sets the close flag of the window at true
     }
 
-    if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE){
-        Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+    /**************** Camera Management ****************/
+
+    // Go to the next planet focused pov
+    if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE)
+    {
+        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->previous_planet();
     }
-    else if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE){
-        Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+    // Go to the previous planet focused pov
+    else if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)
+    {
+        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->next_planet();
     }
+    // Go to the initial pov
+    else if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE)
+    {
+        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
+        context->resetCam();
+    }
 
-    /****************  Speed Management ****************/
-    else if (key == GLFW_KEY_KP_ADD && action == GLFW_RELEASE){
-        Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+    /**************** Speed Management ****************/
+
+    else if (key == GLFW_KEY_KP_ADD && action == GLFW_RELEASE)
+    {
+        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->increaseSpeed(2);
     }
-    else if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_RELEASE){
-        Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+    else if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_RELEASE)
+    {
+        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->decreaseSpeed(2);
     }
 }
 
-void Events::onScroll(GLFWwindow* window, double xoffset, double yoffset){
+void Events::onScroll(GLFWwindow *window, double xoffset, double yoffset)
+{
     std::cout << "Key Event : " << window << "\nxoffset: " << xoffset << "\nyoffset: " << yoffset << std::endl;
 
-    Context* context = static_cast<Context*>(glfwGetWindowUserPointer(window));
+    Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
 
-    Camera & camera = context->getCamera();
+    Camera &camera = context->getCamera();
 
-    if (yoffset == -1){  // Dezooming
+    if (yoffset == -1)
+    { // Dezooming
         camera.moveFront(0.5);
     }
-    else if (yoffset == 1){  // Zooming
+    else if (yoffset == 1)
+    { // Zooming
         camera.moveFront(-0.5);
     }
-
 }
 
 /**
@@ -143,7 +163,7 @@ void Events::onScroll(GLFWwindow* window, double xoffset, double yoffset){
  *
  * @param window A window to bind the events with.
  ********************************************************************************/
-void Events::setEvents(GLFWwindow *window, Context & context)
+void Events::setEvents(GLFWwindow *window, Context &context)
 {
     glfwSetWindowSizeCallback(window, Events::onWindowResized);
     glfwSetCursorPosCallback(window, Events::onMouseMotion);   /* Mouse moved */
@@ -151,7 +171,7 @@ void Events::setEvents(GLFWwindow *window, Context & context)
     glfwSetKeyCallback(window, Events::onKey);                 /* Key events */
     glfwSetScrollCallback(window, Events::onScroll);
 
-    glfwSetWindowUserPointer(window, &context);    /* Set the context */
+    glfwSetWindowUserPointer(window, &context); /* Set the context */
 
     std::cout << window << std::endl;
 }

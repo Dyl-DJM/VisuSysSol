@@ -13,51 +13,101 @@
 
 #include <glimac/common.hpp>
 
+class Camera
+{
+public:
+    /**
+     * @brief Constructor.
+     *
+     * @param distToCenter A distance on z axis from the center of the scene.
+     * @param angle A degree value representing the camera rotation around the x-axis.
+     */
+    Camera(float distToCenter, float angle);
 
-class Camera{
-    public:
+    /**
+     * @brief Move the camera forward.
+     *
+     * @param delta Number of unit to move forward (or backward if negative) from.
+     */
+    void moveFront(float delta);
 
-        /**
-         * @brief Constructor
-        */
-        Camera();
+    /**
+     * @brief Rotate the camera horizontally.
+     *
+     * @param degrees Angle in degree to rotate horizontally for. Positive degree will rotate left, negate will rotate right.
+     */
+    void rotateLeft(float degrees);
 
-        /**
-         * @brief Move the camera forward.
-         * 
-         * @param delta Number of unit to move forward (or backward if negative) from.
-        */
-        void moveFront(float delta);
+    /**
+     * @brief Rotate the camera vertically.
+     *
+     * @param degree Angle in degree to rotate vertically for. Positive degree will rotate up, negate will rotate down.
+     */
+    void rotateUp(float degrees);
 
-        /**
-         * @brief Rotate the camera horizontally.
-         * 
-         * @param degrees Angle in degree to rotate horizontally for. Positive degree will rotate left, negate will rotate right.
-        */
-        void rotateLeft(float degrees);
+    /**
+     * @brief Returns the camera view matrix.
+     */
+    glm::mat4 getViewMatrix() const;
 
-        /**
-         * @brief Rotate the camera vertically.
-         * 
-         * @param degree Angle in degree to rotate vertically for. Positive degree will rotate up, negate will rotate down.
-        */
-        void rotateUp(float degrees);
+    /**
+     * @brief Update the camera's position depending on the target planet's position
+     *
+     * @param targetPosition the position of the targeted planet
+     */
+    void update_position(glm::vec4 targetPosition);
 
+    /**
+     * @brief Set a distance for the camera
+     *
+     * @param distance The distance to set
+     */
+    void set_distance(float distance);
 
-        glm::mat4 getViewMatrix() const;
+    /**
+     * @brief Makes a basic view Matrix computation.
+     *
+     * Computes the camera view matrix thanks to distance and angles information.
+     */
+    void initialConfig();
 
-        /**
-         * @brief Update the camera's position depending on the target planet's position
-         * 
-         * @param targetPosition the position of the targeted planet
-        */
-        void update_position(glm::vec4 targetPosition);
+    /**
+     * @brief Checks if the camera is currently in the focused mode.
+     *
+     * @return True if the camera is currently in the focused mode and false otherwise.
+     */
+    bool isFocusedPov();
 
-    private:
-        float m_fDistance;
-        float m_fAngleX;       // Rotation angle on the X axis
-        float m_fAngleY;       // Rotation angle on the Y axis
-        glm::vec3 position;    // Position of the camera
-        glm::mat4 view_matrix;  
+    /**
+     * @brief Sets the camera in the focused mode.
+     */
+    void setFocusedPov();
 
+    /**
+     * @brief Sets the camera in the default mode.
+     */
+    void setInitialPov();
+
+    /**
+     * @brief Checks if the camera is currently in the default mode.
+     *
+     * @return True if the camera is currently in the default mode and false otherwise.
+     */
+    bool isInitialPov();
+
+private:
+    enum POV_STATE
+    {
+        GENERAL, // 3/4 view mode
+        FOCUSED, // Planet focused mode
+        PROFILE  // Sun profile view
+    };
+
+    POV_STATE _pov = GENERAL;
+    float m_fDistance;      // Distance from the center of the scene
+    float _focusedDistance; // Distance from the focused element
+    float m_fAngleX;        // Rotation angle on the X axis
+    float m_fAngleY;        // Rotation angle on the Y axis
+    glm::vec3 position;     // Position of the camera
+    glm::mat4 view_matrix;
 };

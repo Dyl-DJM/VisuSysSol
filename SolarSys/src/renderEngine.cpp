@@ -143,7 +143,7 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light
     auto transfos = planet.getMatrices();
     // auto MVPMatrix = transfos.getMVPMatrix();
     auto viewMatrix = camera.getViewMatrix();
-    auto normalMatrix = transfos.getMVPMatrix();
+    auto normalMatrix = transfos.getNormalMatrix();
     auto projMatrix = transfos.getProjMatrix();
     auto MVMatrix = viewMatrix * transfos.getMVMatrix();
     auto MVPMatrix = projMatrix * MVMatrix;
@@ -297,7 +297,7 @@ void RenderEngine::draw(Skybox &skybox)
     auto transfos = skybox.getMatrices();
     auto MVPMatrix = transfos.getMVPMatrix();
     auto MVMatrix = transfos.getMVMatrix();
-    auto normalMatrix = transfos.getMVPMatrix();
+    auto normalMatrix = transfos.getNormalMatrix();
 
     // Send matrices
     glUniformMatrix4fv(skyboxShader->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));

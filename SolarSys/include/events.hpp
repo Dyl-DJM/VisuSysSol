@@ -45,23 +45,20 @@ public:
      *
      * @param window A window to bind the events with.
      ********************************************************************************/
-    static void setEvents(GLFWwindow *window, Context & context);
+    static void setEvents(GLFWwindow *window, Context &context);
 
     /**
      * Sets the solar system from which position data will be recovered from.
      * @param solarSys The SolarSystem object from which the planets will be recovered from
-    */
-    static void setPlanets(SolarSystem & solarSys);
-    
+     */
+    static void setPlanets(SolarSystem &solarSys);
 
 private:
-
-    static bool mouse_right_press;  // Boolean describing wether the right mouse is pressed or not
+    static bool mouse_right_press; // Boolean describing wether the right mouse is pressed or not
     static double mouse_x;
     static double mouse_y;
-    static unsigned int planet_idx;          // Index of the planet whose POV is to be shown
-    static std::vector<std::unique_ptr<PlanetObject>> planets;  // Vector of pointers toward planets from  which position will be recovered from.
-
+    static unsigned int planet_idx;                            // Index of the planet whose POV is to be shown
+    static std::vector<std::unique_ptr<PlanetObject>> planets; // Vector of pointers toward planets from  which position will be recovered from.
 
     /**
      * @brief Callback function for the keys on the keyboard.
@@ -98,17 +95,16 @@ private:
      ********************************************************************************/
     static void onMouseMotion(GLFWwindow *window, double x, double y);
 
-
     /**
      * @brief Callback function for mouse scroll.
      *
      * It fits the wanted template of the GLFW description.
      *
      * @param window A window.
-     * @param xoffset 
+     * @param xoffset
      * @param yoffset
      ********************************************************************************/
-    static void onScroll(GLFWwindow* window, double xoffset, double yoffset);
+    static void onScroll(GLFWwindow *window, double xoffset, double yoffset);
 
     /**
      * @brief Callback function for the resize event.
@@ -128,4 +124,4 @@ inline double Events::mouse_x = 0.0f;
 
 inline double Events::mouse_y = 0.0f;
 
-inline unsigned int Events::planet_idx = 0;  // The sun (index 0) is selected by default
+inline unsigned int Events::planet_idx = 0; // The sun (index 0) is selected by default

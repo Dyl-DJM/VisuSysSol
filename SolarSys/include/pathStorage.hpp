@@ -21,13 +21,25 @@ public:
     // Textures
     static constexpr const char *PATH_TEXTURE_SUN = "../assets/sun/sunBetter.jpg";
 
-    static constexpr const char *PATH_TEXTURE_MERCURY = "../assets/mercury/mercurymapthumb.jpg";
-    static constexpr const char *PATH_TEXTURE_MERCURY_BUMP = "../assets/mercury/mercurybumpthumb.jpg";
+    static constexpr const char *PATH_TEXTURE_MERCURY = "../assets/mercury/mercurymapenhanced.jpg";
 
-    static constexpr const char *PATH_TEXTURE_VENUS = "../assets/venus/venusmapthumb.jpg";
+    static constexpr const char *PATH_TEXTURE_VENUS = "../assets/venus/venusmap.jpg";
 
     static constexpr const char *PATH_TEXTURE_EARTH = "../assets/earth/earthMapBetter.jpg";
     static constexpr const char *PATH_TEXTURE_CLOUDS = "../assets/earth/earthCloudBetter.jpg";
+
+    static constexpr const char *PATH_TEXTURE_MARS = "../assets/mars/mars_1k_color.jpg";
+
+    static constexpr const char *PATH_TEXTURE_JUPITER = "../assets/jupiter/jupiter2_2k.jpg";
+
+    static constexpr const char *PATH_TEXTURE_SATURN = "../assets/saturn/saturnmap.jpg";
+
+    static constexpr const char *PATH_TEXTURE_URANUS = "../assets/uranus/uranusmap.jpg";
+
+    static constexpr const char *PATH_TEXTURE_NEPTUNE = "../assets/neptune/neptunemap.jpg";
+
+    static constexpr const char *PATH_TEXTURE_PLUTO = "../assets/pluto/plutomap1k.jpg";
+
     static constexpr const char *PATH_TEXTURE_SKYBOX = "../assets/skybox/spaceMilky.jpg";
 
     // Shaders
