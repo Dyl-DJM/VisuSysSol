@@ -116,5 +116,6 @@ void Context::decreaseSpeed(float value)
  ********************************************************************************/
 void Context::resetCam()
 {
+    planet_idx = 0;
     camera.setInitialPov();
 }

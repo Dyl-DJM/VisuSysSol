@@ -17,8 +17,8 @@
  * @param distToCenter A distance on z axis from the center of the scene.
  * @param angle A degree value representing the camera rotation around the x-axis.
  */
-Camera::Camera(float distToCenter, float angle)
-    : m_fDistance{distToCenter}, _focusedDistance{0}, m_fAngleX{angle}, m_fAngleY{0}, position{glm::vec3(0, 0, 0)}
+Camera::Camera()
+    : m_fDistance{initialDistance}, m_fAngleX{initialAngleX}, m_fAngleY{initialAngleY}, position{glm::vec3(0, 0, 0)}
 {
     initialConfig();
 }
@@ -81,11 +81,11 @@ glm::mat4 Camera::getViewMatrix() const
 void Camera::update_position(glm::vec4 targetPosition)
 {
     // The position of the camera before transformation
-    glm::vec3 cameraPosition = glm::vec3(0.f, 0.f, -_focusedDistance);
+    glm::vec3 cameraPosition = glm::vec3(0.f, 0.f, m_fDistance);
 
     // rotation matrix
-    glm::mat4 rotation = glm::rotate(glm::mat4(1.f), glm::radians(0.f), glm::vec3(1.f, 0.f, 0.f));
-    rotation = glm::rotate(rotation, glm::radians(0.f), glm::vec3(0.f, 1.f, 0.f));
+    glm::mat4 rotation = glm::rotate(glm::mat4(1.f), glm::radians(m_fAngleX), glm::vec3(1.f, 0.f, 0.f));
+    rotation = glm::rotate(rotation, glm::radians(m_fAngleY), glm::vec3(0.f, 1.f, 0.f));
 
     // Update the position after rotation transformation
     cameraPosition = glm::vec3(rotation * glm::vec4(cameraPosition, 1.f)); // Add 1.f because it's a position
@@ -108,11 +108,11 @@ void Camera::set_distance(float distance)
 {
     if (distance < 1.)
     {
-        _focusedDistance = 1.;
+        m_fDistance = 1.;
     }
     else
     {
-        _focusedDistance = distance;
+        m_fDistance = distance;
     }
 }
 
@@ -131,7 +131,10 @@ bool Camera::isFocusedPov()
  */
 void Camera::setFocusedPov()
 {
-    _pov = FOCUSED;
+    if (_pov != FOCUSED){
+        _pov = FOCUSED;
+        m_fAngleX = 15;  // When returning to focus mode from initial POV, set the angle to 15.
+    }
 }
 
 /**
@@ -149,5 +152,9 @@ bool Camera::isInitialPov()
  */
 void Camera::setInitialPov()
 {
+    // Resetting the camera position
+    m_fDistance = initialDistance;
+    m_fAngleX = initialAngleX;
+    m_fAngleY = initialAngleY;
     _pov = GENERAL;
 }

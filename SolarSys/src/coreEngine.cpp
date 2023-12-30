@@ -203,7 +203,7 @@ int render3DScene(char *relativePath)
     createSolarSys(relativePath, windowWidth, windowHeight, *solarSys);
 
     // Camera initialization
-    Camera camera = Camera(50, fractionToDegrees(3, 4));
+    Camera camera = Camera();
 
     /********************* CONTEXT OBJECT CREATION ********************/
 

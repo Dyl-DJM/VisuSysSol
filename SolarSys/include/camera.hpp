@@ -12,6 +12,7 @@
 #pragma once
 
 #include <glimac/common.hpp>
+#include "tools.hpp"
 
 class Camera
 {
@@ -22,7 +23,7 @@ public:
      * @param distToCenter A distance on z axis from the center of the scene.
      * @param angle A degree value representing the camera rotation around the x-axis.
      */
-    Camera(float distToCenter, float angle);
+    Camera();
 
     /**
      * @brief Move the camera forward.
@@ -95,6 +96,10 @@ public:
      */
     bool isInitialPov();
 
+    static const float initialDistance;
+    static const float initialAngleX;
+    static const float initialAngleY;
+
 private:
     enum POV_STATE
     {
@@ -105,9 +110,12 @@ private:
 
     POV_STATE _pov = GENERAL;
     float m_fDistance;      // Distance from the center of the scene
-    float _focusedDistance; // Distance from the focused element
     float m_fAngleX;        // Rotation angle on the X axis
     float m_fAngleY;        // Rotation angle on the Y axis
     glm::vec3 position;     // Position of the camera
     glm::mat4 view_matrix;
 };
+
+inline const float Camera::initialDistance = 50;
+inline const float Camera::initialAngleX = fractionToDegrees(3, 4);
+inline const float Camera::initialAngleY = 0;
