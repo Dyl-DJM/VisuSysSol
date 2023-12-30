@@ -51,8 +51,8 @@ PlanetObject::PlanetObject(unsigned int nbOfTextures, GLuint *textureIDs, const 
  * Configure the matrices which are going to determine the location of
  * the object in the scene.
  *
- * @param w Width that whill be used for the pespective computation.
- * @param h Height that whill be used for the pespective computation.
+ * @param w Width that will be used for the pespective computation.
+ * @param h Height that will be used for the pespective computation.
  ********************************************************************************/
 void PlanetObject::configureMatrices(float w, float h)
 {
@@ -62,7 +62,7 @@ void PlanetObject::configureMatrices(float w, float h)
 /**
  * @brief Apply transformations on the matrices.
  *
- * @param rotation A float value taht determines how much do we rotate.
+ * @param rotation A float value that determines how much do we rotate.
  ********************************************************************************/
 void PlanetObject::updateMatrices(float rotation)
 {
@@ -130,4 +130,47 @@ const Matrices &PlanetObject::getMatrices() const
 */
 float PlanetObject::getSize() const{
     return _data._diameter;
+}
+
+/**
+ * @brief Add a ring texture.
+*/
+void PlanetObject::addRingTexture(GLuint textureID){
+    _ringTextIDs.emplace_back(textureID);
+}
+
+/**
+ * @brief Returns wether or not the planet has a ring.
+*/
+bool PlanetObject::hasRing(){
+    return _data._hasRing;
+}
+
+/**
+ * @brief Retrieves the ID of the textures binded to the planet object.
+ *
+ * @return A view of an ID vector for the textures this object is binded to.
+ ********************************************************************************/
+const std::vector<GLuint> PlanetObject::getRingTextIDs() const{
+    return _ringTextIDs;
+}
+
+/**
+ * @brief Apply transformations on the matrices for the torus transformation.
+ *        Note: the transformation of the MVMatrix for the planet must have already been done before calling this function
+ ********************************************************************************/
+void PlanetObject::updateMatricesTorus()
+{
+
+    auto projMatrix = _matrices.getProjMatrix();
+    auto MVMatrix = _matrices.getMVMatrix();
+
+    MVMatrix = glm::rotate(MVMatrix, glm::radians(90.f), glm::vec3(1, 0, 0));       // Rotation on itself
+
+    auto normalMatrix = glm::transpose(glm::inverse(MVMatrix));
+    auto MVPMatrix = projMatrix * MVMatrix;
+
+    _matrices.setMVMatrix(MVMatrix);
+    _matrices.setNormalMatrix(normalMatrix);
+    _matrices.setMVPMatrix(MVPMatrix);
 }

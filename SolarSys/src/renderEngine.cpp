@@ -87,6 +87,42 @@ void RenderEngine::createSphere()
     glBindVertexArray(0);
 }
 
+void RenderEngine::createTorus(){
+    auto torus = Torus(2.5, 1, 64, 16);
+    _nbVerticesTorus = torus.getVertexCount();
+    auto ptrVertices = torus.getDataPointer();
+
+    // Generates VBO buffer and binds it
+    glGenBuffers(1, &_vboTorus);
+    glBindBuffer(GL_ARRAY_BUFFER, _vboTorus);
+
+    glBufferData(GL_ARRAY_BUFFER, _nbVerticesTorus * sizeof(ShapeVertex), ptrVertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0); // Unbinding vbo
+
+    // VAO generation
+    glGenVertexArrays(1, &_vaoTorus);
+    glBindVertexArray(_vaoTorus);
+
+    // Vertex Attributes
+    const GLuint ATTR_POSITION = 0;
+    const GLuint ATTR_NORMAL = 1;
+    const GLuint ATTR_TEXTURE = 2;
+
+    glEnableVertexAttribArray(ATTR_POSITION);
+    glEnableVertexAttribArray(ATTR_NORMAL);
+    glEnableVertexAttribArray(ATTR_TEXTURE);
+
+    // Set the information for GPU on how to read the vertex array
+    glBindBuffer(GL_ARRAY_BUFFER, _vboTorus);
+    glVertexAttribPointer(ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)offsetof(ShapeVertex, position)); // Positions
+    glVertexAttribPointer(ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)offsetof(ShapeVertex, normal));     // Normals
+    glVertexAttribPointer(ATTR_TEXTURE, 2, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)offsetof(ShapeVertex, texCoords)); // Textures coords
+    glBindBuffer(GL_ARRAY_BUFFER, 0);                                                                                                  // Unbind thanks to the Buffer ID 0
+
+    // Unbind the VAO
+    glBindVertexArray(0);
+}
+
 /**
  * @brief Loads a texture at the given path.
  *
@@ -165,6 +201,40 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera)
 
     // Draw the vertices
     glDrawArrays(GL_TRIANGLES, 0, _nbVertices);
+
+    if (planet.hasRing()){
+        // Draw torus
+        startRing(planet);
+
+        planet.updateMatricesTorus(); // Update the matrices for the torus
+
+        auto transfos = planet.getMatrices();
+        auto viewMatrix = camera.getViewMatrix();
+        auto normalMatrix = transfos.getNormalMatrix();
+        auto projMatrix = transfos.getProjMatrix();
+        auto MVMatrix = viewMatrix *transfos.getMVMatrix();
+        auto MVPMatrix = projMatrix * MVMatrix;
+
+        // Send matrices
+        glUniformMatrix4fv(planetShader->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
+        glUniformMatrix4fv(planetShader->uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
+        glUniformMatrix4fv(planetShader->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+
+        // //Send the textures
+        int i = 0;
+        auto ringTexts = planet.getRingTextIDs();
+
+        for (auto it = ringTexts.begin(); it != ringTexts.end(); it++)
+        {
+            glUniform1i(planetShader->uTextures[i], i);
+            i++;
+        }
+
+        // Draw the vertices
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, _nbVerticesTorus);
+
+        endRing(planet);
+    }
 }
 
 /**
@@ -315,6 +385,46 @@ void RenderEngine::end(const Skybox &skybox)
 {
     // Unbind textures
     for (unsigned int i = 0; i < skybox.getTextIDs().size(); i++)
+    {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+    // Unbind the VAO
+    glBindVertexArray(0);
+}
+
+/**
+ * @brief Configures the environment to allow the rendering.
+ *
+ * Bind the textures of the torus object and the VAO.
+ *
+ * @param planet The planet whose ring's texture we want to configure
+ ********************************************************************************/
+void RenderEngine::startRing(const PlanetObject &planet){
+    auto ringTextIDs = planet.getRingTextIDs();
+    int i = 0;
+    for (auto it = ringTextIDs.begin(); it != ringTextIDs.end(); it++)
+    {
+        glActiveTexture(GL_TEXTURE0 + i);
+        glBindTexture(GL_TEXTURE_2D, *it); // Earth texture binded to #0
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        i++;
+    }
+
+    // Bind the VAO to draw its data
+    glBindVertexArray(_vaoTorus);
+}
+
+/**
+ * @brief Put an end to the current rendering environment.
+ *
+ * @param planet A PlanetObject (defined in the planetObject module) we want
+ *               to put an end to the drawing environment for.
+ ********************************************************************************/
+void RenderEngine::endRing(const PlanetObject &planet)
+{
+    // Unbind textures
+    for (unsigned int i = 0; i < planet.getRingTextIDs().size(); i++)
     {
         glBindTexture(GL_TEXTURE_2D, 0);
     }

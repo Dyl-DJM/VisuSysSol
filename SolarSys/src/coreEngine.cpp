@@ -115,6 +115,7 @@ void createSolarSys(char *relativePath, float windowWidth, float windowHeight, S
     unsigned int jupiterText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_JUPITER);
 
     unsigned int saturnText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_SATURN);
+    unsigned int saturnRingText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_SATURN_RING);
 
     unsigned int uranusText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_URANUS);
 
@@ -143,6 +144,7 @@ void createSolarSys(char *relativePath, float windowWidth, float windowHeight, S
 
     // Saturn
     PlanetObject saturn = createPlanet<SaturnData, Shader1Texture>(applicationPath, saturnText, windowWidth, windowHeight);
+    saturn.addRingTexture(saturnRingText);
 
     // Uranus
     PlanetObject uranus = createPlanet<UranusData, Shader1Texture>(applicationPath, uranusText, windowWidth, windowHeight);
@@ -222,6 +224,7 @@ int render3DScene(char *relativePath)
 
     auto renderEng = std::make_unique<RenderEngine>();
     renderEng->createSphere();
+    renderEng->createTorus();
     renderEng->integrateSkybox(*skybox); // Allows the
 
     /********************* RENDERING LOOP ********************/
@@ -245,7 +248,6 @@ int render3DScene(char *relativePath)
 
         for (auto &planet : (*solarSys))
         {
-            // Solution if problem persist: Use a step...
             inProgramElapsedTime += step * context.getSpeedMultiplier();
             renderEng->start(planet);                    // Binds textures and vao
             planet.updateMatrices(inProgramElapsedTime); // Update the matrices regarding the time

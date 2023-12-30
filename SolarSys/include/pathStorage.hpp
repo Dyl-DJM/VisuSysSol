@@ -33,6 +33,7 @@ public:
     static constexpr const char *PATH_TEXTURE_JUPITER = "../assets/jupiter/jupiter2_2k.jpg";
 
     static constexpr const char *PATH_TEXTURE_SATURN = "../assets/saturn/saturnmap.jpg";
+    static constexpr const char *PATH_TEXTURE_SATURN_RING = "../assets/saturn/saturnringcolor.jpg";
 
     static constexpr const char *PATH_TEXTURE_URANUS = "../assets/uranus/uranusmap.jpg";
 

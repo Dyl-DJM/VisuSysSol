@@ -20,6 +20,7 @@
 #include "include/planetObject.hpp"
 #include "include/events.hpp"
 #include "include/skybox.hpp"
+#include "include/torus.hpp"
 
 #include <glimac/glm.hpp> // TODO : Delete when the skybox is finished/well defined
 
@@ -76,6 +77,14 @@ public:
      * It configures the depth of the scene in OpenGL
      ********************************************************************************/
     void createSphere();
+
+    /**
+     * @brief Create a Torus object, fill the vao and vbo with
+     * its data.
+     *
+     * It configures the depth of the scene in OpenGL
+     ********************************************************************************/
+    void createTorus();
 
     /**
      * @brief Configures the environment to allow the rendering.
@@ -141,11 +150,40 @@ public:
      ********************************************************************************/
     void end(const Skybox &skybox);
 
+    /**
+     * @brief Configures the environment to allow the rendering.
+     *
+     * Bind the textures of the torus object and the VAO.
+     *
+     * @param planet The planet whose ring's texture we want to configure
+     ********************************************************************************/
+    void startRing(const PlanetObject &planet);
+
+    /**
+     * @brief Launches the rendering of the given planet.
+     *
+     * @param planet A PlanetObject (defined in the planetObject module) we want
+     *               to draw.
+     ********************************************************************************/
+    void drawRing(PlanetObject &planet, Camera & camera);
+
+    /**
+     * @brief Put an end to the current rendering environment.
+     *
+     * @param planet A PlanetObject (defined in the planetObject module) we want
+     *               to put an end to the drawing environment for.
+     ********************************************************************************/
+    void endRing(const PlanetObject &planet);
+
 private:
     // Planets
     GLuint _vbo;                  // VertexBufferObject ID
     GLuint _vao;                  // VertexArrayObject ID
     unsigned int _nbVertices = 0; // Amount of vertices to draw
+
+    GLuint _vboTorus;
+    GLuint _vaoTorus;
+    unsigned int _nbVerticesTorus = 0;
 
     // Skybox                          // TODO : Put it inside a map to store all the type of VBOs etc for each shape (sphere)
     GLuint _vboSkybox;

@@ -25,13 +25,16 @@
  * @param angle Angle of rotation of the ellipse
  * @param revPeriod Revolution period of the planet in Earth days
  ********************************************************************************/
-PlanetData::PlanetData(float rotation, float diameter, float position, float angle, float revPeriod)
+PlanetData::PlanetData(float rotation, float diameter, float position, float angle, float revPeriod, bool hasRing = false, float ringDist = 0, float ringThickness = 0)
     : _rotationPeriod{rotation / PlanetData::rotationUnit}
     , _diameter{diameter / PlanetData::sizeUnit}
     , _position{position / PlanetData::distanceUnit}
     , _angle{angle}
     , _revolutionPeriod{revPeriod * (24.f / PlanetData::rotationUnit)}  // Since we count the revolution period as Earth days (24 hours) 
                                                                         // And the rotationUnit is 6h, we multiply it by 4 .
+    , _hasRing{hasRing}
+    , _ringDist{ringDist}
+    , _ringThickness{ringThickness}
 {}
 
 /*================================== SUN DATA ====================================*/
@@ -69,7 +72,7 @@ JupiterData::JupiterData() : PlanetData(9.9259, 139822, 778000000, 0, 4332.589)
 {}
 
 // Saturn
-SaturnData::SaturnData(): PlanetData(10.656, 116464, 1434000000, 0, 10759.22)
+SaturnData::SaturnData(): PlanetData(10.656, 116464, 1434000000, 0, 10759.22, true, 8, 2)
 {}
 
 // Uranus

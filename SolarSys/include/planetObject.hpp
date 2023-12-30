@@ -50,6 +50,7 @@ public:
      *               ShaderManager (defined in the shaderManager module).
      ********************************************************************************/
     PlanetObject(unsigned int nbOfTextures, GLuint *textureIDs, const PlanetData &data, std::shared_ptr<ShaderManager> shader);
+    
 
     /**
      * @brief Destructor of the class.
@@ -104,10 +105,30 @@ public:
     */
    float getSize() const;
 
+    /**
+     * @brief Add a ring texture.
+    */
+   void addRingTexture(GLuint textureID);
+
+    /**
+     * @brief Returns wether or not the planet has a ring.
+    */
+   bool hasRing();
+
+    /**
+     * @brief Retrieves the ID of the textures binded to the planet object.
+     *
+     * @return A view of an ID vector for the textures this object is binded to.
+     ********************************************************************************/
+    const std::vector<GLuint> getRingTextIDs() const;
+
+    void updateMatricesTorus();
+
 private:
     PlanetData _data;                       // Information about the planet
     std::vector<GLuint> _textIDs;           // Textures IDs
     std::shared_ptr<ShaderManager> _shader; // ShaderManager (class defined in the shaderManager module)
     Matrices _matrices;                     // Transformation matrices
+    std::vector<GLuint> _ringTextIDs;
     // add the satellites (later)
 };

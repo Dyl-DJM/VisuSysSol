@@ -31,7 +31,7 @@ protected:
      * @param position Position value relative to the sun's position.
      * @param angle  Angle of the ellipse.
      ********************************************************************************/
-    PlanetData(float rotation, float diameter, float position, float angle, float revPeriod);
+    PlanetData(float rotation, float diameter, float position, float angle, float revPeriod, bool hasRing, float ringDist, float ringThickness);
 
 public:
     /**
@@ -44,6 +44,9 @@ public:
     const float _position;         // Position of the planet relative to the sun
     const float _angle;            // Angle of rotation of the ellipse
     const float _revolutionPeriod; // Revolution period of the planet
+    const bool _hasRing;          // Boolean describing the presence of a ring or not.
+    const float _ringDist;        // Distance of the ring from center of planet
+    const float _ringThickness;   // Thickness of the ring
 
     static const float sizeUnit;  // The homothety unit we'll use to downscale the solar system
     static const float rotationUnit;  // Homothety unit we'll use to reduce the time of rotation
