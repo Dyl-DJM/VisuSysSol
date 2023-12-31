@@ -41,6 +41,7 @@ ShaderManager::ShaderManager(const FilePath &applicationPath, const char *vertex
     uLightPosition = glGetUniformLocation(m_Program.getGLId(), "uLightPos");
     uLightIntensity = glGetUniformLocation(m_Program.getGLId(), "uLightIntensity");
     uIsLighted = glGetUniformLocation(m_Program.getGLId(), "uIsLighted");
+    uAmbientLight = glGetUniformLocation(m_Program.getGLId(), "uAmbientLight");
 }
 
 /* ================================= SHADER1FULLYLIGHTEDTEXTURE ======================================= */

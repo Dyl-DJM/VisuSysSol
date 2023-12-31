@@ -55,6 +55,7 @@ public:
     GLint uLightPosition;
     GLint uLightIntensity;
     GLint uIsLighted;
+    GLint uAmbientLight;
 };
 
 /**

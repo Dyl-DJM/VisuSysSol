@@ -11,6 +11,7 @@ uniform float uShininess;
 uniform int uIsLighted;
 uniform vec3 uLightPos;
 uniform vec3 uLightIntensity;
+uniform vec3 uAmbientLight;
 
 // View Coordinates
 in vec4 vVertexPositionVC;
@@ -31,9 +32,14 @@ vec3 blinnPhong(){
   vec3 halfV = (wo + wi) / 2;
   vec3 n = normalize(vVertexNormalVC.xyz);
 
-  vec3 a = uKd * dot(wi, n);
-  vec3 b = uKs * pow(dot(halfV, n), uShininess);
+  vec3 a = uKd * dot(wi, n);  // Diffuse component
+  vec3 b = uKs * pow(dot(halfV, n), uShininess);  // Specular component
   vec3 formula = li * (a + b);
+
+  // Not really an ambient light but closer to a minimum light factor
+  formula.x = (formula.x < uAmbientLight.x) ? uAmbientLight.x : formula.x;
+  formula.y = (formula.y < uAmbientLight.y) ? uAmbientLight.y : formula.y;
+  formula.z = (formula.z < uAmbientLight.z) ? uAmbientLight.z : formula.z;
 
   return formula;
 }

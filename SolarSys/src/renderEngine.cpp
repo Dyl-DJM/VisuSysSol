@@ -200,9 +200,11 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light
 
     // Send Light Information
     glm::vec3 lightPos = glm::vec3(viewMatrix * glm::vec4(light._position, 1)); // The homogeneous coordinate must be 1
+    glm::vec3 ambientLight = glm::vec3(0.4, 0.4, 0.4); // The homogeneous coordinate must be 1
     glUniform3fv(planetShader->uLightPosition, 1, glm::value_ptr(lightPos));
     glUniform3fv(planetShader->uLightIntensity, 1, glm::value_ptr(light._intensity));
     glUniform1i(planetShader->uIsLighted, true);
+    glUniform3fv(planetShader->uAmbientLight, 1, glm::value_ptr(ambientLight));
 
     // //Send the textures
     int i = 0;
