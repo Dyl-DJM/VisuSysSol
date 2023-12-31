@@ -20,6 +20,7 @@
 #include "include/planetObject.hpp"
 #include "include/events.hpp"
 #include "include/skybox.hpp"
+#include "include/light.hpp"
 #include "include/torus.hpp"
 
 #include <glimac/glm.hpp> // TODO : Delete when the skybox is finished/well defined
@@ -102,7 +103,7 @@ public:
      * @param planet A PlanetObject (defined in the planetObject module) we want
      *               to draw.
      ********************************************************************************/
-    void draw(PlanetObject &planet, Camera &camera);
+    void draw(PlanetObject &planet, Camera &camera, const Light &light);
 
     /**
      * @brief Put an end to the current rendering environment.
@@ -165,7 +166,7 @@ public:
      * @param planet A PlanetObject (defined in the planetObject module) we want
      *               to draw.
      ********************************************************************************/
-    void drawRing(PlanetObject &planet, Camera & camera);
+    void drawRing(PlanetObject &planet, Camera &camera);
 
     /**
      * @brief Put an end to the current rendering environment.
@@ -185,7 +186,11 @@ private:
     GLuint _vaoTorus;
     unsigned int _nbVerticesTorus = 0;
 
-    // Skybox                          // TODO : Put it inside a map to store all the type of VBOs etc for each shape (sphere)
+    GLuint _vboTorus;
+    GLuint _vaoTorus;
+    unsigned int _nbVerticesTorus = 0;
+
+    // Skybox                          // TODO : Put it inside a map to store all the type of VBOs etc for each shape (sphere, cube, rings etc)
     GLuint _vboSkybox;
     GLuint _vaoSkybox;
     GLuint _ibo;

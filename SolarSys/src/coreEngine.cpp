@@ -124,7 +124,7 @@ void createSolarSys(char *relativePath, float windowWidth, float windowHeight, S
     unsigned int plutoText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_PLUTO);
 
     // Sun
-    PlanetObject sun = createPlanet<SunData, Shader1Texture>(applicationPath, sunText, windowWidth, windowHeight);
+    PlanetObject sun = createPlanet<SunData, Shader1FullyLightedTexture>(applicationPath, sunText, windowWidth, windowHeight); // The sun is fully lighted and doesn't depend on any source of light
 
     // Mercury
     PlanetObject mercury = createPlanet<MercuryData, Shader1Texture>(applicationPath, mercuryText, windowWidth, windowHeight);
@@ -205,6 +205,9 @@ int render3DScene(char *relativePath)
     // Camera initialization
     Camera camera = Camera();
 
+    // Light source
+    auto sunLight = Light();
+
     /********************* CONTEXT OBJECT CREATION ********************/
 
     Context context = Context(camera, *solarSys);
@@ -252,8 +255,8 @@ int render3DScene(char *relativePath)
             renderEng->start(planet);                    // Binds textures and vao
             planet.updateMatrices(inProgramElapsedTime); // Update the matrices regarding the time
             context.update_camera();
-            renderEng->draw(planet, camera); // Draw the current planet
-            renderEng->end(planet);          // Unbind the resources
+            renderEng->draw(planet, camera, sunLight); // Draw the current planet
+            renderEng->end(planet);                    // Unbind the resources
         }
 
         window->manageWindow(); // Make the window active (events) and swap the buffers

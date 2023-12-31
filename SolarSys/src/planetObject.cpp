@@ -127,8 +127,9 @@ const Matrices &PlanetObject::getMatrices() const
 /**
  * @brief Get the planetObject's size from its data.
  * @return The size of the planet.
-*/
-float PlanetObject::getSize() const{
+ */
+float PlanetObject::getSize() const
+{
     return _data._diameter;
 }
 

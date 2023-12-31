@@ -47,6 +47,29 @@ public:
     GLint uMVMatrix;              // Uniform ID for ModelView matrix
     GLint uNormalMatrix;          // Uniform ID for Normal matrix
     std::vector<GLint> uTextures; // Texture IDs
+
+    // Light components
+    GLint uKd;
+    GLint uKs;
+    GLint uShininess;
+    GLint uLightPosition;
+    GLint uLightIntensity;
+    GLint uIsLighted;
+};
+
+/**
+ * @brief Shader structure for a single fully lighted texture.
+ ********************************************************************************/
+class Shader1FullyLightedTexture : public ShaderManager
+{
+public:
+    /**
+     * @brief Constructor of the class.
+     *
+     * @param applicationPath A FilePath (defined in the glimac library) describing
+     *                        the location where the app is ran.
+     ********************************************************************************/
+    Shader1FullyLightedTexture(const FilePath &applicationPath);
 };
 
 /**

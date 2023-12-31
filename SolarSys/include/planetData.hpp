@@ -48,15 +48,14 @@ public:
     const float _ringDist;        // Distance of the ring from center of planet
     const float _ringThickness;   // Thickness of the ring
 
-    static const float sizeUnit;  // The homothety unit we'll use to downscale the solar system
-    static const float rotationUnit;  // Homothety unit we'll use to reduce the time of rotation
+    static const float sizeUnit;     // The homothety unit we'll use to downscale the solar system
+    static const float rotationUnit; // Homothety unit we'll use to reduce the time of rotation
     static const float distanceUnit;
-
 };
 
 inline const float PlanetData::sizeUnit = 142984.; // We are setting 1 unit to 142984 km (Jupiter's size)
 inline const float PlanetData::rotationUnit = 6.;  // We are setting 1 unit to 6 hours
-inline const float PlanetData::distanceUnit = 5000000.;  
+inline const float PlanetData::distanceUnit = 5000000.;
 
 /**
  * @brief Contains data about the Sun.
@@ -74,20 +73,20 @@ public:
 
 class MercuryData : public PlanetData
 {
-    public:
+public:
     /**
      * @brief Constructor
-    */
-   MercuryData();
+     */
+    MercuryData();
 };
 
 class VenusData : public PlanetData
 {
-    public:
+public:
     /**
      * @brief Constructor
-    */
-   VenusData();
+     */
+    VenusData();
 };
 
 /**
@@ -106,54 +105,54 @@ public:
 
 class MarsData : public PlanetData
 {
-    public:
+public:
     /**
      * @brief Constructor
-    */
-   MarsData();
+     */
+    MarsData();
 };
 
 class JupiterData : public PlanetData
 {
-    public:
+public:
     /**
      * @brief Constructor
-    */
-   JupiterData();
+     */
+    JupiterData();
 };
 
 class SaturnData : public PlanetData
 {
-    public:
+public:
     /**
      * @brief Constructor
-    */
-   SaturnData();
+     */
+    SaturnData();
 };
 
 class UranusData : public PlanetData
 {
-    public:
+public:
     /**
      * @brief Constructor
-    */
-   UranusData();
+     */
+    UranusData();
 };
 
 class NeptuneData : public PlanetData
 {
-    public:
+public:
     /**
      * @brief Constructor
-    */
-   NeptuneData();
+     */
+    NeptuneData();
 };
 
 class PlutoData : public PlanetData
 {
-    public:
+public:
     /**
      * @brief Constructor
-    */
-   PlutoData();
+     */
+    PlutoData();
 };
