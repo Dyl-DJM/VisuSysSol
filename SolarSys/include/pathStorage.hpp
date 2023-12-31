@@ -43,7 +43,8 @@ public:
     static constexpr const char *PATH_TEXTURE_SKYBOX = "../assets/skybox/spaceMilky.jpg";
 
     // Shaders
-    static constexpr const char *RELATIVE_PATH_VERTEX = "SolarSys/shaders/3D.vs.glsl";         // Vertex shader path
-    static constexpr const char *RELATIVE_PATH_FRAGMENT_1T = "SolarSys/shaders/1Text.fs.glsl"; // Single Texture shader path
-    static constexpr const char *RELATIVE_PATH_FRAGMENT_2T = "SolarSys/shaders/2Text.fs.glsl"; // Multi texturing(2) shader path
+    static constexpr const char *RELATIVE_PATH_VERTEX = "SolarSys/shaders/3D.vs.glsl";                                 // Vertex shader path
+    static constexpr const char *RELATIVE_PATH_FRAGMENT_FULLYLIGHTED1T = "SolarSys/shaders/1TextFullyLighted.fs.glsl"; // Path of the shader for single textures fully lighted
+    static constexpr const char *RELATIVE_PATH_FRAGMENT_1T = "SolarSys/shaders/1Text.fs.glsl";                         // Single Texture shader path
+    static constexpr const char *RELATIVE_PATH_FRAGMENT_2T = "SolarSys/shaders/2Text.fs.glsl";                         // Multi texturing(2) shader path
 };

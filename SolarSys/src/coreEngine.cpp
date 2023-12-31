@@ -123,7 +123,7 @@ void createSolarSys(char *relativePath, float windowWidth, float windowHeight, S
     unsigned int plutoText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_PLUTO);
 
     // Sun
-    PlanetObject sun = createPlanet<SunData, Shader1Texture>(applicationPath, sunText, windowWidth, windowHeight);
+    PlanetObject sun = createPlanet<SunData, Shader1FullyLightedTexture>(applicationPath, sunText, windowWidth, windowHeight); // The sun is fully lighted and doesn't depend on any source of light
 
     // Mercury
     PlanetObject mercury = createPlanet<MercuryData, Shader1Texture>(applicationPath, mercuryText, windowWidth, windowHeight);
@@ -203,7 +203,7 @@ int render3DScene(char *relativePath)
     // Camera initialization
     Camera camera = Camera(50, fractionToDegrees(3, 4));
 
-    // Light
+    // Light source
     auto sunLight = Light();
 
     /********************* CONTEXT OBJECT CREATION ********************/

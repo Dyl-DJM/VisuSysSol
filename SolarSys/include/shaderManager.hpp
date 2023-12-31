@@ -58,6 +58,21 @@ public:
 };
 
 /**
+ * @brief Shader structure for a single fully lighted texture.
+ ********************************************************************************/
+class Shader1FullyLightedTexture : public ShaderManager
+{
+public:
+    /**
+     * @brief Constructor of the class.
+     *
+     * @param applicationPath A FilePath (defined in the glimac library) describing
+     *                        the location where the app is ran.
+     ********************************************************************************/
+    Shader1FullyLightedTexture(const FilePath &applicationPath);
+};
+
+/**
  * @brief Shader structure for single texture.
  ********************************************************************************/
 class Shader1Texture : public ShaderManager

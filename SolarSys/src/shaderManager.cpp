@@ -43,6 +43,19 @@ ShaderManager::ShaderManager(const FilePath &applicationPath, const char *vertex
     uIsLighted = glGetUniformLocation(m_Program.getGLId(), "uIsLighted");
 }
 
+/* ================================= SHADER1FULLYLIGHTEDTEXTURE ======================================= */
+
+/**
+ * @brief Constructor of the class.
+ *
+ * @param applicationPath A FilePath (defined in the glimac library) describing
+ *                        the location where the app is ran.
+ ********************************************************************************/
+Shader1FullyLightedTexture::Shader1FullyLightedTexture(const FilePath &applicationPath)
+    : ShaderManager(applicationPath, PathStorage::RELATIVE_PATH_VERTEX, PathStorage::RELATIVE_PATH_FRAGMENT_FULLYLIGHTED1T)
+{
+}
+
 /* ================================= SHADER1TEXTURE ======================================= */
 
 /**

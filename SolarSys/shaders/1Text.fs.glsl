@@ -26,7 +26,7 @@ out vec4 fFragColor;
 vec3 blinnPhong(){
   vec3 wi = normalize(uLightPos - vVertexPositionVC.xyz);
   float d = distance(uLightPos, vVertexPositionVC.xyz);
-  vec3 li = uLightIntensity / (d * d);
+  vec3 li = uLightIntensity / (d * 1);
   vec3 wo = normalize(-vVertexPositionVC.xyz);
   vec3 halfV = (wo + wi) / 2;
   vec3 n = normalize(vVertexNormalVC.xyz);
@@ -45,7 +45,7 @@ void main() {
     vec4 color_norm = normalize(vVertexNormalVC);
 
     if(uIsLighted != 0){
-      fFragColor =  text * vec4(blinnPhong() , 1);
+      fFragColor = text * vec4(blinnPhong() , 1);
     }else{
       fFragColor =  text;
     }
