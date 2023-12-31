@@ -186,10 +186,6 @@ private:
     GLuint _vaoTorus;
     unsigned int _nbVerticesTorus = 0;
 
-    GLuint _vboTorus;
-    GLuint _vaoTorus;
-    unsigned int _nbVerticesTorus = 0;
-
     // Skybox                          // TODO : Put it inside a map to store all the type of VBOs etc for each shape (sphere, cube, rings etc)
     GLuint _vboSkybox;
     GLuint _vaoSkybox;
