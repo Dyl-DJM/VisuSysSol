@@ -30,6 +30,25 @@ PlanetObject::PlanetObject(GLuint textureID, const PlanetData &data, std::shared
 /**
  * @brief Constructor of the class.
  *
+ * @param textureID An integer that describes the ID of the texture.
+ * @param ringTextureID the ID of the ring texture
+ * @param data A PlanetData (defined in the planetData module).
+ * @param shader A shared_ptr (defined in the memory librarry) of a
+ *               ShaderManager (defined in the shaderManager module).
+ * @param torusShader shared_ptr of a ShaderManager pointing to the torus shader
+ ********************************************************************************/
+PlanetObject::PlanetObject(GLuint textureID, GLuint ringTextureID, const PlanetData &data, std::shared_ptr<ShaderManager> shader, std::shared_ptr<ShaderManager> ringShader)
+    : _data{data}
+    , _shader{shader}
+    , _ringShader{ringShader}
+{
+     _textIDs.emplace_back(textureID);
+     _ringTextIDs.emplace_back(ringTextureID);
+}
+
+/**
+ * @brief Constructor of the class.
+ *
  * @param nbOfTextures Amount of textures.
  * @param textureIDs An array of integer that describes the IDs of the textures.
  * @param data A PlanetData (defined in the planetData module).
@@ -134,13 +153,6 @@ float PlanetObject::getSize() const
 }
 
 /**
- * @brief Add a ring texture.
-*/
-void PlanetObject::addRingTexture(GLuint textureID){
-    _ringTextIDs.emplace_back(textureID);
-}
-
-/**
  * @brief Returns wether or not the planet has a ring.
 */
 bool PlanetObject::hasRing(){
@@ -174,4 +186,14 @@ void PlanetObject::updateMatricesTorus()
     _matrices.setMVMatrix(MVMatrix);
     _matrices.setNormalMatrix(normalMatrix);
     _matrices.setMVPMatrix(MVPMatrix);
+}
+
+/**
+ * @brief Retrieves the ShaderManager (class defined in the shaderManager module)
+ * of the planet's ring.
+ *
+ * @return A shared_ptr (defined in the memory library) of the ShaderManager.
+ ********************************************************************************/
+std::shared_ptr<ShaderManager> PlanetObject::getRingShaderManager(){
+    return _ringShader;
 }

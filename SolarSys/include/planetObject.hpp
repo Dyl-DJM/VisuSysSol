@@ -50,7 +50,18 @@ public:
      *               ShaderManager (defined in the shaderManager module).
      ********************************************************************************/
     PlanetObject(unsigned int nbOfTextures, GLuint *textureIDs, const PlanetData &data, std::shared_ptr<ShaderManager> shader);
-    
+
+    /**
+     * @brief Constructor of the class.
+     *
+     * @param textureID An integer that describes the ID of the texture.
+     * @param ringTextureID the ID of the ring texture
+     * @param data A PlanetData (defined in the planetData module).
+     * @param shader A shared_ptr (defined in the memory librarry) of a
+     *               ShaderManager (defined in the shaderManager module).
+     * @param ringShader shared_ptr of a ShaderManager pointing to the torus shader
+     ********************************************************************************/
+    PlanetObject(GLuint textureID, GLuint ringTextureID, const PlanetData &data, std::shared_ptr<ShaderManager> shader, std::shared_ptr<ShaderManager> ringShader);
 
     /**
      * @brief Destructor of the class.
@@ -106,11 +117,6 @@ public:
    float getSize() const;
 
     /**
-     * @brief Add a ring texture.
-    */
-   void addRingTexture(GLuint textureID);
-
-    /**
      * @brief Returns wether or not the planet has a ring.
     */
    bool hasRing();
@@ -122,7 +128,20 @@ public:
      ********************************************************************************/
     const std::vector<GLuint> getRingTextIDs() const;
 
+    /**
+     * @brief Apply transformations on the matrices for the torus transformation.
+     *        Note: the transformation of the MVMatrix for the planet must have already been done before calling this function
+    ********************************************************************************/
     void updateMatricesTorus();
+
+    /**
+     * @brief Retrieves the ShaderManager (class defined in the shaderManager module)
+     * of the planet's ring.
+     *
+     * @return A shared_ptr (defined in the memory library) of the ShaderManager.
+     ********************************************************************************/
+    std::shared_ptr<ShaderManager> getRingShaderManager();
+
 
 private:
     PlanetData _data;                       // Information about the planet
@@ -130,5 +149,6 @@ private:
     std::shared_ptr<ShaderManager> _shader; // ShaderManager (class defined in the shaderManager module)
     Matrices _matrices;                     // Transformation matrices
     std::vector<GLuint> _ringTextIDs;
+    std::shared_ptr<ShaderManager> _ringShader; // Shader for the ring
     // add the satellites (later)
 };

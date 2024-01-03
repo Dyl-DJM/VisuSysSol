@@ -82,6 +82,41 @@ PlanetObject createPlanet(FilePath applicationPath, unsigned int texture, float 
 }
 
 /**
+ * @brief Build a Planet object.
+ *
+ * Thanks to an ID, it loads the corresponding texture to fill the planet to
+ * create. It also needs information about the Data type we want to put inside
+ * and the type of shader manager.
+ * With these information it is possible to create a Planet Object and set its
+ * initial matrices.
+ * After the call of this function, it will be possible to display this object in
+ * a 3D scene.
+ *
+ * @tparam DataType A type with information to bind to the planet, must be a PlanetData
+ *         or a derived class.
+ * @tparam ShaderType A type that gathers information about the shader management of the
+ *         planet object, must be a ShaderManager or a derived class.
+ * @param applicationPath A FilePath object (class of the glimac folder) to the folder where we find the shader files.
+ * @param texture An integer ID of the texture we want to bind.
+ * @param windowWidth Width of the window.
+ * @param windowHeight Height of the window.
+ *
+ * @return A PlanetObject, the object that can be displayed in a 3D scene.
+ ********************************************************************************/
+template <typename DataType, typename ShaderType = ShaderManager, typename RingShaderType = ShaderManager>
+PlanetObject createPlanetWithRing(FilePath applicationPath, unsigned int texture, unsigned int ringText, float windowWidth, float windowHeight)
+{
+    auto planetData = DataType();
+    auto shader = std::make_shared<ShaderType>(applicationPath); // Need a shared_ptr here to avoid C pointers
+    auto ringShader = std::make_shared<RingShaderType>(applicationPath);
+    auto planet = PlanetObject(texture, ringText, planetData, shader, ringShader);
+    planet.configureMatrices(windowWidth, windowHeight); // Build the initial matrices linked to this planet
+    return planet;
+}
+
+
+
+/**
  * @brief Fills an empty solar sytem with all the information about it (planets...).
  *
  *  Creates planets and add them inside the given solar system object.
@@ -143,8 +178,7 @@ void createSolarSys(char *relativePath, float windowWidth, float windowHeight, S
     PlanetObject jupiter = createPlanet<JupiterData, Shader1Texture>(applicationPath, jupiterText, windowHeight, windowHeight);
 
     // Saturn
-    PlanetObject saturn = createPlanet<SaturnData, Shader1Texture>(applicationPath, saturnText, windowWidth, windowHeight);
-    saturn.addRingTexture(saturnRingText);
+    PlanetObject saturn = createPlanetWithRing<SaturnData, Shader1Texture, ShaderTorusTexture>(applicationPath, saturnText, saturnRingText, windowWidth, windowHeight);
 
     // Uranus
     PlanetObject uranus = createPlanet<UranusData, Shader1Texture>(applicationPath, uranusText, windowWidth, windowHeight);

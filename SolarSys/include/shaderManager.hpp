@@ -102,3 +102,18 @@ public:
      ********************************************************************************/
     Shader2Texture(const FilePath &applicationPath);
 };
+
+/**
+ * @brief Shader structure for two textures.
+ ********************************************************************************/
+class ShaderTorusTexture : public ShaderManager
+{
+public:
+    /**
+     * @brief Constructor of the class.
+     *
+     * @param applicationPath A FilePath (defined in the glimac library) describing
+     *                        the location where the app is ran.
+     ********************************************************************************/
+    ShaderTorusTexture(const FilePath &applicationPath);
+};

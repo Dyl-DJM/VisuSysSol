@@ -220,6 +220,12 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light
     glDrawArrays(GL_TRIANGLES, 0, _nbVertices);
 
     if (planet.hasRing()){
+
+        auto ringShader = planet.getRingShaderManager().get();
+        auto &ringProgram = ringShader->m_Program;
+
+        ringProgram.use();
+        
         // Draw torus
         startRing(planet);
 
@@ -233,9 +239,20 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light
         auto MVPMatrix = projMatrix * MVMatrix;
 
         // Send matrices
-        glUniformMatrix4fv(planetShader->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
-        glUniformMatrix4fv(planetShader->uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
-        glUniformMatrix4fv(planetShader->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+        glUniformMatrix4fv(ringShader->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
+        glUniformMatrix4fv(ringShader->uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
+        glUniformMatrix4fv(ringShader->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+
+        // Send Material Information
+        glUniform3fv(ringShader->uKd, 1, glm::value_ptr(light._Kd));
+        glUniform3fv(ringShader->uKs, 1, glm::value_ptr(light._Ks));
+        glUniform1f(ringShader->uShininess, light._shininess);
+
+        // Send Light Information
+        glUniform3fv(ringShader->uLightPosition, 1, glm::value_ptr(lightPos));
+        glUniform3fv(ringShader->uLightIntensity, 1, glm::value_ptr(light._intensity));
+        glUniform1i(ringShader->uIsLighted, true);
+        glUniform3fv(ringShader->uAmbientLight, 1, glm::value_ptr(ambientLight));
 
         // //Send the textures
         int i = 0;
@@ -243,7 +260,7 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light
 
         for (auto it = ringTexts.begin(); it != ringTexts.end(); it++)
         {
-            glUniform1i(planetShader->uTextures[i], i);
+            glUniform1i(ringShader->uTextures[i], i);
             i++;
         }
 
@@ -425,8 +442,11 @@ void RenderEngine::startRing(const PlanetObject &planet){
     {
         glActiveTexture(GL_TEXTURE0 + i);
         glBindTexture(GL_TEXTURE_2D, *it); // Earth texture binded to #0
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+        // GL_MIRRORED_REPEAT to repeat the texture above and below the torus in a mirrored way
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+
         i++;
     }
 

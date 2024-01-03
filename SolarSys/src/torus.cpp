@@ -28,7 +28,7 @@ void Torus::build(GLfloat radius, GLfloat thickness, GLsizei discLat, GLsizei di
                 // Computing position
                 vertex.position.x = (radius + thickness * cos(v)) * cos(u2);
                 vertex.position.y = (radius + thickness * cos(v)) * sin(u2);
-                vertex.position.z = thickness / 10 * sin(v); // Division by 10 to "flatten" the torus
+                vertex.position.z = thickness / 20 * sin(v); // Division by 20 to "flatten" the torus
 
                 // Computing normals
                 vertex.normal.x = cos(v) * cos(u2);

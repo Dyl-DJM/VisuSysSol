@@ -82,3 +82,14 @@ Shader2Texture::Shader2Texture(const FilePath &applicationPath) : ShaderManager(
 {
     uTextures.emplace_back(glGetUniformLocation(m_Program.getGLId(), "uSecondTexture"));
 }
+
+
+/**
+ * @brief Constructor of the class.
+ *
+ * @param applicationPath A FilePath (defined in the glimac library) describing
+ *                        the location where the app is ran.
+ ********************************************************************************/
+ShaderTorusTexture::ShaderTorusTexture(const FilePath &applicationPath)
+    : ShaderManager(applicationPath, PathStorage::RELATIVE_PATH_VERTEX, PathStorage::RELATIVE_PATH_FRAGMENT_TORUS)
+{}
