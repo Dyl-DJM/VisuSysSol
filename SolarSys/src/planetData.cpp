@@ -51,13 +51,13 @@ SunData::SunData() : PlanetData(609.12, 1392680, 0, 0, 0)
 
 // Mercury
 
-MercuryData::MercuryData() : PlanetData(4222.6, 4879.4, 58000000, 0.01, 87.969)
+MercuryData::MercuryData() : PlanetData(1407.6, 4879.4, 58000000, 0.01, 87.969)
 {
 }
 
 // Venus
 
-VenusData::VenusData() : PlanetData(2802.0, 12103.6, 108208930, 177.4, 224.701)
+VenusData::VenusData() : PlanetData(5832.6, 12103.6, 108208930, 177.4, 224.701)
 {
 }
 
@@ -66,17 +66,17 @@ VenusData::VenusData() : PlanetData(2802.0, 12103.6, 108208930, 177.4, 224.701)
 /**
  * @brief Constructor of the class.
  ********************************************************************************/
-EarthData::EarthData() : PlanetData(24., 12742, 149597871, 23.5, 365.256)
+EarthData::EarthData() : PlanetData(23.9345, 12742, 149597871, 23.5, 365.256)
 {
 }
 
 // Mars
-MarsData::MarsData() : PlanetData(24.6597, 6779, 227900000, 25.19, 686.980)
+MarsData::MarsData() : PlanetData(24.6229, 6779, 227900000, 25.19, 686.980)
 {
 }
 
 // Jupiter
-JupiterData::JupiterData() : PlanetData(9.9259, 139822, 778000000, 3.13, 4332.589)
+JupiterData::JupiterData() : PlanetData(9.9250, 139822, 778000000, 3.13, 4332.589)
 {
 }
 
@@ -96,7 +96,7 @@ NeptuneData::NeptuneData() : PlanetData(16.11, 49244, 4495000000, 28.32, 60189.)
 }
 
 // Pluto
-PlutoData::PlutoData() : PlanetData(153.282, 2376, 5910000000, 119.61, 90560)
+PlutoData::PlutoData() : PlanetData(-153.2928, 2376, 5910000000, 119.61, 90560)
 {
 }
 
@@ -105,7 +105,7 @@ PlutoData::PlutoData() : PlanetData(153.282, 2376, 5910000000, 119.61, 90560)
 /* ========================================================================================================== */
 
 // ----------------------------------------- EARTH  -----------------------------------------
-MoonData::MoonData() : PlanetData(27.32, 3474, 384400 + satelliteOffset, 0, 27.32)
+MoonData::MoonData() : PlanetData(27.32, 3474, 384400 + satelliteOffset, -6.68, 27.32)
 {
 }
 
