@@ -38,12 +38,10 @@ PlanetObject::PlanetObject(GLuint textureID, const PlanetData &data, std::shared
  * @param torusShader shared_ptr of a ShaderManager pointing to the torus shader
  ********************************************************************************/
 PlanetObject::PlanetObject(GLuint textureID, GLuint ringTextureID, const PlanetData &data, std::shared_ptr<ShaderManager> shader, std::shared_ptr<ShaderManager> ringShader)
-    : _data{data}
-    , _shader{shader}
-    , _ringShader{ringShader}
+    : _data{data}, _shader{shader}, _ringShader{ringShader}
 {
-     _textIDs.emplace_back(textureID);
-     _ringTextIDs.emplace_back(ringTextureID);
+    _textIDs.emplace_back(textureID);
+    _ringTextIDs.emplace_back(ringTextureID);
 }
 
 /**
@@ -104,13 +102,20 @@ void PlanetObject::updateMatrices(float rotation)
     MVMatrix = glm::rotate(MVMatrix, glm::radians(_data._angle), glm::vec3(0, 0, 1));              // Planet's axial tilt
     MVMatrix = glm::rotate(MVMatrix, rotationDegree - revolutionDegree, glm::vec3(0, 1, 0));       // Rotation on itself
     MVMatrix = glm::scale(MVMatrix, glm::vec3(_data._diameter, _data._diameter, _data._diameter)); // Size dimension
-
     auto normalMatrix = glm::transpose(glm::inverse(MVMatrix));
     auto MVPMatrix = projMatrix * MVMatrix;
 
     _matrices.setMVMatrix(MVMatrix);
     _matrices.setNormalMatrix(normalMatrix);
     _matrices.setMVPMatrix(MVPMatrix);
+
+    for (auto &satellite : _satellites)
+    {
+        auto refMat = glm::rotate(glm::mat4(1), revolutionDegree, glm::vec3(0, 1, 0)); // Rotation around the central point (the sun)
+        refMat = glm::translate(refMat, glm::vec3(0, 0, _data._position));
+
+        satellite.fillMatrices(refMat, projMatrix, rotation);
+    }
 }
 
 /**
@@ -129,7 +134,7 @@ const std::vector<GLuint> PlanetObject::getTextIDs() const
  *
  * @return A shared_ptr (defined in the memory library) of the ShaderManager.
  ********************************************************************************/
-std::shared_ptr<ShaderManager> PlanetObject::getShaderManager()
+std::shared_ptr<ShaderManager> PlanetObject::getShaderManager() const
 {
     return _shader;
 }
@@ -145,6 +150,27 @@ const Matrices &PlanetObject::getMatrices() const
 }
 
 /**
+ * @brief Adds a satellite to the planet.
+ *
+ * @param satellite A satellite we want to add to the planet.
+ ********************************************************************************/
+void PlanetObject::addSatellite(SatelliteObject satellite)
+{
+    satellite.fillMatrices(_matrices.getMVMatrix(), _matrices.getProjMatrix(), 0);
+    _satellites.push_back(satellite);
+}
+
+/**
+ * @brief Retrieves the satellites of the planet.
+ *
+ * @return A view of the satellites stored by the planet.
+ ********************************************************************************/
+const std::vector<SatelliteObject> &PlanetObject::getSatellites() const
+{
+    return _satellites;
+}
+
+/**
  * @brief Get the planetObject's size from its data.
  * @return The size of the planet.
  */
@@ -155,8 +181,9 @@ float PlanetObject::getSize() const
 
 /**
  * @brief Returns wether or not the planet has a ring.
-*/
-bool PlanetObject::hasRing(){
+ */
+bool PlanetObject::hasRing()
+{
     return _data._hasRing;
 }
 
@@ -165,7 +192,8 @@ bool PlanetObject::hasRing(){
  *
  * @return A view of an ID vector for the textures this object is binded to.
  ********************************************************************************/
-const std::vector<GLuint> PlanetObject::getRingTextIDs() const{
+const std::vector<GLuint> PlanetObject::getRingTextIDs() const
+{
     return _ringTextIDs;
 }
 
@@ -179,7 +207,7 @@ void PlanetObject::updateMatricesTorus()
     auto projMatrix = _matrices.getProjMatrix();
     auto MVMatrix = _matrices.getMVMatrix();
 
-    MVMatrix = glm::rotate(MVMatrix, glm::radians(90.f), glm::vec3(1, 0, 0));       // Rotation on itself
+    MVMatrix = glm::rotate(MVMatrix, glm::radians(90.f), glm::vec3(1, 0, 0));                                  // Rotation on itself
     MVMatrix = glm::scale(MVMatrix, glm::vec3(1 / _data._diameter, 1 / _data._diameter, 1 / _data._diameter)); // Scale torus back to 1
     // Since the toruses are created with already accurate proportions, we can just scale the object back to 1
 
@@ -197,27 +225,97 @@ void PlanetObject::updateMatricesTorus()
  *
  * @return A shared_ptr (defined in the memory library) of the ShaderManager.
  ********************************************************************************/
-std::shared_ptr<ShaderManager> PlanetObject::getRingShaderManager(){
+std::shared_ptr<ShaderManager> PlanetObject::getRingShaderManager()
+{
     return _ringShader;
 }
 
 /**
  * @brief Accessor for the planet's data.
-*/
-PlanetData PlanetObject::getPlanetData(){
+ */
+PlanetData PlanetObject::getPlanetData()
+{
     return _data;
 }
 
 /**
  * @brief Set an ID for the planet's ring
-*/
-void PlanetObject::setRingID(int ID){
+ */
+void PlanetObject::setRingID(int ID)
+{
     ringID = ID;
 }
 
 /**
  * @brief Accessor for the ring ID
-*/
-int PlanetObject::getRingID() const{
+ */
+int PlanetObject::getRingID() const
+{
     return ringID;
+}
+
+/**
+ * @brief Constructor.
+ *
+ * @param textureID An integer that describes the ID of the texture.
+ * @param data A PlanetData (defined in the planetData module).
+ * @param shader A shared_ptr (defined in the memory librarry) of a
+ *               ShaderManager (defined in the shaderManager module).
+ ********************************************************************************/
+SatelliteObject::SatelliteObject(GLuint textureID, const PlanetData &data, std::shared_ptr<ShaderManager> shader)
+    : PlanetObject(textureID, data, shader)
+{
+}
+
+/**
+ * @brief Constructor.
+ *
+ * @param nbOfTextures Amount of textures.
+ * @param textureIDs An array of integer that describes the IDs of the textures.
+ * @param data A PlanetData (defined in the planetData module).
+ * @param shader A shared_ptr (defined in the memory librarry) of a
+ *               ShaderManager (defined in the shaderManager module).
+ ********************************************************************************/
+SatelliteObject::SatelliteObject(unsigned int nbOfTextures, GLuint *textureIDs, const PlanetData &data, std::shared_ptr<ShaderManager> shader)
+    : PlanetObject(nbOfTextures, textureIDs, data, shader)
+{
+}
+
+/**
+ * @brief Redefinition of the inherited function.
+ *
+ * Throw an error because we don't want the satellite to store other satellites.
+ *
+ * @param satellite A satellite we want to add to the planet.
+ ********************************************************************************/
+void SatelliteObject::addSatellite([[maybe_unused]] SatelliteObject satellite)
+{
+    throw std::logic_error("A satellite doesn't have its own satellites");
+}
+
+/**
+ * @brief Compute the satellite matrices thanks to a reference.
+ *
+ * @param refMatrix A reference matrix, we compute the satellite matrices by
+ *                  doing the transformations above this one.
+ * @param projMatrix Projection matrix.
+ * @param rotation A float number that give information about the time spent.
+ ********************************************************************************/
+void SatelliteObject::fillMatrices(glm::mat4 refMatrix, glm::mat4 projMatrix, float rotation)
+{
+
+    float rotationDegree = _data._rotationPeriod == 0 ? 0 : rotation * (1. / _data._rotationPeriod); // TODO : Change this computation that doesn't fit realty and put it at a function of the class
+    float revolutionDegree = _data._revolutionPeriod == 0 ? 0 : rotation * (1. / _data._revolutionPeriod);
+    auto MVMatrix = glm::rotate(refMatrix, revolutionDegree, glm::vec3(0, 1, 0)); // Rotation around the central point (the planet reference)
+
+    MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, _data._position));                         // Distance from the central point (from the sun)
+    MVMatrix = glm::rotate(MVMatrix, rotationDegree - revolutionDegree, glm::vec3(0, 1, 0));       // Rotation on itself
+    MVMatrix = glm::scale(MVMatrix, glm::vec3(_data._diameter, _data._diameter, _data._diameter)); // Size dimension
+
+    auto normalMatrix = glm::transpose(glm::inverse(MVMatrix));
+    auto MVPMatrix = projMatrix * MVMatrix;
+
+    _matrices.setMVMatrix(MVMatrix);
+    _matrices.setNormalMatrix(normalMatrix);
+    _matrices.setMVPMatrix(MVPMatrix);
 }

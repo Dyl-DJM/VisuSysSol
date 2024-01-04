@@ -16,10 +16,17 @@
 
 #include <vector>
 #include <memory>
+#include <stdexcept>
 
 #include "include/planetData.hpp"
 #include "include/shaderManager.hpp"
 #include "include/matrices.hpp"
+
+class SatelliteObject;
+
+/* ========================================================================================================== */
+/* =                                                PLANETS                                                 = */
+/* ========================================================================================================== */
 
 /**
  * @brief Represents a Planet.
@@ -66,9 +73,7 @@ public:
     /**
      * @brief Destructor of the class.
      ********************************************************************************/
-    ~PlanetObject()
-    {
-    }
+    virtual ~PlanetObject() = default;
 
     /**
      * @brief Initialize all the transformation matrices.
@@ -101,7 +106,7 @@ public:
      *
      * @return A shared_ptr (defined in the memory library) of the ShaderManager.
      ********************************************************************************/
-    std::shared_ptr<ShaderManager> getShaderManager();
+    std::shared_ptr<ShaderManager> getShaderManager() const;
 
     /**
      * @brief Retrieves the transformation matrices of a planet object.
@@ -113,13 +118,13 @@ public:
     /**
      * @brief Get the planetObject's size from its data.
      * @return The size of the planet.
-    */
-   float getSize() const;
+     */
+    float getSize() const;
 
     /**
      * @brief Returns wether or not the planet has a ring.
-    */
-   bool hasRing();
+     */
+    bool hasRing();
 
     /**
      * @brief Retrieves the ID of the textures binded to the planet object.
@@ -131,7 +136,7 @@ public:
     /**
      * @brief Apply transformations on the matrices for the torus transformation.
      *        Note: the transformation of the MVMatrix for the planet must have already been done before calling this function
-    ********************************************************************************/
+     ********************************************************************************/
     void updateMatricesTorus();
 
     /**
@@ -144,27 +149,93 @@ public:
 
     /**
      * @brief Accessor for the planet's data.
-    */
+     */
     PlanetData getPlanetData();
 
     /**
      * @brief Set an ID for the planet's ring
-    */
+     */
     void setRingID(int ID);
 
     /**
      * @brief Accessor for the ring ID
-    */
+     */
     int getRingID() const;
 
+    /**
+     * @brief Adds a satellite to the planet.
+     *
+     * @param satellite A satellite we want to add to the planet.
+     ********************************************************************************/
+    virtual void addSatellite(SatelliteObject satellite);
 
-private:
+    /**
+     * @brief Retrieves the satellites of the planet.
+     *
+     * @return A view of the satellites stored by the planet.
+     ********************************************************************************/
+    const std::vector<SatelliteObject> &getSatellites() const;
+
+protected:                                  // We want the attributes to be available by the subclasses
     PlanetData _data;                       // Information about the planet
     std::vector<GLuint> _textIDs;           // Textures IDs
     std::shared_ptr<ShaderManager> _shader; // ShaderManager (class defined in the shaderManager module)
     Matrices _matrices;                     // Transformation matrices
     std::vector<GLuint> _ringTextIDs;
     std::shared_ptr<ShaderManager> _ringShader; // Shader for the ring
-    int ringID; // An ID for the ring, used to recover the planet's specific torus
-    // add the satellites (later)
+    int ringID;                                 // An ID for the ring, used to recover the planet's specific torus
+    std::vector<SatelliteObject> _satellites;   // Satellites storage
+};
+
+/* ========================================================================================================== */
+/* =                                                SATELLITES                                              = */
+/* ========================================================================================================== */
+
+class SatelliteObject : public PlanetObject
+{
+public:
+    /**
+     * @brief Constructor.
+     *
+     * @param textureID An integer that describes the ID of the texture.
+     * @param data A PlanetData (defined in the planetData module).
+     * @param shader A shared_ptr (defined in the memory librarry) of a
+     *               ShaderManager (defined in the shaderManager module).
+     ********************************************************************************/
+    SatelliteObject(GLuint textureID, const PlanetData &data, std::shared_ptr<ShaderManager> shader);
+
+    /**
+     * @brief Constructor.
+     *
+     * @param nbOfTextures Amount of textures.
+     * @param textureIDs An array of integer that describes the IDs of the textures.
+     * @param data A PlanetData (defined in the planetData module).
+     * @param shader A shared_ptr (defined in the memory librarry) of a
+     *               ShaderManager (defined in the shaderManager module).
+     ********************************************************************************/
+    SatelliteObject(unsigned int nbOfTextures, GLuint *textureIDs, const PlanetData &data, std::shared_ptr<ShaderManager> shader);
+
+    /**
+     * @brief Destructor of the class.
+     ********************************************************************************/
+    virtual ~SatelliteObject() = default;
+
+    /**
+     * @brief Redefinition of the inherited function.
+     *
+     * Throw an error because we don't want the satellite to store other satellites.
+     *
+     * @param satellite A satellite we want to add to the planet.
+     ********************************************************************************/
+    void addSatellite([[maybe_unused]] SatelliteObject satellite) override;
+
+    /**
+     * @brief Compute the satellite matrices thanks to a reference.
+     *
+     * @param refMatrix A reference matrix, we compute the satellite matrices by
+     *                  doing the transformations above this one.
+     * @param projMatrix Projection matrix.
+     * @param rotation A float number that give information about the time spent.
+     ********************************************************************************/
+    void fillMatrices(glm::mat4 refMatrix, glm::mat4 projMatrix, float rotation);
 };

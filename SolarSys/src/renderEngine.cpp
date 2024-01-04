@@ -12,7 +12,7 @@
 
 #include "include/renderEngine.hpp"
 
-#include <glimac/glm.hpp> // tests
+#include <glimac/glm.hpp>
 
 /**
  * @brief Clears the display of the scene.   (CLEAR THE SCENE RATHER... MIGHT BE SMART TO RENAME IT clearScene)
@@ -89,7 +89,6 @@ void RenderEngine::createSphere()
     glBindVertexArray(0);
 }
 
-
 /**
  * @brief Create a Torus object, fill the vao and vbo with
  * its data.
@@ -98,7 +97,8 @@ void RenderEngine::createSphere()
  * @param innerEdgeDist The distance from the center of the inner edge of the torus
  * @param thickness The diameter of the torus pipe
  ********************************************************************************/
-void RenderEngine::createTorus(GLfloat innerEdgeDist, GLfloat thickness){
+void RenderEngine::createTorus(GLfloat innerEdgeDist, GLfloat thickness)
+{
     auto radius = innerEdgeDist + thickness;
     auto pipeRadius = thickness;
     std::cout << "radius: " << radius << ", pipeRadius: " << pipeRadius << std::endl;
@@ -143,15 +143,18 @@ void RenderEngine::createTorus(GLfloat innerEdgeDist, GLfloat thickness){
     _vboTorus.emplace_back(vboTorus);
 }
 
-void RenderEngine::createPlanetRing(PlanetObject & planet){
-    if (planet.hasRing()){
+void RenderEngine::createPlanetRing(PlanetObject &planet)
+{
+    if (planet.hasRing())
+    {
         auto data = planet.getPlanetData();
         auto ringDistance = data._ringDist;
         auto ringThickness = data._ringThickness;
         createTorus(ringDistance, ringThickness);
         planet.setRingID(_vaoTorus.size() - 1);
     }
-    else{
+    else
+    {
         planet.setRingID(-1);
     }
 }
@@ -202,8 +205,9 @@ void RenderEngine::start(const PlanetObject &planet)
  * @param planet A PlanetObject (defined in the planetObject module) we want
  *               to draw.
  ********************************************************************************/
-void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light)
+void RenderEngine::draw(const PlanetObject &planet, Camera &camera, const Light &light)
 {
+    start(planet);
     auto planetShader = planet.getShaderManager().get();
     auto &planetProgram = planetShader->m_Program; // Use of reference to not call the copy constructor of Program (which is private)
 
@@ -231,7 +235,7 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light
 
     // Send Light Information
     glm::vec3 lightPos = glm::vec3(viewMatrix * glm::vec4(light._position, 1)); // The homogeneous coordinate must be 1
-    glm::vec3 ambientLight = glm::vec3(0.4, 0.4, 0.4); // The homogeneous coordinate must be 1
+    glm::vec3 ambientLight = glm::vec3(0.4, 0.4, 0.4);                          // The homogeneous coordinate must be 1
     glUniform3fv(planetShader->uLightPosition, 1, glm::value_ptr(lightPos));
     glUniform3fv(planetShader->uLightIntensity, 1, glm::value_ptr(light._intensity));
     glUniform1i(planetShader->uIsLighted, true);
@@ -250,13 +254,14 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light
     // Draw the vertices
     glDrawArrays(GL_TRIANGLES, 0, _nbVertices);
 
-    if (planet.hasRing()){
+    if (planet.hasRing())
+    {
 
         auto ringShader = planet.getRingShaderManager().get();
         auto &ringProgram = ringShader->m_Program;
 
         ringProgram.use();
-        
+
         // Draw torus
         startRing(planet);
 
@@ -266,7 +271,7 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light
         auto viewMatrix = camera.getViewMatrix();
         auto normalMatrix = transfos.getNormalMatrix();
         auto projMatrix = transfos.getProjMatrix();
-        auto MVMatrix = viewMatrix *transfos.getMVMatrix();
+        auto MVMatrix = viewMatrix * transfos.getMVMatrix();
         auto MVPMatrix = projMatrix * MVMatrix;
 
         // Send matrices
@@ -299,6 +304,13 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light
         glDrawArrays(GL_TRIANGLE_STRIP, 0, _nbVerticesTorus);
 
         endRing(planet);
+    }
+
+    end(planet);
+
+    for (auto &satellite : planet.getSatellites())
+    {
+        draw(satellite, camera, light);
     }
 }
 
@@ -466,7 +478,8 @@ void RenderEngine::end(const Skybox &skybox)
  *
  * @param planet The planet whose ring's texture we want to configure
  ********************************************************************************/
-void RenderEngine::startRing(const PlanetObject &planet){
+void RenderEngine::startRing(const PlanetObject &planet)
+{
     auto ringTextIDs = planet.getRingTextIDs();
     int i = 0;
     for (auto it = ringTextIDs.begin(); it != ringTextIDs.end(); it++)
