@@ -60,9 +60,9 @@ public:
     constexpr static const float satelliteOffset = 1000000;
 };
 
-inline const float PlanetData::sizeUnit = 139822.; // We are setting 1 unit to 139822 km (Jupiter's size)
+inline const float PlanetData::sizeUnit = 139822. * 4; // We are setting 1 unit to 3 times 139822 km (Jupiter's size)
 inline const float PlanetData::rotationUnit = 6.;  // We are setting 1 unit to 6 hours
-inline const float PlanetData::distanceUnit = 5000000.;
+inline const float PlanetData::distanceUnit = 8000000.;
 
 /**
  * @brief Contains data about the Sun.

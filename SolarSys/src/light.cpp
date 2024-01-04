@@ -16,7 +16,7 @@
  * @brief Constructor of the class.
  ********************************************************************************/
 Light::Light()
-    : _Kd{glm::vec3(1, 1, 1)}, _Ks{glm::vec3(1, .3, .8)}, _shininess{32}, _position{glm::vec3(0, 0, 0)}, _intensity{glm::vec3(40, 40, 40)} // TODO : The inital value for the position will be the center position defined in Matrices for example
+    : _Kd{glm::vec3(1, 1, 1)}, _Ks{glm::vec3(1, .3, .8)}, _shininess{32}, _position{glm::vec3(0, 0, 0)}, _intensity{glm::vec3(30, 30, 30)} // TODO : The inital value for the position will be the center position defined in Matrices for example
 {
 }
 

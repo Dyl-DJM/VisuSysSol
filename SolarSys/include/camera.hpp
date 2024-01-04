@@ -116,6 +116,6 @@ private:
     glm::mat4 view_matrix;
 };
 
-inline const float Camera::initialDistance = 50;
+inline const float Camera::initialDistance = 25;
 inline const float Camera::initialAngleX = fractionToDegrees(3, 4);
 inline const float Camera::initialAngleY = 0;

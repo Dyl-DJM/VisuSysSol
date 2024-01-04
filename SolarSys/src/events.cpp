@@ -146,11 +146,11 @@ void Events::onScroll(GLFWwindow *window, double xoffset, double yoffset)
 
     if (yoffset == -1)
     { // Dezooming
-        camera.moveFront(0.5);
+        camera.moveFront(0.1);
     }
     else if (yoffset == 1)
     { // Zooming
-        camera.moveFront(-0.5);
+        camera.moveFront(-0.1);
     }
 }
 
