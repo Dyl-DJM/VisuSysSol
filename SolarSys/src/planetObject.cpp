@@ -179,6 +179,8 @@ void PlanetObject::updateMatricesTorus()
     auto MVMatrix = _matrices.getMVMatrix();
 
     MVMatrix = glm::rotate(MVMatrix, glm::radians(90.f), glm::vec3(1, 0, 0));       // Rotation on itself
+    MVMatrix = glm::scale(MVMatrix, glm::vec3(1 / _data._diameter, 1 / _data._diameter, 1 / _data._diameter)); // Scale torus back to 1
+    // Since the toruses are created with already accurate proportions, we can just scale the object back to 1
 
     auto normalMatrix = glm::transpose(glm::inverse(MVMatrix));
     auto MVPMatrix = projMatrix * MVMatrix;
@@ -196,4 +198,25 @@ void PlanetObject::updateMatricesTorus()
  ********************************************************************************/
 std::shared_ptr<ShaderManager> PlanetObject::getRingShaderManager(){
     return _ringShader;
+}
+
+/**
+ * @brief Accessor for the planet's data.
+*/
+PlanetData PlanetObject::getPlanetData(){
+    return _data;
+}
+
+/**
+ * @brief Set an ID for the planet's ring
+*/
+void PlanetObject::setRingID(int ID){
+    ringID = ID;
+}
+
+/**
+ * @brief Accessor for the ring ID
+*/
+int PlanetObject::getRingID() const{
+    return ringID;
 }

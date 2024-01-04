@@ -53,7 +53,7 @@ public:
     static const float distanceUnit;
 };
 
-inline const float PlanetData::sizeUnit = 142984.; // We are setting 1 unit to 142984 km (Jupiter's size)
+inline const float PlanetData::sizeUnit = 139822.; // We are setting 1 unit to 139822 km (Jupiter's size)
 inline const float PlanetData::rotationUnit = 6.;  // We are setting 1 unit to 6 hours
 inline const float PlanetData::distanceUnit = 5000000.;
 

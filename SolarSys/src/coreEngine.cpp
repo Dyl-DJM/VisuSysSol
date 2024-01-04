@@ -153,6 +153,7 @@ void createSolarSys(char *relativePath, float windowWidth, float windowHeight, S
     unsigned int saturnRingText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_SATURN_RING);
 
     unsigned int uranusText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_URANUS);
+    unsigned int uranusRingText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_URANUS_RING);
 
     unsigned int neptuneText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_NEPTUNE);
 
@@ -181,7 +182,7 @@ void createSolarSys(char *relativePath, float windowWidth, float windowHeight, S
     PlanetObject saturn = createPlanetWithRing<SaturnData, Shader1Texture, ShaderTorusTexture>(applicationPath, saturnText, saturnRingText, windowWidth, windowHeight);
 
     // Uranus
-    PlanetObject uranus = createPlanet<UranusData, Shader1Texture>(applicationPath, uranusText, windowWidth, windowHeight);
+    PlanetObject uranus = createPlanetWithRing<UranusData, Shader1Texture, ShaderTorusTexture>(applicationPath, uranusText, uranusRingText, windowWidth, windowHeight);
 
     // Neptune
     PlanetObject neptune = createPlanet<NeptuneData, Shader1Texture>(applicationPath, neptuneText, windowWidth, windowHeight);
@@ -261,7 +262,11 @@ int render3DScene(char *relativePath)
 
     auto renderEng = std::make_unique<RenderEngine>();
     renderEng->createSphere();
-    renderEng->createTorus();
+    
+    for (auto &planet : (*solarSys)){
+        renderEng->createPlanetRing(planet);
+    }
+    
     renderEng->integrateSkybox(*skybox); // Allows the
 
     /********************* RENDERING LOOP ********************/

@@ -89,21 +89,36 @@ void RenderEngine::createSphere()
     glBindVertexArray(0);
 }
 
-void RenderEngine::createTorus(){
-    auto torus = Torus(2.5, 1, 64, 16);
+
+/**
+ * @brief Create a Torus object, fill the vao and vbo with
+ * its data.
+ *
+ * It configures the depth of the scene in OpenGL
+ * @param innerEdgeDist The distance from the center of the inner edge of the torus
+ * @param thickness The diameter of the torus pipe
+ ********************************************************************************/
+void RenderEngine::createTorus(GLfloat innerEdgeDist, GLfloat thickness){
+    auto radius = innerEdgeDist + thickness;
+    auto pipeRadius = thickness;
+    std::cout << "radius: " << radius << ", pipeRadius: " << pipeRadius << std::endl;
+    auto torus = Torus(radius, pipeRadius, 64, 16);
     _nbVerticesTorus = torus.getVertexCount();
     auto ptrVertices = torus.getDataPointer();
 
+    GLuint vboTorus;
+    GLuint vaoTorus;
+
     // Generates VBO buffer and binds it
-    glGenBuffers(1, &_vboTorus);
-    glBindBuffer(GL_ARRAY_BUFFER, _vboTorus);
+    glGenBuffers(1, &vboTorus);
+    glBindBuffer(GL_ARRAY_BUFFER, vboTorus);
 
     glBufferData(GL_ARRAY_BUFFER, _nbVerticesTorus * sizeof(ShapeVertex), ptrVertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0); // Unbinding vbo
 
     // VAO generation
-    glGenVertexArrays(1, &_vaoTorus);
-    glBindVertexArray(_vaoTorus);
+    glGenVertexArrays(1, &vaoTorus);
+    glBindVertexArray(vaoTorus);
 
     // Vertex Attributes
     const GLuint ATTR_POSITION = 0;
@@ -115,7 +130,7 @@ void RenderEngine::createTorus(){
     glEnableVertexAttribArray(ATTR_TEXTURE);
 
     // Set the information for GPU on how to read the vertex array
-    glBindBuffer(GL_ARRAY_BUFFER, _vboTorus);
+    glBindBuffer(GL_ARRAY_BUFFER, vboTorus);
     glVertexAttribPointer(ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)offsetof(ShapeVertex, position)); // Positions
     glVertexAttribPointer(ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)offsetof(ShapeVertex, normal));     // Normals
     glVertexAttribPointer(ATTR_TEXTURE, 2, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)offsetof(ShapeVertex, texCoords)); // Textures coords
@@ -123,6 +138,22 @@ void RenderEngine::createTorus(){
 
     // Unbind the VAO
     glBindVertexArray(0);
+
+    _vaoTorus.emplace_back(vaoTorus);
+    _vboTorus.emplace_back(vboTorus);
+}
+
+void RenderEngine::createPlanetRing(PlanetObject & planet){
+    if (planet.hasRing()){
+        auto data = planet.getPlanetData();
+        auto ringDistance = data._ringDist;
+        auto ringThickness = data._ringThickness;
+        createTorus(ringDistance, ringThickness);
+        planet.setRingID(_vaoTorus.size() - 1);
+    }
+    else{
+        planet.setRingID(-1);
+    }
 }
 
 /**
@@ -451,7 +482,7 @@ void RenderEngine::startRing(const PlanetObject &planet){
     }
 
     // Bind the VAO to draw its data
-    glBindVertexArray(_vaoTorus);
+    glBindVertexArray(_vaoTorus[planet.getRingID()]);
 }
 
 /**

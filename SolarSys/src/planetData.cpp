@@ -24,12 +24,19 @@
  * @param position Position of the planet relative to the sun
  * @param angle Angle of rotation of the ellipse
  * @param revPeriod Revolution period of the planet in Earth days
+ * @param hasRing Wether or not the planet has a ring
+ * @param ringDist The ring's distance in km from the planet's center
+ * @param ringThickness The ring's size from the inner edge to the outer edge in km
  ********************************************************************************/
 PlanetData::PlanetData(float rotation, float diameter, float position, float angle, float revPeriod, bool hasRing = false, float ringDist = 0, float ringThickness = 0)
-    : _rotationPeriod{rotation / PlanetData::rotationUnit}, _diameter{diameter / PlanetData::sizeUnit}, _position{position / PlanetData::distanceUnit}, _angle{angle}, _revolutionPeriod{revPeriod * (24.f / PlanetData::rotationUnit)} // Since we count the revolution period as Earth days (24 hours)
-                                                                                                                                                                                                                                        // And the rotationUnit is 6h, we multiply it by 4 .
-      ,
-      _hasRing{hasRing}, _ringDist{ringDist}, _ringThickness{ringThickness}
+    : _rotationPeriod{rotation / PlanetData::rotationUnit}
+    , _diameter{diameter / PlanetData::sizeUnit}
+    , _position{position / PlanetData::distanceUnit}
+    , _angle{angle}
+    , _revolutionPeriod{revPeriod * (24.f / PlanetData::rotationUnit)} // Since we count the revolution period as Earth days (24 hours)                                                                                                                                                                                                                              // And the rotationUnit is 6h, we multiply it by 4 .
+    , _hasRing{hasRing},
+     _ringDist{ringDist / (PlanetData::sizeUnit / 2)}, // Divide the unit by 2 because it's a radius and not a diameter
+      _ringThickness{ringThickness / PlanetData::sizeUnit}
 {
 }
 
@@ -74,12 +81,12 @@ JupiterData::JupiterData() : PlanetData(9.9259, 139822, 778000000, 0, 4332.589)
 }
 
 // Saturn
-SaturnData::SaturnData() : PlanetData(10.656, 116464, 1434000000, 0, 10759.22, true, 8, 2)
+SaturnData::SaturnData() : PlanetData(10.656, 116464, 1434000000, 0, 10759.22, true, 66900, 72926) // We display only until the F ring
 {
 }
 
 // Uranus
-UranusData::UranusData() : PlanetData(17.24, 50724, 2871000000, 0, 30685.4)
+UranusData::UranusData() : PlanetData(17.24, 50724, 2871000000, 0, 30685.4, true, 41837, 9312) // Display until epsilon ring
 {
 }
 

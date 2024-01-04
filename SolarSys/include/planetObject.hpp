@@ -142,6 +142,21 @@ public:
      ********************************************************************************/
     std::shared_ptr<ShaderManager> getRingShaderManager();
 
+    /**
+     * @brief Accessor for the planet's data.
+    */
+    PlanetData getPlanetData();
+
+    /**
+     * @brief Set an ID for the planet's ring
+    */
+    void setRingID(int ID);
+
+    /**
+     * @brief Accessor for the ring ID
+    */
+    int getRingID() const;
+
 
 private:
     PlanetData _data;                       // Information about the planet
@@ -150,5 +165,6 @@ private:
     Matrices _matrices;                     // Transformation matrices
     std::vector<GLuint> _ringTextIDs;
     std::shared_ptr<ShaderManager> _ringShader; // Shader for the ring
+    int ringID; // An ID for the ring, used to recover the planet's specific torus
     // add the satellites (later)
 };

@@ -36,6 +36,7 @@ public:
     static constexpr const char *PATH_TEXTURE_SATURN_RING = "../assets/saturn/saturnringcolor.jpg";
 
     static constexpr const char *PATH_TEXTURE_URANUS = "../assets/uranus/uranusmap.jpg";
+    static constexpr const char *PATH_TEXTURE_URANUS_RING = "../assets/uranus/uranusringcolour.jpg";
 
     static constexpr const char *PATH_TEXTURE_NEPTUNE = "../assets/neptune/neptunemap.jpg";
 

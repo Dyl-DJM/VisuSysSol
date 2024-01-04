@@ -84,8 +84,10 @@ public:
      * its data.
      *
      * It configures the depth of the scene in OpenGL
+     * @param innerEdgeDist The distance from the center of the inner edge of the torus
+     * @param thickness The diameter of the torus pipe
      ********************************************************************************/
-    void createTorus();
+    void createTorus(GLfloat innerEdgeDist, GLfloat thickness);
 
     /**
      * @brief Configures the environment to allow the rendering.
@@ -176,14 +178,16 @@ public:
      ********************************************************************************/
     void endRing(const PlanetObject &planet);
 
+    void createPlanetRing(PlanetObject & planet);
+
 private:
     // Planets
     GLuint _vbo;                  // VertexBufferObject ID
     GLuint _vao;                  // VertexArrayObject ID
     unsigned int _nbVertices = 0; // Amount of vertices to draw
 
-    GLuint _vboTorus;
-    GLuint _vaoTorus;
+    std::vector<GLuint> _vboTorus;
+    std::vector<GLuint> _vaoTorus;
     unsigned int _nbVerticesTorus = 0;
 
     // Skybox                          // TODO : Put it inside a map to store all the type of VBOs etc for each shape (sphere, cube, rings etc)
