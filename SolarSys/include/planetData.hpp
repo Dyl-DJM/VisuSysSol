@@ -48,6 +48,7 @@ public:
     static const float sizeUnit;     // The homothety unit we'll use to downscale the solar system
     static const float rotationUnit; // Homothety unit we'll use to reduce the time of rotation
     static const float distanceUnit;
+    constexpr static const float satelliteOffset = 1000000;
 };
 
 inline const float PlanetData::sizeUnit = 142984.; // We are setting 1 unit to 142984 km (Jupiter's size)
@@ -152,4 +153,227 @@ public:
      * @brief Constructor
      */
     PlutoData();
+};
+
+/* ========================================================================================================== */
+/* =                                                SATELLITES                                              = */
+/* ========================================================================================================== */
+
+// ----------------------------------------- EARTH  -----------------------------------------
+class MoonData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    MoonData();
+};
+
+// ----------------------------------------- MARS  -----------------------------------------
+class PhobosData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    PhobosData();
+};
+
+class DeimosData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    DeimosData();
+};
+
+// ----------------------------------------- JUPITER  -----------------------------------------
+
+class CallistoData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    CallistoData();
+};
+
+class GanymedeData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    GanymedeData();
+};
+
+class EuropaData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    EuropaData();
+};
+
+class IoData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    IoData();
+};
+
+// ----------------------------------------- SATURN  -----------------------------------------
+
+class MimasData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    MimasData();
+};
+
+class EnceladusData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    EnceladusData();
+};
+
+class TethysData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    TethysData();
+};
+
+class DioneData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    DioneData();
+};
+
+class RheaData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    RheaData();
+};
+
+class TitanData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    TitanData();
+};
+
+class HyperionData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    HyperionData();
+};
+
+class IapetusData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    IapetusData();
+};
+
+// ----------------------------------------- URANUS  -----------------------------------------
+
+class ArielData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    ArielData();
+};
+
+class UmbrielData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    UmbrielData();
+};
+
+class TitaniaData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    TitaniaData();
+};
+
+class OberonData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    OberonData();
+};
+
+class MirandaData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    MirandaData();
+};
+
+// ----------------------------------------- NEPTUNE  -----------------------------------------
+
+class TritonData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    TritonData();
+};
+
+class NereidData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    NereidData();
+};
+
+// ----------------------------------------- PLUTO  -----------------------------------------
+
+class CharonData : public PlanetData
+{
+public:
+    /**
+     * @brief Constructor
+     */
+    CharonData();
 };

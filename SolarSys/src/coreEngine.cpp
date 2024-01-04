@@ -39,12 +39,12 @@
  *
  * @return A PlanetObject, the object that can be displayed in a 3D scene.
  ********************************************************************************/
-template <typename DataType = PlanetData, typename ShaderType = ShaderManager>
-PlanetObject createPlanet(FilePath applicationPath, int nbTextures, unsigned int *textures, float windowWidth, float windowHeight)
+template <typename DataType = PlanetData, typename ShaderType = ShaderManager, typename CelestialType = PlanetObject>
+CelestialType createPlanet(FilePath applicationPath, int nbTextures, unsigned int *textures, float windowWidth, float windowHeight)
 {
     auto planetData = DataType();
     auto shader = std::make_shared<ShaderType>(applicationPath); // Need a shared_ptr here to avoid C pointers
-    auto planet = PlanetObject(nbTextures, textures, planetData, shader);
+    auto planet = CelestialType(nbTextures, textures, planetData, shader);
     planet.configureMatrices(windowWidth, windowHeight); // Build the initial matrices linked to this planet
     return planet;
 }
@@ -71,12 +71,12 @@ PlanetObject createPlanet(FilePath applicationPath, int nbTextures, unsigned int
  *
  * @return A PlanetObject, the object that can be displayed in a 3D scene.
  ********************************************************************************/
-template <typename DataType, typename ShaderType = ShaderManager>
-PlanetObject createPlanet(FilePath applicationPath, unsigned int texture, float windowWidth, float windowHeight)
+template <typename DataType, typename ShaderType = ShaderManager, typename CelestialType = PlanetObject>
+CelestialType createPlanet(FilePath applicationPath, unsigned int texture, float windowWidth, float windowHeight)
 {
     auto planetData = DataType();
     auto shader = std::make_shared<ShaderType>(applicationPath); // Need a shared_ptr here to avoid C pointers
-    auto planet = PlanetObject(texture, planetData, shader);
+    auto planet = CelestialType(texture, planetData, shader);
     planet.configureMatrices(windowWidth, windowHeight); // Build the initial matrices linked to this planet
     return planet;
 }
@@ -109,18 +109,41 @@ void createSolarSys(char *relativePath, float windowWidth, float windowHeight, S
 
     unsigned int earthText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_EARTH);
     unsigned int cloudText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_CLOUDS);
+    unsigned int moonText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_MOON);
 
     unsigned int marsText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_MARS);
+    unsigned int phobosText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_PHOBOS);
+    unsigned int deimosText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_DEIMOS);
 
     unsigned int jupiterText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_JUPITER);
+    unsigned int callistoText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_CALLISTO);
+    unsigned int ganymedeText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_GANYMEDE);
+    unsigned int europaText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_EUROPA);
+    unsigned int ioText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_IO);
 
     unsigned int saturnText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_SATURN);
+    unsigned int mimasText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_MIMAS);
+    unsigned int enceladusText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_ENCELADUS);
+    unsigned int tethysText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_TETHYS);
+    unsigned int dioneText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_DIONE);
+    unsigned int rehaText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_REHA);
+    unsigned int titanText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_TITAN);
+    unsigned int hyperionText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_HYPERION);
+    unsigned int iapetusText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_IAPETUS);
 
     unsigned int uranusText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_URANUS);
+    unsigned int arielText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_ARIEL);
+    unsigned int umbrielText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_UMBRIEL);
+    unsigned int titaniaText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_TITANIA);
+    unsigned int oberonText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_OBERON);
+    unsigned int mirandaText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_MIRANDA);
 
     unsigned int neptuneText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_NEPTUNE);
+    unsigned int tritonText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_TRITON);
+    unsigned int nereidText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_NEREID);
 
     unsigned int plutoText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_PLUTO);
+    unsigned int charonText = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_CHARON);
 
     // Sun
     PlanetObject sun = createPlanet<SunData, Shader1FullyLightedTexture>(applicationPath, sunText, windowWidth, windowHeight); // The sun is fully lighted and doesn't depend on any source of light
@@ -133,27 +156,78 @@ void createSolarSys(char *relativePath, float windowWidth, float windowHeight, S
 
     // Earth
     unsigned int earthTextures[] = {earthText, cloudText};
-    PlanetObject earth = createPlanet<EarthData, Shader2Texture>(applicationPath, 2, earthTextures, windowWidth, windowHeight); // TODO : When the data linking is done, no need to add 1 to the width
+    PlanetObject earth = createPlanet<EarthData, Shader2Texture>(applicationPath, 2, earthTextures, windowWidth, windowHeight);
+    SatelliteObject moon = createPlanet<MoonData, Shader1Texture, SatelliteObject>(applicationPath, moonText, windowWidth, windowHeight);
+    earth.addSatellite(moon);
 
     // Mars
     PlanetObject mars = createPlanet<MarsData, Shader1Texture>(applicationPath, marsText, windowWidth, windowHeight);
+    SatelliteObject phobos = createPlanet<PhobosData, Shader1Texture, SatelliteObject>(applicationPath, phobosText, windowWidth, windowHeight);
+    SatelliteObject deimos = createPlanet<DeimosData, Shader1Texture, SatelliteObject>(applicationPath, deimosText, windowWidth, windowHeight);
+
+    mars.addSatellite(phobos);
+    mars.addSatellite(deimos);
 
     // Jupiter
     PlanetObject jupiter = createPlanet<JupiterData, Shader1Texture>(applicationPath, jupiterText, windowHeight, windowHeight);
+    SatelliteObject callisto = createPlanet<CallistoData, Shader1Texture, SatelliteObject>(applicationPath, callistoText, windowWidth, windowHeight);
+    SatelliteObject ganymede = createPlanet<GanymedeData, Shader1Texture, SatelliteObject>(applicationPath, ganymedeText, windowWidth, windowHeight);
+    SatelliteObject europa = createPlanet<EuropaData, Shader1Texture, SatelliteObject>(applicationPath, europaText, windowWidth, windowHeight);
+    SatelliteObject io = createPlanet<IoData, Shader1Texture, SatelliteObject>(applicationPath, ioText, windowWidth, windowHeight);
+
+    jupiter.addSatellite(callisto);
+    jupiter.addSatellite(ganymede);
+    jupiter.addSatellite(europa);
+    jupiter.addSatellite(io);
 
     // Saturn
     PlanetObject saturn = createPlanet<SaturnData, Shader1Texture>(applicationPath, saturnText, windowWidth, windowHeight);
+    SatelliteObject mimas = createPlanet<MimasData, Shader1Texture, SatelliteObject>(applicationPath, mimasText, windowWidth, windowHeight);
+    SatelliteObject enceladus = createPlanet<EnceladusData, Shader1Texture, SatelliteObject>(applicationPath, enceladusText, windowWidth, windowHeight);
+    SatelliteObject tethys = createPlanet<TethysData, Shader1Texture, SatelliteObject>(applicationPath, tethysText, windowWidth, windowHeight);
+    SatelliteObject dione = createPlanet<DioneData, Shader1Texture, SatelliteObject>(applicationPath, dioneText, windowWidth, windowHeight);
+    SatelliteObject rhea = createPlanet<RheaData, Shader1Texture, SatelliteObject>(applicationPath, rehaText, windowWidth, windowHeight);
+    SatelliteObject titan = createPlanet<TitanData, Shader1Texture, SatelliteObject>(applicationPath, titanText, windowWidth, windowHeight);
+    SatelliteObject hyperion = createPlanet<HyperionData, Shader1Texture, SatelliteObject>(applicationPath, hyperionText, windowWidth, windowHeight);
+    SatelliteObject iapetus = createPlanet<IapetusData, Shader1Texture, SatelliteObject>(applicationPath, iapetusText, windowWidth, windowHeight);
+    saturn.addSatellite(mimas);
+    saturn.addSatellite(enceladus);
+    saturn.addSatellite(tethys);
+    saturn.addSatellite(dione);
+    saturn.addSatellite(rhea);
+    saturn.addSatellite(titan);
+    saturn.addSatellite(hyperion);
+    saturn.addSatellite(iapetus);
 
     // Uranus
     PlanetObject uranus = createPlanet<UranusData, Shader1Texture>(applicationPath, uranusText, windowWidth, windowHeight);
+    SatelliteObject ariel = createPlanet<ArielData, Shader1Texture, SatelliteObject>(applicationPath, arielText, windowWidth, windowHeight);
+    SatelliteObject umbriel = createPlanet<UmbrielData, Shader1Texture, SatelliteObject>(applicationPath, umbrielText, windowWidth, windowHeight);
+    SatelliteObject titania = createPlanet<TitaniaData, Shader1Texture, SatelliteObject>(applicationPath, titaniaText, windowWidth, windowHeight);
+    SatelliteObject oberon = createPlanet<OberonData, Shader1Texture, SatelliteObject>(applicationPath, oberonText, windowWidth, windowHeight);
+    SatelliteObject miranda = createPlanet<MirandaData, Shader1Texture, SatelliteObject>(applicationPath, mirandaText, windowWidth, windowHeight);
+
+    uranus.addSatellite(ariel);
+    uranus.addSatellite(umbriel);
+    uranus.addSatellite(titania);
+    uranus.addSatellite(oberon);
+    uranus.addSatellite(miranda);
 
     // Neptune
     PlanetObject neptune = createPlanet<NeptuneData, Shader1Texture>(applicationPath, neptuneText, windowWidth, windowHeight);
+    SatelliteObject triton = createPlanet<TritonData, Shader1Texture, SatelliteObject>(applicationPath, tritonText, windowWidth, windowHeight);
+    SatelliteObject nereid = createPlanet<NereidData, Shader1Texture, SatelliteObject>(applicationPath, nereidText, windowWidth, windowHeight);
+
+    neptune.addSatellite(triton);
+    neptune.addSatellite(nereid);
 
     // Pluto
     PlanetObject pluto = createPlanet<PlutoData, Shader1Texture>(applicationPath, plutoText, windowWidth, windowHeight);
+    SatelliteObject charon = createPlanet<CharonData, Shader1Texture, SatelliteObject>(applicationPath, charonText, windowWidth, windowHeight);
 
-    // // Fill the solar system
+    pluto.addSatellite(charon);
+
+    // Fill the solar system
     solarSys.addPlanet(std::make_unique<PlanetObject>(sun));
     solarSys.addPlanet(std::make_unique<PlanetObject>(mercury));
     solarSys.addPlanet(std::make_unique<PlanetObject>(venus));
@@ -250,11 +324,9 @@ int render3DScene(char *relativePath)
         {
             // Solution if problem persist: Use a step...
             inProgramElapsedTime += step * context.getSpeedMultiplier();
-            renderEng->start(planet);                    // Binds textures and vao
             planet.updateMatrices(inProgramElapsedTime); // Update the matrices regarding the time
             context.update_camera();
             renderEng->draw(planet, camera, sunLight); // Draw the current planet
-            renderEng->end(planet);                    // Unbind the resources
         }
 
         window->manageWindow(); // Make the window active (events) and swap the buffers

@@ -90,3 +90,110 @@ NeptuneData::NeptuneData() : PlanetData(16.11, 49244, 4495000000, 0, 60189.)
 PlutoData::PlutoData() : PlanetData(153.282, 2376, 5910000000, 0, 90560)
 {
 }
+
+/* ========================================================================================================== */
+/* =                                                SATELLITES                                              = */
+/* ========================================================================================================== */
+
+// ----------------------------------------- EARTH  -----------------------------------------
+MoonData::MoonData() : PlanetData(27.32, 3474, 384400 + satelliteOffset, 0, 27.32)
+{
+}
+
+// ----------------------------------------- MARS  -----------------------------------------
+PhobosData::PhobosData() : PlanetData(0.31891, 22.0, 9378 + satelliteOffset, 0, 0.31891)
+{
+}
+
+DeimosData::DeimosData() : PlanetData(30.3, 12.4, 23460 + satelliteOffset, 0, 30.3)
+{
+}
+
+// ----------------------------------------- JUPITER  -----------------------------------------
+CallistoData::CallistoData() : PlanetData(16.689, 4800, 1882700 + satelliteOffset, 0, 16.689)
+{
+}
+
+GanymedeData::GanymedeData() : PlanetData(7.155, 5.268, 1070412 + satelliteOffset, 0, 7.155)
+{
+}
+
+EuropaData::EuropaData() : PlanetData(3.551, 3.121, 671034 + satelliteOffset, 0, 3.551)
+{
+}
+
+IoData::IoData() : PlanetData(1.769, 3.643, 421800 + satelliteOffset, 0, 1.769)
+{
+}
+
+// ----------------------------------------- SATURN  -----------------------------------------
+
+MimasData::MimasData() : PlanetData(0.942, 396.4, 185520 + satelliteOffset, 0, 0.942)
+{
+}
+
+EnceladusData::EnceladusData() : PlanetData(0.0, 504.2, 238020 + satelliteOffset, 0, 0.0)
+{
+}
+
+TethysData::TethysData() : PlanetData(1.888, 1060.4, 294660 + satelliteOffset, 0, 1.888)
+{
+}
+
+DioneData::DioneData() : PlanetData(0.524, 1122.8, 377400 + satelliteOffset, 0, 0.524)
+{
+}
+
+RheaData::RheaData() : PlanetData(1.08, 1527.6, 527040 + satelliteOffset, 0, 1.08)
+{
+}
+
+TitanData::TitanData() : PlanetData(0.174, 5150, 1221870 + satelliteOffset, 0, 0.174)
+{
+}
+
+HyperionData::HyperionData() : PlanetData(0.629, 360.4, 1470900 + satelliteOffset, 0, 0.629)
+{
+}
+
+IapetusData::IapetusData() : PlanetData(15.967, 1469, 3561300 + satelliteOffset, 0, 15.967)
+{
+}
+
+// ----------------------------------------- URANUS  -----------------------------------------
+
+ArielData::ArielData() : PlanetData(0.0, 1158.8, 191020 + satelliteOffset, 0, 0.0)
+{
+}
+
+UmbrielData::UmbrielData() : PlanetData(0.0, 1169.4, 266300 + satelliteOffset, 0, 0.0)
+{
+}
+
+TitaniaData::TitaniaData() : PlanetData(0.0, 1576.8, 435910 + satelliteOffset, 0, 0.0)
+{
+}
+
+OberonData::OberonData() : PlanetData(0.0, 1522.8, 583520 + satelliteOffset, 0, 0.0)
+{
+}
+
+MirandaData::MirandaData() : PlanetData(0.0, 471.6, 129390 + satelliteOffset, 0, 0.0)
+{
+}
+
+// ----------------------------------------- NEPTUNE  -----------------------------------------
+
+TritonData::TritonData() : PlanetData(156.865, 2706, 354759 + satelliteOffset, 0, 156.865)
+{
+}
+
+NereidData::NereidData() : PlanetData(0.0, 340, 5513400 + satelliteOffset, 0, 0.0)
+{
+}
+
+// ----------------------------------------- PLUTO  -----------------------------------------
+
+CharonData::CharonData() : PlanetData(0.0, 1207, 19591 + satelliteOffset, 0, 0.0)
+{
+}

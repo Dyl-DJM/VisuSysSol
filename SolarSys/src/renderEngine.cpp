@@ -12,7 +12,7 @@
 
 #include "include/renderEngine.hpp"
 
-#include <glimac/glm.hpp> // tests
+#include <glimac/glm.hpp>
 
 /**
  * @brief Clears the display of the scene.   (CLEAR THE SCENE RATHER... MIGHT BE SMART TO RENAME IT clearScene)
@@ -135,8 +135,9 @@ void RenderEngine::start(const PlanetObject &planet)
  * @param planet A PlanetObject (defined in the planetObject module) we want
  *               to draw.
  ********************************************************************************/
-void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light)
+void RenderEngine::draw(const PlanetObject &planet, Camera &camera, const Light &light)
 {
+    start(planet);
     auto planetShader = planet.getShaderManager().get();
     auto &planetProgram = planetShader->m_Program; // Use of reference to not call the copy constructor of Program (which is private)
 
@@ -180,6 +181,13 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light
 
     // Draw the vertices
     glDrawArrays(GL_TRIANGLES, 0, _nbVertices);
+
+    end(planet);
+
+    for (auto &satellite : planet.getSatellites())
+    {
+        draw(satellite, camera, light);
+    }
 }
 
 /**
