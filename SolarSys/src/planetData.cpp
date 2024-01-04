@@ -22,9 +22,9 @@
  * @param rotation Rotation period of the planet in hour
  * @param diameter Size of the planet in km
  * @param position Position of the planet relative to the sun
- * @param angle Angle of rotation of the ellipse
+ * @param angle Axial tilt of the planet
  * @param revPeriod Revolution period of the planet in Earth days
- * @param hasRing Wether or not the planet has a ring
+ * @param hasRing Whether or not the planet has a ring
  * @param ringDist The ring's distance in km from the planet's center
  * @param ringThickness The ring's size from the inner edge to the outer edge in km
  ********************************************************************************/
@@ -51,13 +51,13 @@ SunData::SunData() : PlanetData(609.12, 1392680, 0, 0, 0)
 
 // Mercury
 
-MercuryData::MercuryData() : PlanetData(4222.6, 4879.4, 58000000, 0, 87.969)
+MercuryData::MercuryData() : PlanetData(4222.6, 4879.4, 58000000, 0.01, 87.969)
 {
 }
 
 // Venus
 
-VenusData::VenusData() : PlanetData(2802.0, 12103.6, 108208930, 0, 224.701)
+VenusData::VenusData() : PlanetData(2802.0, 12103.6, 108208930, 177.4, 224.701)
 {
 }
 
@@ -66,36 +66,36 @@ VenusData::VenusData() : PlanetData(2802.0, 12103.6, 108208930, 0, 224.701)
 /**
  * @brief Constructor of the class.
  ********************************************************************************/
-EarthData::EarthData() : PlanetData(24., 12742, 149597871, 0, 365.256)
+EarthData::EarthData() : PlanetData(24., 12742, 149597871, 23.5, 365.256)
 {
 }
 
 // Mars
-MarsData::MarsData() : PlanetData(24.6597, 6779, 227900000, 0, 686.980)
+MarsData::MarsData() : PlanetData(24.6597, 6779, 227900000, 25.19, 686.980)
 {
 }
 
 // Jupiter
-JupiterData::JupiterData() : PlanetData(9.9259, 139822, 778000000, 0, 4332.589)
+JupiterData::JupiterData() : PlanetData(9.9259, 139822, 778000000, 3.13, 4332.589)
 {
 }
 
 // Saturn
-SaturnData::SaturnData() : PlanetData(10.656, 116464, 1434000000, 0, 10759.22, true, 66900, 72926) // We display only until the F ring
+SaturnData::SaturnData() : PlanetData(10.656, 116464, 1434000000, 26.73, 10759.22, true, 66900, 72926) // We display only until the F ring
 {
 }
 
 // Uranus
-UranusData::UranusData() : PlanetData(17.24, 50724, 2871000000, 0, 30685.4, true, 41837, 9312) // Display until epsilon ring
+UranusData::UranusData() : PlanetData(17.24, 50724, 2871000000, 97.77, 30685.4, true, 41837, 9312) // Display until epsilon ring
 {
 }
 
 // Neptune
-NeptuneData::NeptuneData() : PlanetData(16.11, 49244, 4495000000, 0, 60189.)
+NeptuneData::NeptuneData() : PlanetData(16.11, 49244, 4495000000, 28.32, 60189.)
 {
 }
 
 // Pluto
-PlutoData::PlutoData() : PlanetData(153.282, 2376, 5910000000, 0, 90560)
+PlutoData::PlutoData() : PlanetData(153.282, 2376, 5910000000, 119.61, 90560)
 {
 }

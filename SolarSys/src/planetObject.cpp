@@ -101,6 +101,7 @@ void PlanetObject::updateMatrices(float rotation)
     auto MVMatrix = glm::rotate(glm::mat4(1), revolutionDegree, glm::vec3(0, 1, 0)); // Rotation around the central point (the sun)
 
     MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, _data._position));                         // Distance from the central point (from the sun)
+    MVMatrix = glm::rotate(MVMatrix, glm::radians(_data._angle), glm::vec3(0, 0, 1));              // Planet's axial tilt
     MVMatrix = glm::rotate(MVMatrix, rotationDegree - revolutionDegree, glm::vec3(0, 1, 0));       // Rotation on itself
     MVMatrix = glm::scale(MVMatrix, glm::vec3(_data._diameter, _data._diameter, _data._diameter)); // Size dimension
 

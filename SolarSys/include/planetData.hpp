@@ -22,14 +22,18 @@
 class PlanetData
 {
 protected:
+
     /**
      * @brief Constructor of the class.
      *
-     * @param rotation Float value that describes the rotation period of the
-     *                 planet.
-     * @param diameter Size of the planet.
-     * @param position Position value relative to the sun's position.
-     * @param angle  Angle of the ellipse.
+     * @param rotation Rotation period of the planet in hour
+     * @param diameter Size of the planet in km
+     * @param position Position of the planet relative to the sun
+     * @param angle Axial tilt of the planet
+     * @param revPeriod Revolution period of the planet in Earth days
+     * @param hasRing Whether or not the planet has a ring
+     * @param ringDist The ring's distance in km from the planet's center
+     * @param ringThickness The ring's size from the inner edge to the outer edge in km
      ********************************************************************************/
     PlanetData(float rotation, float diameter, float position, float angle, float revPeriod, bool hasRing, float ringDist, float ringThickness);
 
