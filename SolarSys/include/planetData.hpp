@@ -28,14 +28,15 @@ protected:
      *
      * @param rotation Rotation period of the planet in hour
      * @param diameter Size of the planet in km
-     * @param position Position of the planet relative to the sun
-     * @param angle Axial tilt of the planet
+     * @param position Position of the planet relative to the sun in km
+     * @param orbitInclination The angle of inclination of the planet's orbit in degree
+     * @param angle Axial tilt of the planet in degree
      * @param revPeriod Revolution period of the planet in Earth days
      * @param hasRing Whether or not the planet has a ring
      * @param ringDist The ring's distance in km from the planet's center
      * @param ringThickness The ring's size from the inner edge to the outer edge in km
      ********************************************************************************/
-    PlanetData(float rotation, float diameter, float position, float angle, float revPeriod, bool hasRing, float ringDist, float ringThickness);
+    PlanetData(float rotation, float diameter, float position, float orbitInclination, float angle, float revPeriod, bool hasRing, float ringDist, float ringThickness);
 
 public:
     /**
@@ -46,7 +47,8 @@ public:
     const float _rotationPeriod;   // Rotation period of the planet
     const float _diameter;         // Size of the planet
     const float _position;         // Position of the planet relative to the sun
-    const float _angle;            // Angle of rotation of the ellipse
+    const float _orbitInclination; // Angle of the inclination of the planet's orbit in degree
+    const float _angle;            // Angle of rotation of the ellipse in degree
     const float _revolutionPeriod; // Revolution period of the planet
     const bool _hasRing;          // Boolean describing the presence of a ring or not.
     const float _ringDist;        // Distance of the ring from center of planet
