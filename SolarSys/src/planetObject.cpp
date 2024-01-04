@@ -115,6 +115,7 @@ void PlanetObject::updateMatrices(float rotation)
         auto refMat = glm::rotate(glm::mat4(1), revolutionDegree, glm::vec3(0, 1, 0)); // Rotation around the central point (the sun)
         refMat = glm::rotate(refMat, glm::radians(_data._orbitInclination), glm::vec3(1, 0, 0));  // Planet's orbit inclination
         refMat = glm::translate(refMat, glm::vec3(0, 0, _data._position));
+        refMat = glm::rotate(refMat, glm::radians(_data._angle), glm::vec3(-1, 0, 0));
 
         satellite.fillMatrices(refMat, projMatrix, rotation);
     }
