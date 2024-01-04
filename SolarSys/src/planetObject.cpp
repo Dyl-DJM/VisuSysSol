@@ -165,7 +165,7 @@ void PlanetObject::addSatellite(SatelliteObject satellite)
  *
  * @return A view of the satellites stored by the planet.
  ********************************************************************************/
-const std::vector<SatelliteObject> &PlanetObject::getSatellites() const
+std::vector<SatelliteObject> &PlanetObject::getSatellites()
 {
     return _satellites;
 }

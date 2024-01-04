@@ -105,7 +105,7 @@ public:
      * @param planet A PlanetObject (defined in the planetObject module) we want
      *               to draw.
      ********************************************************************************/
-    void draw(const PlanetObject &planet, Camera &camera, const Light &light);
+    void draw(PlanetObject &planet, Camera &camera, const Light &light);
 
     /**
      * @brief Put an end to the current rendering environment.
@@ -178,7 +178,7 @@ public:
      ********************************************************************************/
     void endRing(const PlanetObject &planet);
 
-    void createPlanetRing(PlanetObject & planet);
+    void createPlanetRing(PlanetObject &planet);
 
 private:
     // Planets

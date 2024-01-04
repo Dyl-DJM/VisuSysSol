@@ -174,7 +174,7 @@ public:
      *
      * @return A view of the satellites stored by the planet.
      ********************************************************************************/
-    const std::vector<SatelliteObject> &getSatellites() const;
+    std::vector<SatelliteObject> &getSatellites();
 
 protected:                                  // We want the attributes to be available by the subclasses
     PlanetData _data;                       // Information about the planet

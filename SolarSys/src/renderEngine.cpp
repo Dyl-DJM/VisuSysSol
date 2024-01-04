@@ -205,7 +205,7 @@ void RenderEngine::start(const PlanetObject &planet)
  * @param planet A PlanetObject (defined in the planetObject module) we want
  *               to draw.
  ********************************************************************************/
-void RenderEngine::draw(const PlanetObject &planet, Camera &camera, const Light &light)
+void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light)
 {
     start(planet);
     auto planetShader = planet.getShaderManager().get();
