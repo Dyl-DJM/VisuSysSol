@@ -53,7 +53,7 @@ void Context::update_camera()
     {
         camera.update_position(solarSys[planet_idx].getMatrices().getMVMatrix()[3]);
     }
-    else if (camera.isInitialPov()) // We juste restore the initial computations for the view matrix of this point of viex
+    else if (camera.isInitialPov() || camera.isProfilePov()) // We just restore the initial computations(transformations on matrices) for the view matrix for one of these two modes
     {
         camera.initialConfig();
     }
@@ -121,6 +121,14 @@ void Context::resetCam()
 }
 
 /**
+ * @brief Returns to the profile point of view for the camera.
+ ********************************************************************************/
+void Context::profileCam()
+{
+    camera.setProfilePov();
+}
+
+/**
  * @brief Tells if the cam is on the focused mode or not.
  *
  * @return True if the camera is set on the focused mode and false otherwise.
@@ -138,4 +146,14 @@ bool Context::isCamFocused()
 bool Context::isInitalCam()
 {
     return camera.isInitialPov();
+}
+
+/**
+ * @brief Tells if the cam is on the profile mode or not.
+ *
+ * @return True if the camera is set on the profile mode and false otherwise.
+ ********************************************************************************/
+bool Context::isProfileCam()
+{
+    return camera.isProfilePov();
 }

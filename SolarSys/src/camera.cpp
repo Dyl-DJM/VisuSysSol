@@ -62,7 +62,10 @@ void Camera::rotateLeft(float degrees)
  */
 void Camera::rotateUp(float degrees)
 {
-    m_fAngleX += degrees;
+    if (_pov != PROFILE) // We want to rotate up only if we are in the default/initial mode where we are allowed to rotate arround this axis too
+    {
+        m_fAngleX += degrees;
+    }
 }
 
 /**
@@ -156,4 +159,28 @@ void Camera::setInitialPov()
     m_fAngleX = initialAngleX;
     m_fAngleY = initialAngleY;
     _pov = GENERAL;
+}
+
+/**
+ * @brief Checks if the camera is currently in the profile mode.
+ *
+ * @return True if the camera is currently in the profile mode and false otherwise.
+ */
+bool Camera::isProfilePov()
+{
+    return _pov == PROFILE;
+}
+
+/**
+ * @brief Sets the camera in the profile mode.
+ */
+void Camera::setProfilePov()
+{
+    if (_pov != PROFILE) // Without the condition
+    {
+        m_fDistance = initialDistance;
+        m_fAngleX = 0; // The profile view is the same as the default/initial but with a a 0 value on X angle
+        m_fAngleY = initialAngleY;
+        _pov = PROFILE;
+    }
 }

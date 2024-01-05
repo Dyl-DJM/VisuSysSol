@@ -96,6 +96,18 @@ public:
      */
     bool isInitialPov();
 
+    /**
+     * @brief Checks if the camera is currently in the profile mode.
+     *
+     * @return True if the camera is currently in the profile mode and false otherwise.
+     */
+    bool isProfilePov();
+
+    /**
+     * @brief Sets the camera in the profile mode.
+     */
+    void setProfilePov();
+
     static const float initialDistance;
     static const float initialAngleX;
     static const float initialAngleY;

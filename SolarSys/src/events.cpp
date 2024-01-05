@@ -123,11 +123,17 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->resetCam();
     }
+    // Go to the profile pov
+    else if (key == GLFW_KEY_P && action == GLFW_RELEASE)
+    {
+        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
+        context->profileCam();
+    }
     // Make the distances
     else if (key == GLFW_KEY_D && action == GLFW_RELEASE)
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
-        if (context->isInitalCam()) // We want to change distances only in the initial pov
+        if (!context->isCamFocused()) // We want to change distances only in the initial pov
         {
             PlanetData::_largeView = !PlanetData::_largeView;
         }

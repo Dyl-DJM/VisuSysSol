@@ -94,6 +94,18 @@ public:
      ********************************************************************************/
     bool isInitalCam();
 
+    /**
+     * @brief Sets the profile point of view for the camera.
+     ********************************************************************************/
+    void profileCam();
+
+    /**
+     * @brief Tells if the cam is on the profile mode or not.
+     *
+     * @return True if the camera is set on the profile mode and false otherwise.
+     ********************************************************************************/
+    bool isProfileCam();
+
 private:
     Camera &camera;
     SolarSystem &solarSys;
