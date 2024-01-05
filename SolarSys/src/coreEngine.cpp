@@ -317,7 +317,7 @@ int render3DScene(char *relativePath)
 
     /********************* CONTEXT OBJECT CREATION ********************/
 
-    Context context = Context(camera, *solarSys);
+    Context context = Context(camera, *solarSys, sunLight);
     float inProgramElapsedTime = getTime();
     float currentElapsedTime = getTime();
 

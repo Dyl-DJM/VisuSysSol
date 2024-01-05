@@ -158,6 +158,13 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
         if (!context->isCamFocused()) // We want to change distances only in the initial pov
         {
             PlanetData::_largeView = !PlanetData::_largeView;
+
+            if (PlanetData::_largeView){
+                context->getLight().setIntensity(30.);
+            }
+            else {
+                context->getLight().setIntensity(7.5);
+            }
         }
     }
 }

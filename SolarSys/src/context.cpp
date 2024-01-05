@@ -19,8 +19,8 @@
  * @param solarSystem The SolarSystem object associated to the program
  * @param speedMultiplier Speed multiplier at which time elapses in the solar system
  */
-Context::Context(Camera &cam, SolarSystem &solarSystem)
-    : camera{cam}, solarSys{solarSystem}, planet_idx{0}, speedMultiplier{1}
+Context::Context(Camera &cam, SolarSystem &solarSystem, Light & light)
+    : camera{cam}, solarSys{solarSystem}, planet_idx{0}, speedMultiplier{1}, _light {light}
 {
     update_camera();
 }
@@ -182,4 +182,11 @@ bool Context::isInitalCam()
 bool Context::isProfileCam()
 {
     return camera.isProfilePov();
+}
+
+/**
+ * @brief Accessor for the light
+*/
+Light & Context::getLight(){
+    return _light;
 }

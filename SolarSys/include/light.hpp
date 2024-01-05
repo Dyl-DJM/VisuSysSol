@@ -36,6 +36,13 @@ public:
      ********************************************************************************/
     void fill(glm::vec3 kd, glm::vec3 ks, float shininess, glm::vec3 pos, glm::vec3 intensity);
 
+    /**
+     * @brief Set the intensity of the light to value
+     * 
+     * @param value The light intensity to set
+    */
+    void setIntensity(float value);
+
     // Material coefficients
     glm::vec3 _Kd;        // Diffuse reflection
     glm::vec3 _Ks;        // Glossy reflection

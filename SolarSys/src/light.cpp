@@ -37,3 +37,14 @@ void Light::fill(glm::vec3 kd, glm::vec3 ks, float shininess, glm::vec3 pos, glm
     _position = pos;
     _intensity = intensity;
 }
+
+/**
+ * @brief Set the intensity of the light to value
+ * 
+ * @param value The light intensity to set
+*/
+void Light::setIntensity(float value){
+    _intensity.x = value;
+    _intensity.y = value;
+    _intensity.z = value;
+}
