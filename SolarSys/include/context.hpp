@@ -74,6 +74,24 @@ public:
     void decreaseSpeed(float value);
 
     /**
+     * @brief Creates a time leap linked to the context.
+     *
+     * @param value The float value of the time leap (in seconds).
+     ********************************************************************************/
+    void timeLeap(float value);
+    /**
+     * @brief Consumes the current time leap.
+     *
+     * Returns the current value of the time leap, if no one was created before
+     * the value returned is 0.
+     *
+     * Then the time leap is restored to 0.
+     *
+     * @param The float value of the time leap (in seconds).
+     ********************************************************************************/
+    float consumeTimeLeap();
+
+    /**
      * @brief Returns to the initial configuration of the camera.
      *
      * The camera will return its first position, view angle...
@@ -111,4 +129,5 @@ private:
     SolarSystem &solarSys;
     unsigned int planet_idx; // Index of the selected planet in the solar system
     float speedMultiplier;   // Multiplier for the speed at which time elapses in the solar system
+    float _tLeap = 0;
 };

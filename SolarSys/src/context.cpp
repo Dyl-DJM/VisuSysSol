@@ -23,7 +23,6 @@ Context::Context(Camera &cam, SolarSystem &solarSystem)
     : camera{cam}, solarSys{solarSystem}, planet_idx{0}, speedMultiplier{1}
 {
     update_camera();
-    camera.set_distance(solarSys[planet_idx].getSize() * 2);
 }
 
 /**
@@ -107,6 +106,33 @@ void Context::increaseSpeed(float value)
 void Context::decreaseSpeed(float value)
 {
     speedMultiplier = (speedMultiplier - value < 1) ? speedMultiplier : (speedMultiplier - value);
+}
+
+/**
+ * @brief Creates a time leap linked to the context.
+ *
+ * @param value The float value of the time leap (in seconds).
+ ********************************************************************************/
+void Context::timeLeap(float value)
+{
+    _tLeap = value;
+}
+
+/**
+ * @brief Consumes the current time leap.
+ *
+ * Returns the current value of the time leap, if no one was created before
+ * the value returned is 0.
+ *
+ * Then the time leap is restored to 0.
+ *
+ * @param The float value of the time leap (in seconds).
+ ********************************************************************************/
+float Context::consumeTimeLeap()
+{
+    auto val = _tLeap;
+    _tLeap = 0; // Restores the time leap to 0 when consumed
+    return val;
 }
 
 /**

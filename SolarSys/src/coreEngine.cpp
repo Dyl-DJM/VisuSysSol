@@ -364,6 +364,7 @@ int render3DScene(char *relativePath)
         for (auto &planet : (*solarSys))
         {
             inProgramElapsedTime += step * context.getSpeedMultiplier();
+            inProgramElapsedTime += context.consumeTimeLeap();
 
             // Update the matrices regarding the time, we want the satellites to update its matrices only in the focused mode
             planet.updateMatrices(inProgramElapsedTime, context.isCamFocused());

@@ -129,15 +129,6 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->profileCam();
     }
-    // Make the distances
-    else if (key == GLFW_KEY_D && action == GLFW_RELEASE)
-    {
-        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
-        if (!context->isCamFocused()) // We want to change distances only in the initial pov
-        {
-            PlanetData::_largeView = !PlanetData::_largeView;
-        }
-    }
 
     /**************** Speed Management ****************/
 
@@ -150,6 +141,24 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->decreaseSpeed(2);
+    }
+    // Time leap
+    else if (key == GLFW_KEY_T && action == GLFW_RELEASE)
+    {
+        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
+        context->timeLeap(100); // Set a 100 unity time leap
+    }
+
+    /**************** Distance system ****************/
+
+    // Make the distances
+    else if (key == GLFW_KEY_D && action == GLFW_RELEASE)
+    {
+        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
+        if (!context->isCamFocused()) // We want to change distances only in the initial pov
+        {
+            PlanetData::_largeView = !PlanetData::_largeView;
+        }
     }
 }
 
