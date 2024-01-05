@@ -179,8 +179,8 @@ void Camera::setProfilePov()
     if (_pov != PROFILE) // Without the condition
     {
         m_fDistance = initialDistance;
-        m_fAngleX = 0; // The profile view is the same as the default/initial but with a a 0 value on X angle
-        m_fAngleY = initialAngleY;
+        m_fAngleX = 0;  // The profile view is the same as the default/initial but with a a 0 value on X angle
+        m_fAngleY = 90; // The initial state of the profil view, must
         _pov = PROFILE;
     }
 }
