@@ -16,6 +16,7 @@
 #define GLFW_INCLUDE_NONE
 
 #include "../include/camera.hpp"
+#include "../include/light.hpp"
 #include "../include/solarSystem.hpp"
 
 class Context
