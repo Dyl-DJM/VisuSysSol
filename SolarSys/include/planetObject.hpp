@@ -90,8 +90,10 @@ public:
      * @brief Apply transformations on the matrices.
      *
      * @param rotation A float value that determines how much do we rotate.
+     * @param updateSatellites If true, then the satellites matrices are also
+     *                         updated.
      ********************************************************************************/
-    void updateMatrices(float rotation);
+    void updateMatrices(float rotation, bool updateSatellites);
 
     /**
      * @brief Retrieves the ID of the textures binded to the planet object.

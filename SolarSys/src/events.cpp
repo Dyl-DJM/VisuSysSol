@@ -106,12 +106,14 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
     // Go to the next planet focused pov
     if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE)
     {
+        PlanetData::_largeView = true;
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->previous_planet();
     }
     // Go to the previous planet focused pov
     else if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)
     {
+        PlanetData::_largeView = true;
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->next_planet();
     }
@@ -120,6 +122,15 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->resetCam();
+    }
+    // Make the distances
+    else if (key == GLFW_KEY_D && action == GLFW_RELEASE)
+    {
+        Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
+        if (context->isInitalCam()) // We want to change distances only in the initial pov
+        {
+            PlanetData::_largeView = !PlanetData::_largeView;
+        }
     }
 
     /**************** Speed Management ****************/

@@ -14,6 +14,8 @@
 
 #include "include/planetData.hpp"
 
+bool PlanetData::_largeView = true; // We want to take the real distances by default
+
 /*================================== PLANET DATA ====================================*/
 
 /**
@@ -30,16 +32,24 @@
  * @param ringThickness The ring's size from the inner edge to the outer edge in km
  ********************************************************************************/
 PlanetData::PlanetData(float rotation, float diameter, float position, float orbitInclination, float angle, float revPeriod, bool hasRing = false, float ringDist = 0, float ringThickness = 0)
-    : _rotationPeriod{rotation / PlanetData::rotationUnit}
-    , _diameter{diameter / PlanetData::sizeUnit}
-    , _position{position / PlanetData::distanceUnit}
-    , _orbitInclination{orbitInclination}
-    , _angle{angle}
-    , _revolutionPeriod{revPeriod * (24.f / PlanetData::rotationUnit)} // Since we count the revolution period as Earth days (24 hours)                                                                                                                                                                                                                              // And the rotationUnit is 6h, we multiply it by 4 .
-    , _hasRing{hasRing},
-     _ringDist{ringDist / (PlanetData::sizeUnit / 2)}, // Divide the unit by 2 because it's a radius and not a diameter
+    : _position{(position == 0 ? 0 : (y0 + (((position - x0) * (y1 - y0)) / (x1 - x0)))) / PlanetData::distanceUnit}, _largePosition{position / PlanetData::distanceUnit}, _rotationPeriod{rotation / PlanetData::rotationUnit}, _diameter{diameter / PlanetData::sizeUnit}, _orbitInclination{orbitInclination}, _angle{angle}, _revolutionPeriod{revPeriod * (24.f / PlanetData::rotationUnit)} // Since we count the revolution period as Earth days (24 hours)                                                                                                                                                                                                                              // And the rotationUnit is 6h, we multiply it by 4 .
+      ,
+      _hasRing{hasRing},
+      _ringDist{ringDist / (PlanetData::sizeUnit / 2)}, // Divide the unit by 2 because it's a radius and not a diameter
       _ringThickness{ringThickness / PlanetData::sizeUnit}
 {
+}
+
+/**
+ * @brief Retrieves the value of the planet position from the sun.
+ ********************************************************************************/
+float PlanetData::getPosition()
+{
+  if (_largeView)
+  {
+    return _largePosition;
+  }
+  return _position;
 }
 
 /*================================== SUN DATA ====================================*/

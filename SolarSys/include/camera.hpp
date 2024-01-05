@@ -109,13 +109,13 @@ private:
     };
 
     POV_STATE _pov = GENERAL;
-    float m_fDistance;      // Distance from the center of the scene
-    float m_fAngleX;        // Rotation angle on the X axis
-    float m_fAngleY;        // Rotation angle on the Y axis
-    glm::vec3 position;     // Position of the camera
+    float m_fDistance;  // Distance from the center of the scene
+    float m_fAngleX;    // Rotation angle on the X axis
+    float m_fAngleY;    // Rotation angle on the Y axis
+    glm::vec3 position; // Position of the camera
     glm::mat4 view_matrix;
 };
 
-inline const float Camera::initialDistance = 25;
+inline const float Camera::initialDistance = 18;
 inline const float Camera::initialAngleX = fractionToDegrees(3, 4);
 inline const float Camera::initialAngleY = 0;

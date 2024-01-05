@@ -308,9 +308,12 @@ void RenderEngine::draw(PlanetObject &planet, Camera &camera, const Light &light
 
     end(planet);
 
-    for (auto &satellite : planet.getSatellites())
+    if (camera.isFocusedPov()) // We draw the satellites only in the focused mode
     {
-        draw(satellite, camera, light);
+        for (auto &satellite : planet.getSatellites())
+        {
+            draw(satellite, camera, light);
+        }
     }
 }
 

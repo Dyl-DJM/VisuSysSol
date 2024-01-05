@@ -73,15 +73,17 @@ PlanetObject::PlanetObject(unsigned int nbOfTextures, GLuint *textureIDs, const 
  ********************************************************************************/
 void PlanetObject::configureMatrices(float w, float h)
 {
-    _matrices.init(w, h, _data._angle, _data._position - 5, _data._diameter);
+    _matrices.init(w, h, _data._angle, _data.getPosition() - 5, _data._diameter);
 }
 
 /**
  * @brief Apply transformations on the matrices.
  *
  * @param rotation A float value that determines how much do we rotate.
+ * @param updateSatellites If true, then the satellites matrices are also
+ *                         updated.
  ********************************************************************************/
-void PlanetObject::updateMatrices(float rotation)
+void PlanetObject::updateMatrices(float rotation, bool updateSatellites)
 {
 
     // Previous matrices
@@ -96,11 +98,11 @@ void PlanetObject::updateMatrices(float rotation)
     float revolutionDegree = _data._revolutionPeriod == 0 ? 0 : rotation * (1. / _data._revolutionPeriod);
     // TODO : put real conversions iduced by real values of the rotation period, diameter etc..
     // auto MVMatrixBasic = glm::translate(glm::mat4(1), glm::vec3(0.f, 0.f, 0));       // Central point of the sun : need to put it as a static field of the planet Data instead
-    auto MVMatrix = glm::rotate(glm::mat4(1), revolutionDegree, glm::vec3(0, 1, 0)); // Rotation around the central point (the sun)
-    MVMatrix = glm::rotate(MVMatrix, glm::radians(_data._orbitInclination), glm::vec3(1, 0, 0));  // Planet's orbit inclination
+    auto MVMatrix = glm::rotate(glm::mat4(1), revolutionDegree, glm::vec3(0, 1, 0));             // Rotation around the central point (the sun)
+    MVMatrix = glm::rotate(MVMatrix, glm::radians(_data._orbitInclination), glm::vec3(1, 0, 0)); // Planet's orbit inclination
 
-    MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, _data._position));                         // Distance from the central point (from the sun)
-    MVMatrix = glm::rotate(MVMatrix, glm::radians(_data._angle), glm::vec3(-1, 0, 0));              // Planet's axial tilt
+    MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, _data.getPosition()));                     // Distance from the central point (from the sun)
+    MVMatrix = glm::rotate(MVMatrix, glm::radians(_data._angle), glm::vec3(-1, 0, 0));             // Planet's axial tilt
     MVMatrix = glm::rotate(MVMatrix, rotationDegree - revolutionDegree, glm::vec3(0, 1, 0));       // Rotation on itself
     MVMatrix = glm::scale(MVMatrix, glm::vec3(_data._diameter, _data._diameter, _data._diameter)); // Size dimension
     auto normalMatrix = glm::transpose(glm::inverse(MVMatrix));
@@ -110,14 +112,17 @@ void PlanetObject::updateMatrices(float rotation)
     _matrices.setNormalMatrix(normalMatrix);
     _matrices.setMVPMatrix(MVPMatrix);
 
-    for (auto &satellite : _satellites)
+    if (updateSatellites)
     {
-        auto refMat = glm::rotate(glm::mat4(1), revolutionDegree, glm::vec3(0, 1, 0)); // Rotation around the central point (the sun)
-        refMat = glm::rotate(refMat, glm::radians(_data._orbitInclination), glm::vec3(1, 0, 0));  // Planet's orbit inclination
-        refMat = glm::translate(refMat, glm::vec3(0, 0, _data._position));
-        refMat = glm::rotate(refMat, glm::radians(_data._angle), glm::vec3(-1, 0, 0));
+        for (auto &satellite : _satellites)
+        {
+            auto refMat = glm::rotate(glm::mat4(1), revolutionDegree, glm::vec3(0, 1, 0));           // Rotation around the central point (the sun)
+            refMat = glm::rotate(refMat, glm::radians(_data._orbitInclination), glm::vec3(1, 0, 0)); // Planet's orbit inclination
+            refMat = glm::translate(refMat, glm::vec3(0, 0, _data.getPosition()));
+            refMat = glm::rotate(refMat, glm::radians(_data._angle), glm::vec3(-1, 0, 0));
 
-        satellite.fillMatrices(refMat, projMatrix, rotation);
+            satellite.fillMatrices(refMat, projMatrix, rotation);
+        }
     }
 }
 
@@ -310,9 +315,9 @@ void SatelliteObject::fillMatrices(glm::mat4 refMatrix, glm::mat4 projMatrix, fl
     float rotationDegree = _data._rotationPeriod == 0 ? 0 : rotation * (1. / _data._rotationPeriod); // TODO : Change this computation that doesn't fit realty and put it at a function of the class
     float revolutionDegree = _data._revolutionPeriod == 0 ? 0 : rotation * (1. / _data._revolutionPeriod);
     auto MVMatrix = glm::rotate(refMatrix, glm::radians(_data._orbitInclination), glm::vec3(1, 0, 0)); // The orbital tilt
-    MVMatrix = glm::rotate(MVMatrix, revolutionDegree, glm::vec3(0, 1, 0)); // Rotation around the central point (the planet reference)
+    MVMatrix = glm::rotate(MVMatrix, revolutionDegree, glm::vec3(0, 1, 0));                            // Rotation around the central point (the planet reference)
 
-    MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, _data._position));                         // Distance from the central point (from the sun)
+    MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, _data.getPosition()));                     // Distance from the central point (from the sun)
     MVMatrix = glm::rotate(MVMatrix, glm::radians(_data._angle), glm::vec3(-1, 0, 0));             // Axial tilt
     MVMatrix = glm::rotate(MVMatrix, rotationDegree - revolutionDegree, glm::vec3(0, 1, 0));       // Rotation on itself
     MVMatrix = glm::scale(MVMatrix, glm::vec3(_data._diameter, _data._diameter, _data._diameter)); // Size dimension

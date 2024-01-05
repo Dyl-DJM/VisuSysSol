@@ -131,11 +131,9 @@ bool Camera::isFocusedPov()
  */
 void Camera::setFocusedPov()
 {
-    if (_pov != FOCUSED){
-        _pov = FOCUSED;
-        m_fAngleX = 15;  // When returning to focus mode from initial POV, set the angle X to 15.
-        m_fAngleY = 0;   // When returning to focus mode from initial POV, set the angle Y to 0.
-    }
+    _pov = FOCUSED;
+    m_fAngleX = 15; // When returning to focus mode from initial POV, set the angle X to 15.
+    m_fAngleY = 0;  // When returning to focus mode from initial POV, set the angle Y to 0.
 }
 
 /**

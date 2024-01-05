@@ -80,6 +80,20 @@ public:
      ********************************************************************************/
     void resetCam();
 
+    /**
+     * @brief Tells if the cam is on the focused mode or not.
+     *
+     * @return True if the camera is set on the focused mode and false otherwise.
+     ********************************************************************************/
+    bool isCamFocused();
+
+    /**
+     * @brief Tells if the cam is on the initial mode or not.
+     *
+     * @return True if the camera is set on the initial mode and false otherwise.
+     ********************************************************************************/
+    bool isInitalCam();
+
 private:
     Camera &camera;
     SolarSystem &solarSys;

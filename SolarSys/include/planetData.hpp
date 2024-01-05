@@ -22,7 +22,6 @@
 class PlanetData
 {
 protected:
-
     /**
      * @brief Constructor of the class.
      *
@@ -38,30 +37,46 @@ protected:
      ********************************************************************************/
     PlanetData(float rotation, float diameter, float position, float orbitInclination, float angle, float revPeriod, bool hasRing, float ringDist, float ringThickness);
 
+    // These are protexted beacause we want to retrieve them from a getter
+    // to be sure we are taking the right value between these two
+    const float _position;      // Unreal distances form the sun (Better for visualisation)
+    const float _largePosition; // Real distances from the sun
+
 public:
     /**
      * @brief Destructor of the class.
      ********************************************************************************/
     virtual ~PlanetData() {}
 
+    /**
+     * @brief Retrieves the value of the planet position from the sun.
+     ********************************************************************************/
+    float getPosition();
+
     const float _rotationPeriod;   // Rotation period of the planet
     const float _diameter;         // Size of the planet
-    const float _position;         // Position of the planet relative to the sun
     const float _orbitInclination; // Angle of the inclination of the planet's orbit in degree
     const float _angle;            // Angle of rotation of the ellipse in degree
     const float _revolutionPeriod; // Revolution period of the planet
-    const bool _hasRing;          // Boolean describing the presence of a ring or not.
-    const float _ringDist;        // Distance of the ring from center of planet
-    const float _ringThickness;   // Thickness of the ring
+    const bool _hasRing;           // Boolean describing the presence of a ring or not.
+    const float _ringDist;         // Distance of the ring from center of planet
+    const float _ringThickness;    // Thickness of the ring
 
     static const float sizeUnit;     // The homothety unit we'll use to downscale the solar system
     static const float rotationUnit; // Homothety unit we'll use to reduce the time of rotation
     static const float distanceUnit;
     constexpr static const float satelliteOffset = 1000000;
+
+    // Computation on the range of the solar system (For the visualisation distances)
+    constexpr static const float x0 = 58000000;   // Position of the nearest planet
+    constexpr static const float x1 = 5910000000; // Position of the farest planet
+    constexpr static const float y0 = 30000000;   // Wanted position of the nearest planet
+    constexpr static const float y1 = 99000000;   // Wanted position of the farest planet
+    static bool _largeView;                       // Flag for the type of position (large distances or not)
 };
 
 inline const float PlanetData::sizeUnit = 139822. * 4; // We are setting 1 unit to 3 times 139822 km (Jupiter's size)
-inline const float PlanetData::rotationUnit = 6.;  // We are setting 1 unit to 6 hours
+inline const float PlanetData::rotationUnit = 6.;      // We are setting 1 unit to 6 hours
 inline const float PlanetData::distanceUnit = 8000000.;
 
 /**

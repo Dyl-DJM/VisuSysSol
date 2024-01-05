@@ -119,3 +119,23 @@ void Context::resetCam()
     planet_idx = 0;
     camera.setInitialPov();
 }
+
+/**
+ * @brief Tells if the cam is on the focused mode or not.
+ *
+ * @return True if the camera is set on the focused mode and false otherwise.
+ ********************************************************************************/
+bool Context::isCamFocused()
+{
+    return camera.isFocusedPov();
+}
+
+/**
+ * @brief Tells if the cam is on the initial mode or not.
+ *
+ * @return True if the camera is set on the initial mode and false otherwise.
+ ********************************************************************************/
+bool Context::isInitalCam()
+{
+    return camera.isInitialPov();
+}

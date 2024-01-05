@@ -364,7 +364,9 @@ int render3DScene(char *relativePath)
         for (auto &planet : (*solarSys))
         {
             inProgramElapsedTime += step * context.getSpeedMultiplier();
-            planet.updateMatrices(inProgramElapsedTime); // Update the matrices regarding the time
+
+            // Update the matrices regarding the time, we want the satellites to update its matrices only in the focused mode
+            planet.updateMatrices(inProgramElapsedTime, context.isCamFocused());
             context.update_camera();
             renderEng->draw(planet, camera, sunLight); // Draw the current planet
         }
