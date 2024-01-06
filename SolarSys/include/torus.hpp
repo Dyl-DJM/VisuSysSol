@@ -4,26 +4,26 @@
 
 #include <glimac/common.hpp>
 
-
-
-
-class Torus {
+class Torus
+{
     void build(GLfloat radius, GLfloat thickness, GLsizei discLat, GLsizei discLong);
 
 public:
     // Constructeur: alloue le tableau de données et construit les attributs des vertex
-    Torus(GLfloat radius, GLfloat thickness, GLsizei discLat, GLsizei discLong):
-        m_nVertexCount(0) {
+    Torus(GLfloat radius, GLfloat thickness, GLsizei discLat, GLsizei discLong) : m_nVertexCount(0)
+    {
         build(radius, thickness, discLat, discLong); // Construction (voir le .cpp)
     }
 
     // Renvoit le pointeur vers les données
-    const glimac::ShapeVertex* getDataPointer() const {
+    const glimac::ShapeVertex *getDataPointer() const
+    {
         return &m_Vertices[0];
     }
-    
+
     // Renvoit le nombre de vertex
-    GLsizei getVertexCount() const {
+    GLsizei getVertexCount() const
+    {
         return m_nVertexCount;
     }
 
@@ -32,4 +32,3 @@ private:
     GLsizei m_nVertexCount; // Nombre de sommets
     std::vector<GLuint> texts;
 };
-    

@@ -83,7 +83,6 @@ Shader2Texture::Shader2Texture(const FilePath &applicationPath) : ShaderManager(
     uTextures.emplace_back(glGetUniformLocation(m_Program.getGLId(), "uSecondTexture"));
 }
 
-
 /**
  * @brief Constructor of the class.
  *
@@ -92,4 +91,5 @@ Shader2Texture::Shader2Texture(const FilePath &applicationPath) : ShaderManager(
  ********************************************************************************/
 ShaderTorusTexture::ShaderTorusTexture(const FilePath &applicationPath)
     : ShaderManager(applicationPath, PathStorage::RELATIVE_PATH_VERTEX, PathStorage::RELATIVE_PATH_FRAGMENT_TORUS)
-{}
+{
+}

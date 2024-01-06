@@ -1,27 +1,29 @@
+
 #include "../include/torus.hpp"
 
-
-
-
 // Inspired by the code presented in https://electronut.in/torus/#torus-geometry
-void Torus::build(GLfloat radius, GLfloat thickness, GLsizei discLat, GLsizei discLong){
+void Torus::build(GLfloat radius, GLfloat thickness, GLsizei discLat, GLsizei discLong)
+{
 
     auto step_u = 2 * M_PI / discLat;
     auto step_v = 2 * M_PI / discLong;
 
-    for (GLsizei i = 0; i <= discLat; i++){
+    for (GLsizei i = 0; i <= discLat; i++)
+    {
 
         float u = step_u * i;
 
-        for (GLsizei j = 0; j <= discLong; j++){
+        for (GLsizei j = 0; j <= discLong; j++)
+        {
 
             float v = step_v * (j % discLong);
 
-            for (GLsizei k = 0; k < 2; k++){
+            for (GLsizei k = 0; k < 2; k++)
+            {
 
                 glimac::ShapeVertex vertex;
 
-                float u2 = u + (k * step_u); 
+                float u2 = u + (k * step_u);
 
                 // auto thicknessZ = (i > 10) ? thickness / 2 : thickness;
 
@@ -42,7 +44,6 @@ void Torus::build(GLfloat radius, GLfloat thickness, GLsizei discLat, GLsizei di
                 // vertex.texCoords.y = i / discLat;
 
                 m_Vertices.push_back(vertex);
-
             }
         }
     }

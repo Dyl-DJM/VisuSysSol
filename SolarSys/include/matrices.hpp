@@ -12,8 +12,6 @@
 
 #pragma once
 
-#include <iostream>
-
 #include <glimac/glm.hpp>
 
 /**

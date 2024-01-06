@@ -4,13 +4,13 @@
 =      Made by Kevin QUACH and Dylan DE JESUS	     =
 =													 =
 =													 =
-=  This module owns the management of a planet		 =
+=  This module contains the management of a planet	 =
 =  object, this means that we can find all the		 =
-=  information we need to draw it            		 =
-=  													 =
+=  information we need to draw it (textures, shader, =
+=  , data, matrices...)	     						 =
+=													 =
 ======================================================
 */
-// UNCLEARRRRRRRRRR ^^^^^^^^
 
 #pragma once
 
@@ -22,6 +22,7 @@
 #include "include/shaderManager.hpp"
 #include "include/matrices.hpp"
 
+// Forward declaration
 class SatelliteObject;
 
 /* ========================================================================================================== */

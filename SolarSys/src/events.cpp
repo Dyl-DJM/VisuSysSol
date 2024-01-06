@@ -9,6 +9,7 @@
 =  Contains implementations of the interactions      =
 =  with the window using the keys, the keyboard,     =
 =  the mouse or window events (resize..)      		 =
+=  													 =
 ======================================================
 */
 
@@ -39,8 +40,6 @@ void Events::onWindowResized(GLFWwindow *window, int width, int height)
  ********************************************************************************/
 void Events::onMouseMotion(GLFWwindow *window, double x, double y)
 {
-    std::cout << "Mouse Motion : " << window << " for mouse position " << x << " , " << y << std::endl;
-
     if (mouse_right_press)
     { // Camera rotation
 
@@ -65,11 +64,8 @@ void Events::onMouseMotion(GLFWwindow *window, double x, double y)
  * @param action Kind of action (Pressed/Released).
  * @param other Other information.
  ********************************************************************************/
-void Events::onMouseButton(GLFWwindow *window, int code, int action, int other)
+void Events::onMouseButton(GLFWwindow *window, int code, int action, [[maybe_unused]] int other)
 {
-    std::cout << "Mouse Button : " << window << " of code " << code << " fo action "
-              << action << " and other : " << other << std::endl;
-
     if (code == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
     {
         mouse_right_press = true;
@@ -91,15 +87,18 @@ void Events::onMouseButton(GLFWwindow *window, int code, int action, int other)
  * @param scancode Code of the key.
  * @param action Kind of action (Pressed/Released).
  ********************************************************************************/
-void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mods)
+void Events::onKey(GLFWwindow *window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods)
 {
-    std::cout << "Key Event : " << window << " for key " << key << " of scancode " << scancode
-              << ". Made the action : " << action << " and mods are " << mods << std::endl;
-
     if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
     {
         glfwSetWindowShouldClose(window, GLFW_TRUE); // Sets the close flag of the window at true
     }
+
+    /* WARNING : There we didn't want to load the context if the action
+     *           made by the user isn't one we implemented to avoid a
+     *           hight cost load for nothing (thats why we load in all the conditions
+     *           blocks instead of doing it once outside)
+     */
 
     /**************** Camera Management ****************/
 
@@ -179,10 +178,17 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
     }
 }
 
-void Events::onScroll(GLFWwindow *window, double xoffset, double yoffset)
+/**
+ * @brief Callback function for mouse scroll.
+ *
+ * It fits the wanted template of the GLFW description.
+ *
+ * @param window A window.
+ * @param xoffset An offset value on x axis.
+ * @param yoffset An offset value on y axis.
+ ********************************************************************************/
+void Events::onScroll(GLFWwindow *window, [[maybe_unused]] double xoffset, double yoffset)
 {
-    std::cout << "Key Event : " << window << "\nxoffset: " << xoffset << "\nyoffset: " << yoffset << std::endl;
-
     Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
 
     Camera &camera = context->getCamera();
@@ -215,6 +221,4 @@ void Events::setEvents(GLFWwindow *window, Context &context)
     glfwSetScrollCallback(window, Events::onScroll);
 
     glfwSetWindowUserPointer(window, &context); /* Set the context */
-
-    std::cout << window << std::endl;
 }

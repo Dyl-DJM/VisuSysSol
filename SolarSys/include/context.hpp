@@ -28,7 +28,7 @@ public:
      * @param cam The camera associated to the program
      * @param solarSystem The SolarSystem object associated to the program
      */
-    Context(Camera &cam, SolarSystem &solarSystem, Light & light);
+    Context(Camera &cam, SolarSystem &solarSystem, Light &light);
 
     /**
      * Camera accessor.
@@ -127,8 +127,8 @@ public:
 
     /**
      * @brief Accessor for the light
-    */
-    Light & getLight();
+     */
+    Light &getLight();
 
 private:
     Camera &camera;

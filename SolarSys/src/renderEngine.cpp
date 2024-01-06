@@ -12,8 +12,6 @@
 
 #include "include/renderEngine.hpp"
 
-#include <glimac/glm.hpp>
-
 /**
  * @brief Clears the display of the scene.   (CLEAR THE SCENE RATHER... MIGHT BE SMART TO RENAME IT clearScene)
  *
@@ -101,7 +99,6 @@ void RenderEngine::createTorus(GLfloat innerEdgeDist, GLfloat thickness)
 {
     auto radius = innerEdgeDist + thickness;
     auto pipeRadius = thickness;
-    std::cout << "radius: " << radius << ", pipeRadius: " << pipeRadius << std::endl;
     auto torus = Torus(radius, pipeRadius, 64, 16);
     _nbVerticesTorus = torus.getVertexCount();
     auto ptrVertices = torus.getDataPointer();

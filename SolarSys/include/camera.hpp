@@ -108,11 +108,13 @@ public:
      */
     void setProfilePov();
 
+    // Default configuration of the camera
     static const float initialDistance;
     static const float initialAngleX;
     static const float initialAngleY;
 
 private:
+    // Describes the state of the cam
     enum POV_STATE
     {
         GENERAL, // 3/4 view mode

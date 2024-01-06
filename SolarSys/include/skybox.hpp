@@ -19,6 +19,7 @@
 
 #include <glimac/FilePath.hpp>
 #include <glimac/common.hpp> // Must be after the shaderManager import
+
 #include "include/matrices.hpp"
 
 using namespace glimac;

@@ -9,6 +9,7 @@
 =  Contains implementations of the interactions      =
 =  with the window using the keys, the keyboard,     =
 =  the mouse or window events (resize..)      		 =
+=  													 =
 ======================================================
 */
 
@@ -18,6 +19,7 @@
 
 #include <GLFW/glfw3.h>
 #include <iostream>
+
 #include "../include/context.hpp"
 
 /**
@@ -101,8 +103,8 @@ private:
      * It fits the wanted template of the GLFW description.
      *
      * @param window A window.
-     * @param xoffset
-     * @param yoffset
+     * @param xoffset An offset value on x axis.
+     * @param yoffset An offset value on y axis.
      ********************************************************************************/
     static void onScroll(GLFWwindow *window, double xoffset, double yoffset);
 
@@ -119,9 +121,6 @@ private:
 };
 
 inline bool Events::mouse_right_press = false;
-
 inline double Events::mouse_x = 0.0f;
-
 inline double Events::mouse_y = 0.0f;
-
 inline unsigned int Events::planet_idx = 0; // The sun (index 0) is selected by default

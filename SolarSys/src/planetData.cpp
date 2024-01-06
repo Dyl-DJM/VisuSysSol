@@ -1,14 +1,14 @@
 /*
 ======================================================
-=  													 =
-=      Made by Kevin QUACH and Dylan DE JESUS	     =
-=													 =
-=													 =
+=  													                         =
+=      Made by Kevin QUACH and Dylan DE JESUS	       =
+=													                           =
+=													                           =
 =  This module contains the definition of classes    =
 =  used to create instances of Planets.              =
 =  These classes contains the planet's data such as  =
 =  diameter, rotation period, ...                    =
-=													 =
+=													                           =
 ======================================================
 */
 

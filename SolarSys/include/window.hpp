@@ -21,7 +21,6 @@
 
 #include "include/tools.hpp"
 #include "include/events.hpp"
-#include "include/camera.hpp"
 
 /**
  * @brief Representation of a window where we can render the 3D scene.
@@ -76,7 +75,7 @@ public:
     /**
      * @brief Sets the events for the window.
      ********************************************************************************/
-    void configureEvents(Context & context);
+    void configureEvents(Context &context);
 
     /**
      * @brief Gives the creation state of the window.

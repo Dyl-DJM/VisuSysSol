@@ -38,9 +38,9 @@ public:
 
     /**
      * @brief Set the intensity of the light to value
-     * 
+     *
      * @param value The light intensity to set
-    */
+     */
     void setIntensity(float value);
 
     // Material coefficients

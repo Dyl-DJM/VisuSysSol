@@ -4,13 +4,13 @@
 =      Made by Kevin QUACH and Dylan DE JESUS	     =
 =													 =
 =													 =
-=  This module owns the management of a planet		 =
+=  This module contains the management of a planet	 =
 =  object, this means that we can find all the		 =
-=  information we need to draw it            		 =
+=  information we need to draw it (textures, shader, =
+=  , data, matrices...)	     						 =
 =													 =
 ======================================================
 */
-// UNCLEARRRRRRRRRR ^^^^^^^^
 
 #include "include/planetObject.hpp"
 
@@ -85,19 +85,12 @@ void PlanetObject::configureMatrices(float w, float h)
  ********************************************************************************/
 void PlanetObject::updateMatrices(float rotation, bool updateSatellites)
 {
-
     // Previous matrices
-    // auto previousMVMatrix = _matrices.getMVMatrix();
     auto projMatrix = _matrices.getProjMatrix();
 
-    // auto MVMatrixBasic = glm::translate(glm::mat4(1), glm::vec3(0.f, 0.f, -5.f));
-
     // MVMatrix updates <=> transformations that leads to animation
-
-    float rotationDegree = _data._rotationPeriod == 0 ? 0 : rotation * (1. / _data._rotationPeriod); // TODO : Change this computation that doesn't fit realty and put it at a function of the class
+    float rotationDegree = _data._rotationPeriod == 0 ? 0 : rotation * (1. / _data._rotationPeriod);
     float revolutionDegree = _data._revolutionPeriod == 0 ? 0 : rotation * (1. / _data._revolutionPeriod);
-    // TODO : put real conversions iduced by real values of the rotation period, diameter etc..
-    // auto MVMatrixBasic = glm::translate(glm::mat4(1), glm::vec3(0.f, 0.f, 0));       // Central point of the sun : need to put it as a static field of the planet Data instead
     auto MVMatrix = glm::rotate(glm::mat4(1), revolutionDegree, glm::vec3(0, 1, 0));             // Rotation around the central point (the sun)
     MVMatrix = glm::rotate(MVMatrix, glm::radians(_data._orbitInclination), glm::vec3(1, 0, 0)); // Planet's orbit inclination
 
@@ -112,10 +105,12 @@ void PlanetObject::updateMatrices(float rotation, bool updateSatellites)
     _matrices.setNormalMatrix(normalMatrix);
     _matrices.setMVPMatrix(MVPMatrix);
 
+    // Satellites update, thanks to the new position of the planet
     if (updateSatellites)
     {
         for (auto &satellite : _satellites)
         {
+            // Matrice descibing the center of the planet
             auto refMat = glm::rotate(glm::mat4(1), revolutionDegree, glm::vec3(0, 1, 0));           // Rotation around the central point (the sun)
             refMat = glm::rotate(refMat, glm::radians(_data._orbitInclination), glm::vec3(1, 0, 0)); // Planet's orbit inclination
             refMat = glm::translate(refMat, glm::vec3(0, 0, _data.getPosition()));
@@ -211,7 +206,6 @@ const std::vector<GLuint> PlanetObject::getRingTextIDs() const
  ********************************************************************************/
 void PlanetObject::updateMatricesTorus()
 {
-
     auto projMatrix = _matrices.getProjMatrix();
     auto MVMatrix = _matrices.getMVMatrix();
 
@@ -311,8 +305,7 @@ void SatelliteObject::addSatellite([[maybe_unused]] SatelliteObject satellite)
  ********************************************************************************/
 void SatelliteObject::fillMatrices(glm::mat4 refMatrix, glm::mat4 projMatrix, float rotation)
 {
-
-    float rotationDegree = _data._rotationPeriod == 0 ? 0 : rotation * (1. / _data._rotationPeriod); // TODO : Change this computation that doesn't fit realty and put it at a function of the class
+    float rotationDegree = _data._rotationPeriod == 0 ? 0 : rotation * (1. / _data._rotationPeriod);
     float revolutionDegree = _data._revolutionPeriod == 0 ? 0 : rotation * (1. / _data._revolutionPeriod);
     auto MVMatrix = glm::rotate(refMatrix, glm::radians(_data._orbitInclination), glm::vec3(1, 0, 0)); // The orbital tilt
     MVMatrix = glm::rotate(MVMatrix, revolutionDegree, glm::vec3(0, 1, 0));                            // Rotation around the central point (the planet reference)

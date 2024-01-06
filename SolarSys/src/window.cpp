@@ -46,8 +46,6 @@ int Window::initWindowLib()
 void Window::freeCurrentWindow()
 {
     glfwMakeContextCurrent(NULL); // Deletion of the context in the current window
-
-    // TODO : Make an Event function that remove all the Callbacks which has been set
     glfwSetKeyCallback(_window, nullptr);
     glfwSetErrorCallback(nullptr);
 
@@ -120,7 +118,7 @@ Window::Window(unsigned int width, unsigned int height, const char *title)
     /* Make the window's context current */
     glfwMakeContextCurrent(_window);
 
-    /* Intialize glad (loads the OpenGL functions) */ /*TODO : METTRE ÇA DANS MODULE RENDER ENGINE*/
+    /* Intialize glad (loads the OpenGL functions) */
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         return;
@@ -132,7 +130,7 @@ Window::Window(unsigned int width, unsigned int height, const char *title)
 /**
  * @brief Sets the events for the window.
  ********************************************************************************/
-void Window::configureEvents(Context & context)
+void Window::configureEvents(Context &context)
 {
     Events::setEvents(_window, context);
 }

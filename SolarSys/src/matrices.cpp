@@ -26,8 +26,6 @@
  ********************************************************************************/
 void Matrices::init(float w, float h, float rotation, float translation, float scale)
 {
-
-    std::cout << rotation << scale << std::endl; // TODO : remove when the rotation is handled in this function, it is here to avoid the warning and remove the iostream include in hpp
     _projMatrix = glm::perspective(glm::radians(70.f), w / h, 0.1f, 100.f);
 
     // Initial position of the object after transformations

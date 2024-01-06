@@ -16,7 +16,7 @@
  * @brief Constructor of the class.
  ********************************************************************************/
 Light::Light()
-    : _Kd{glm::vec3(1, 1, 1)}, _Ks{glm::vec3(1, .3, .8)}, _shininess{32}, _position{glm::vec3(0, 0, 0)}, _intensity{glm::vec3(30, 30, 30)} // TODO : The inital value for the position will be the center position defined in Matrices for example
+    : _Kd{glm::vec3(1, 1, 1)}, _Ks{glm::vec3(1, .3, .8)}, _shininess{32}, _position{glm::vec3(0, 0, 0)}, _intensity{glm::vec3(30, 30, 30)}
 {
 }
 
@@ -40,10 +40,11 @@ void Light::fill(glm::vec3 kd, glm::vec3 ks, float shininess, glm::vec3 pos, glm
 
 /**
  * @brief Set the intensity of the light to value
- * 
+ *
  * @param value The light intensity to set
-*/
-void Light::setIntensity(float value){
+ */
+void Light::setIntensity(float value)
+{
     _intensity.x = value;
     _intensity.y = value;
     _intensity.z = value;

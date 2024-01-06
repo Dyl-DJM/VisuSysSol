@@ -18,12 +18,10 @@
 #include "include/textures.hpp"
 #include "include/tools.hpp"
 #include "include/planetObject.hpp"
-#include "include/events.hpp"
+#include "include/camera.hpp"
 #include "include/skybox.hpp"
 #include "include/light.hpp"
 #include "include/torus.hpp"
-
-#include <glimac/glm.hpp> // TODO : Delete when the skybox is finished/well defined
 
 /**
  * @brief Represents all the render engine part of the application.
@@ -190,7 +188,7 @@ private:
     std::vector<GLuint> _vaoTorus;
     unsigned int _nbVerticesTorus = 0;
 
-    // Skybox                          // TODO : Put it inside a map to store all the type of VBOs etc for each shape (sphere, cube, rings etc)
+    // Skybox
     GLuint _vboSkybox;
     GLuint _vaoSkybox;
     GLuint _ibo;
