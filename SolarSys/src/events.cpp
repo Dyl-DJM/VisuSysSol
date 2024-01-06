@@ -107,7 +107,8 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
     if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE)
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
-        if (!PlanetData::_largeView){
+        if (!PlanetData::_largeView)
+        {
             PlanetData::_largeView = true;
             context->getLight().setIntensity(30.);
         }
@@ -117,7 +118,8 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
     else if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
-        if (!PlanetData::_largeView){
+        if (!PlanetData::_largeView)
+        {
             PlanetData::_largeView = true;
             context->getLight().setIntensity(30.);
         }
@@ -165,10 +167,12 @@ void Events::onKey(GLFWwindow *window, int key, int scancode, int action, int mo
         {
             PlanetData::_largeView = !PlanetData::_largeView;
 
-            if (PlanetData::_largeView){
+            if (PlanetData::_largeView)
+            {
                 context->getLight().setIntensity(30.);
             }
-            else {
+            else
+            {
                 context->getLight().setIntensity(7.5);
             }
         }

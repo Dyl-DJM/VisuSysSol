@@ -37,8 +37,10 @@ public:
      *
      * @param filePath A FilePath object (see the FilePath class in glimac).
      * @param textID An ID that describes a texture that has been loaded.
+     * @param w The width of the window (used for the projection matrix).
+     * @param h The height of the window (used for the projection matrix).
      ********************************************************************************/
-    Skybox(FilePath filePath, GLuint textID); // TODO : Would be better to give immediately a ShaderManager Object instead of its parameters
+    Skybox(FilePath filePath, GLuint textID, float w, float h);
 
     /**
      * @brief Retrieves the number of vertices.
@@ -114,8 +116,14 @@ private:
      *
      * Creates a cube in 3D dimension thanks to 8 points defined and indexes that
      * describe how this shape can be drawn with triangles.
+     *
+     * @param filePath A FilePath object.
+     * @param textID An integer index describing the information of the texture to
+     *               send to the shader.
+     * @param w The width of the window (used for the projection matrix).
+     * @param h The height of the window (used for the projection matrix).
      ********************************************************************************/
-    void build(FilePath filePath, GLuint textID);
+    void build(FilePath filePath, GLuint textID, float w, float h);
 
     std::vector<ShapeVertex> _cube;         // Vertices that describe the shape
     std::shared_ptr<ShaderManager> _shader; // Shader binded to the cube

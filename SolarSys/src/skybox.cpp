@@ -20,10 +20,12 @@
  *
  * @param filePath A FilePath object (see the FilePath class in glimac).
  * @param textID An ID that describes a texture that has been loaded.
+ * @param w The width of the window (used for the projection matrix).
+ * @param h The height of the window (used for the projection matrix).
  ********************************************************************************/
-Skybox::Skybox(FilePath filePath, GLuint textID) // TODO : Would be better to give immediately a ShaderManager Object instead of its parameters
+Skybox::Skybox(FilePath filePath, GLuint textID, float w, float h)
 {
-    build(filePath, textID);
+    build(filePath, textID, w, h);
 }
 
 /**
@@ -120,8 +122,14 @@ uint Skybox::nbIndexes() const
  *
  * Creates a cube in 3D dimension thanks to 8 points defined and indexes that
  * describe how this shape can be drawn with triangles.
+ *
+ * @param filePath A FilePath object.
+ * @param textID An integer index describing the information of the texture to
+ *               send to the shader.
+ * @param w The width of the window (used for the projection matrix).
+ * @param h The height of the window (used for the projection matrix).
  ********************************************************************************/
-void Skybox::build(FilePath filePath, GLuint textID)
+void Skybox::build(FilePath filePath, GLuint textID, float w, float h)
 {
     /*
           5   *---------*    4
@@ -169,7 +177,7 @@ void Skybox::build(FilePath filePath, GLuint textID)
     }
 
     // Initialize the attributes of the class
-    _matrices.init(1000, 1000, 0, 0, 0.5); // TODO : Actually there are manual arguments, need to pass the windows dimensions instead of 1000, 1000
+    _matrices.init(w, h, 0, 0, 0.5); // 0.5 scale to have a 1x1x1 cube
     _shader = std::make_shared<Shader1Texture>(filePath);
     _texts.push_back(textID);
     _indexes = {

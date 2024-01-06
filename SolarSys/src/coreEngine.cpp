@@ -328,7 +328,7 @@ int render3DScene(char *relativePath)
     // Skybox
     FilePath applicationPath(relativePath);
     auto textID = RenderEngine::createTexture(PathStorage::PATH_TEXTURE_SKYBOX);
-    auto skybox = std::make_unique<Skybox>(applicationPath, textID);
+    auto skybox = std::make_unique<Skybox>(applicationPath, textID, windowWidth, windowHeight);
 
     /***************** INITIALIZE THE 3D CONFIGURATION (DEPTH) *******************/
 
@@ -340,7 +340,7 @@ int render3DScene(char *relativePath)
         renderEng->createPlanetRing(planet);
     }
 
-    renderEng->integrateSkybox(*skybox); // Allows the
+    renderEng->integrateSkybox(*skybox); // Allows the render engine to add the cube of the skybox in vaos and vbos
 
     /********************* RENDERING LOOP ********************/
 
