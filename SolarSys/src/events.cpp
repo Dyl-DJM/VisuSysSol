@@ -103,7 +103,7 @@ void Events::onKey(GLFWwindow *window, int key, [[maybe_unused]] int scancode, i
     /**************** Camera Management ****************/
 
     // Go to the next planet focused pov
-    if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE)
+    if (key == GLFW_KEY_DOWN && action == GLFW_RELEASE)
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         if (!PlanetData::_largeView)
@@ -114,7 +114,7 @@ void Events::onKey(GLFWwindow *window, int key, [[maybe_unused]] int scancode, i
         context->previous_planet();
     }
     // Go to the previous planet focused pov
-    else if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)
+    else if (key == GLFW_KEY_UP && action == GLFW_RELEASE)
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         if (!PlanetData::_largeView)
@@ -139,12 +139,12 @@ void Events::onKey(GLFWwindow *window, int key, [[maybe_unused]] int scancode, i
 
     /**************** Speed Management ****************/
 
-    else if (key == GLFW_KEY_KP_ADD && action == GLFW_RELEASE)
+    else if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->increaseSpeed(2);
     }
-    else if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_RELEASE)
+    else if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE)
     {
         Context *context = static_cast<Context *>(glfwGetWindowUserPointer(window));
         context->decreaseSpeed(2);
